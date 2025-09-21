@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 
-<html lang="ar" dir="rtl">
+<html lang="en">
 
 <head>
 
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Neighbours Help — ساعد جيرانك</title>
+  <title>HelpAroundYou — Neighbors helping neighbors</title>
 
-  <meta name="description" content="منصة مجتمعية لطلب المساعدة أو تقديمها: نقل أثاث، قص حشيش، إزالة أوراق وأغصان، تنظيف، بيك أب بسيارة، وخدمات مخصصة.">
-
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <meta name="description" content="Post a help request or offer a hand. Moving, pickup with truck, leaf/branch removal, cleaning, lawn care, or custom tasks. Payment is handled directly between neighbors.">
 
   <link rel="stylesheet" href="style.css"/>
 
 
 
-  <!-- أيقونات -->
+  <!-- Icons -->
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
 </head>
 
 <body>
 
-  <!-- شريط علوي -->
+  <!-- Top Bar -->
 
   <header class="nav">
 
     <div class="brand">
 
-      <i class="fa-solid fa-hands-holding-heart"></i>
+      <i class="fa-solid fa-hands-holding-heart" aria-hidden="true"></i>
 
-      <span>Neighbours</span><em>Help</em>
+      <span class="name">HelpAround<span class="accent">You</span></span>
 
     </div>
 
-    <nav>
+    <nav aria-label="Primary">
 
-      <a href="#how">كيف تعمل المنصة</a>
+      <a href="#how">How it works</a>
 
-      <a href="#popular">خدمات شائعة</a>
+      <a href="#popular">Popular tasks</a>
 
-      <a href="#helpers">اعثر على مساعدين</a>
+      <a href="#helpers">Find helpers</a>
 
-      <a href="#post" class="cta">انشر طلب مساعدة (مجاني)</a>
+      <a href="#post" class="btn pill">Post a help (Free)</a>
 
     </nav>
 
@@ -54,115 +54,123 @@
 
 
 
-  <!-- البطل / Hero -->
+  <!-- Hero -->
 
-  <section class="hero">
+  <section class="hero" role="region" aria-labelledby="hero-title">
 
-    <h1>جيران يساعدون جيران 🌟</h1>
+    <h1 id="hero-title">Neighbors helping neighbors</h1>
 
-    <p>اطلب مساعدة أو ساعد غيرك في النقل، التنظيف، قص الحشيش، إزالة أغصان 🍂، بيك-أب بسيارة، وغير ذلك.</p>
+    <p class="lead">Ask for a hand or offer one — moving, pickup with a truck, leaf & branch removal, cleaning, lawn care, or any custom task.</p>
 
-    <form class="search" action="#" method="get">
 
-      <input type="text" name="q" placeholder="ابحث عن: نقل أثاث، قص حشيش، تنظيف..." aria-label="بحث">
 
-      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
+    <form class="search" role="search" action="#" method="get">
+
+      <label class="sr-only" for="q">Search tasks</label>
+
+      <input id="q" name="q" type="text" placeholder="Search: furniture move, lawn mow, cleaning…">
+
+      <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
 
     </form>
 
-    <div class="hero-actions">
 
-      <a class="btn primary" href="#post"><i class="fa-solid fa-plus"></i> انشر طلب مساعدة</a>
 
-      <a class="btn ghost" href="#helpers"><i class="fa-solid fa-users"></i> اعثر على مساعدين قريبين</a>
+    <div class="cta-row">
+
+      <a class="btn primary" href="#post"><i class="fa-solid fa-plus"></i> Post a help</a>
+
+      <a class="btn ghost" href="#helpers"><i class="fa-solid fa-users"></i> Find nearby helpers</a>
 
     </div>
+
+
+
+    <p class="disclaimer"><i class="fa-regular fa-circle-check" aria-hidden="true"></i> Pricing & payment are arranged directly between neighbors.</p>
 
   </section>
 
 
 
-  <!-- خدمات شائعة -->
+  <!-- Popular tasks -->
 
-  <section id="popular" class="popular">
+  <section id="popular" class="section">
 
-    <h2>خدمات شائعة</h2>
+    <h2>Popular tasks</h2>
 
-    <div class="grid">
+    <div class="grid cards">
 
-      <a class="card" href="#post">
+      <a class="card" href="#post" aria-label="Leaf and branch removal">
 
         <i class="fa-solid fa-leaf"></i>
 
-        <h3>إزالة أوراق/أغصان</h3>
+        <h3>Leaf & Branch Removal</h3>
 
       </a>
 
-      <a class="card" href="#post">
+      <a class="card" href="#post" aria-label="Pickup with truck">
 
         <i class="fa-solid fa-truck-pickup"></i>
 
-        <h3>بيك-أب بسيارة / نقل</h3>
+        <h3>Pickup with Truck</h3>
 
       </a>
 
-      <a class="card" href="#post">
+      <a class="card" href="#post" aria-label="Furniture move">
 
         <i class="fa-solid fa-couch"></i>
 
-        <h3>نقل أثاث/رفع أثقال</h3>
+        <h3>Furniture Move</h3>
 
       </a>
 
-      <a class="card" href="#post">
+      <a class="card" href="#post" aria-label="Home cleaning">
 
         <i class="fa-solid fa-broom"></i>
 
-        <h3>تنظيف</h3>
+        <h3>Cleaning</h3>
 
       </a>
 
-      <a class="card" href="#post">
+      <a class="card" href="#post" aria-label="Lawn care">
 
         <i class="fa-solid fa-seedling"></i>
 
-        <h3>قص حشيش</h3>
+        <h3>Lawn Care</h3>
 
       </a>
 
-      <a class="card" href="#post">
+      <a class="card" href="#post" aria-label="Custom task">
 
         <i class="fa-solid fa-pen-to-square"></i>
 
-        <h3>خدمة مخصصة (Other)</h3>
+        <h3>Custom Task (Other)</h3>
 
       </a>
 
     </div>
 
-    <p class="note">لا تتقيد بهذه الخيارات فقط — اختر “خدمة مخصصة” واكتب ما تحتاجه بحرّية.</p>
-
   </section>
 
 
 
-  <!-- كيف تعمل المنصة -->
+  <!-- How it works -->
 
-  <section id="how" class="how">
+  <section id="how" class="section how">
 
-    <h2>كيف تعمل المنصة</h2>
+    <h2>How it works</h2>
 
     <ol>
 
-      <li><strong>انشر طلبك</strong> مع العنوان والوقت والتفاصيل.</li>
+      <li><strong>Post</strong> your request with time, location, and details.</li>
 
-      <li><strong>استلم عروضًا</strong> ورسائل من مساعدين قريبين.</li>
+      <li><strong>Get offers</strong> from nearby helpers.</li>
 
-      <li><strong>تواصل واتفقوا</strong> على التفاصيل والسعر بينكم مباشرة.</li>
+      <li><strong>Chat & agree</strong> on price directly between you.</li>
 
-      <li><strong>قابلوا بأمان</strong> وأنجزوا المهمة.</li>
+      <li><strong>Meet safely</strong> and get it done.</li>
 
-      <li><strong>قيّم التجربة</strong> وشجّع جارك بكلمة طيبة أو Tip.</li>
+      <li><strong>Rate</strong> and say thanks (tip optional).</li>
 
     </ol>
 
@@ -170,19 +178,19 @@
 
 
 
-  <!-- انشر طلب مساعدة -->
+  <!-- Post a help -->
 
-  <section id="post" class="post">
+  <section id="post" class="section post">
 
-    <h2>انشر طلب مساعدة</h2>
+    <h2>Post a help</h2>
 
-    <form class="post-form" action="#" method="post">
+    <form class="form" action="#" method="post">
 
       <div class="row">
 
-        <label>عنوان الطلب</label>
+        <label for="title">Title</label>
 
-        <input type="text" name="title" placeholder="مثال: نقل كنبة من الطابق الأرضي للطابق الثاني" required>
+        <input id="title" name="title" type="text" placeholder="Move a sofa from garage to living room" required>
 
       </div>
 
@@ -192,23 +200,23 @@
 
         <div>
 
-          <label>نوع الخدمة</label>
+          <label for="category">Category</label>
 
-          <select name="category" required>
+          <select id="category" name="category" required>
 
-            <option value="" disabled selected>اختر</option>
+            <option value="" disabled selected>Select</option>
 
-            <option>إزالة أوراق/أغصان</option>
+            <option>Leaf & Branch Removal</option>
 
-            <option>بيك-أب بسيارة / نقل</option>
+            <option>Pickup with Truck</option>
 
-            <option>نقل أثاث/رفع أثقال</option>
+            <option>Furniture Move / Heavy Lifting</option>
 
-            <option>تنظيف</option>
+            <option>Cleaning</option>
 
-            <option>قص حشيش</option>
+            <option>Lawn Care</option>
 
-            <option>خدمة مخصصة (Other)</option>
+            <option>Custom Task (Other)</option>
 
           </select>
 
@@ -216,9 +224,9 @@
 
         <div>
 
-          <label>الموقع</label>
+          <label for="location">Location</label>
 
-          <input type="text" name="location" placeholder="المدينة / الحي / العنوان التقريبي" required>
+          <input id="location" name="location" type="text" placeholder="Neighborhood / address (approx.)" required>
 
         </div>
 
@@ -230,17 +238,17 @@
 
         <div>
 
-          <label>التاريخ</label>
+          <label for="date">Date</label>
 
-          <input type="date" name="date" required>
+          <input id="date" name="date" type="date" required>
 
         </div>
 
         <div>
 
-          <label>الوقت</label>
+          <label for="time">Time</label>
 
-          <input type="time" name="time" required>
+          <input id="time" name="time" type="time" required>
 
         </div>
 
@@ -250,9 +258,9 @@
 
       <div class="row">
 
-        <label>التفاصيل</label>
+        <label for="details">Details</label>
 
-        <textarea name="details" rows="4" placeholder="صف المهمة بدقة (الأبعاد، الوزن، الطوابق، ملاحظات الأمان)…" required></textarea>
+        <textarea id="details" name="details" rows="4" placeholder="Describe the task: dimensions/weight, floors, safety notes…" required></textarea>
 
       </div>
 
@@ -260,31 +268,27 @@
 
       <div class="row">
 
-        <label>صور/ملفات (اختياري)</label>
+        <label for="photos">Photos (optional)</label>
 
-        <input type="file" name="photos" multiple>
+        <input id="photos" name="photos" type="file" multiple>
 
       </div>
 
 
 
-      <div class="row policy">
+      <div class="policy">
 
-        <p><i class="fa-regular fa-circle-check"></i> <strong>مهم:</strong> المنصة لا تتدخل في <strong>الدفع أو التسعير</strong> — يتم الاتفاق مباشرة بينك وبين المساعد.</p>
+        <p><i class="fa-regular fa-circle-check" aria-hidden="true"></i> Payment & pricing are <strong>not handled</strong> by the platform — neighbors agree directly.</p>
 
-        <label class="tip">
+        <label class="inline">
 
-          <input type="checkbox" name="tip_optin">
-
-          أرغب بإضافة <strong>Tip/شكر</strong> للمساعد (تحديده لاحقًا بيننا).
+          <input type="checkbox" name="tip_optin"> I may add a tip as a thank-you.
 
         </label>
 
-        <label class="open-price">
+        <label class="inline">
 
-          <input type="checkbox" name="open_price">
-
-          أسمح للمساعدين باقتراح سعر مناسب.
+          <input type="checkbox" name="open_price"> Allow helpers to propose a fair price.
 
         </label>
 
@@ -292,11 +296,7 @@
 
 
 
-      <button class="btn primary" type="submit">
-
-        <i class="fa-solid fa-paper-plane"></i> نشر الطلب
-
-      </button>
+      <button class="btn primary full" type="submit"><i class="fa-solid fa-paper-plane"></i> Publish request</button>
 
     </form>
 
@@ -304,65 +304,69 @@
 
 
 
-  <!-- اعثر على مساعدين -->
+  <!-- Helpers -->
 
-  <section id="helpers" class="helpers">
+  <section id="helpers" class="section helpers">
 
-    <h2>اعثر على مساعدين قريبين</h2>
+    <h2>Find helpers nearby</h2>
 
     <div class="list">
 
       <article class="helper">
 
-        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+        <div class="avatar" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
 
         <div class="info">
 
           <h3>Ali — Pickup Truck</h3>
 
-          <p>نقل أثاث • إزالة أغصان • بيك-أب • 2 ميل</p>
+          <p>Furniture move • Branch removal • 2 mi away</p>
 
           <p class="rating"><i class="fa-solid fa-star"></i> 4.9 (32)</p>
 
         </div>
 
-        <a href="#" class="btn ghost">رسالة</a>
+        <a href="#" class="btn ghost">Message</a>
 
       </article>
 
+
+
       <article class="helper">
 
-        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+        <div class="avatar" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
 
         <div class="info">
 
           <h3>Sarah — Cleaning</h3>
 
-          <p>تنظيف منازل • تنظيم • 1.5 ميل</p>
+          <p>Home cleaning • Organizing • 1.5 mi away</p>
 
           <p class="rating"><i class="fa-solid fa-star"></i> 5.0 (18)</p>
 
         </div>
 
-        <a href="#" class="btn ghost">رسالة</a>
+        <a href="#" class="btn ghost">Message</a>
 
       </article>
 
     </div>
 
-    <p class="safety"><i class="fa-solid fa-shield-heart"></i> للسلامة: قابلوا في مكان آمن، أخبروا شخصًا تثقون به، وتأكدوا من الأجر قبل البدء.</p>
+
+
+    <p class="safety"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i> Safety: meet in a safe place, tell someone you trust, and agree on price before starting.</p>
 
   </section>
 
 
 
-  <!-- تذييل -->
+  <!-- Footer -->
 
   <footer class="footer">
 
-    <p>© 2025 Neighbours Help</p>
+    <p>© 2025 HelpAroundYou</p>
 
-    <p>منصة مجتمعية — دفع الأسعار يتم بين الأطراف مباشرة.</p>
+    <p>Community platform — payment happens directly between neighbors.</p>
 
   </footer>
 
