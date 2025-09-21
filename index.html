@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Neighbours Help — ساعد جيرانك</title>
+
+  <meta name="description" content="منصة مجتمعية لطلب المساعدة أو تقديمها: نقل أثاث، قص حشيش، إزالة أوراق وأغصان، تنظيف، بيك أب بسيارة، وخدمات مخصصة.">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <link rel="stylesheet" href="style.css"/>
+
+
+
+  <!-- أيقونات -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+  <!-- شريط علوي -->
+
+  <header class="nav">
+
+    <div class="brand">
+
+      <i class="fa-solid fa-hands-holding-heart"></i>
+
+      <span>Neighbours</span><em>Help</em>
+
+    </div>
+
+    <nav>
+
+      <a href="#how">كيف تعمل المنصة</a>
+
+      <a href="#popular">خدمات شائعة</a>
+
+      <a href="#helpers">اعثر على مساعدين</a>
+
+      <a href="#post" class="cta">انشر طلب مساعدة (مجاني)</a>
+
+    </nav>
+
+  </header>
+
+
+
+  <!-- البطل / Hero -->
+
+  <section class="hero">
+
+    <h1>جيران يساعدون جيران 🌟</h1>
+
+    <p>اطلب مساعدة أو ساعد غيرك في النقل، التنظيف، قص الحشيش، إزالة أغصان 🍂، بيك-أب بسيارة، وغير ذلك.</p>
+
+    <form class="search" action="#" method="get">
+
+      <input type="text" name="q" placeholder="ابحث عن: نقل أثاث، قص حشيش، تنظيف..." aria-label="بحث">
+
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
+
+    </form>
+
+    <div class="hero-actions">
+
+      <a class="btn primary" href="#post"><i class="fa-solid fa-plus"></i> انشر طلب مساعدة</a>
+
+      <a class="btn ghost" href="#helpers"><i class="fa-solid fa-users"></i> اعثر على مساعدين قريبين</a>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- خدمات شائعة -->
+
+  <section id="popular" class="popular">
+
+    <h2>خدمات شائعة</h2>
+
+    <div class="grid">
+
+      <a class="card" href="#post">
+
+        <i class="fa-solid fa-leaf"></i>
+
+        <h3>إزالة أوراق/أغصان</h3>
+
+      </a>
+
+      <a class="card" href="#post">
+
+        <i class="fa-solid fa-truck-pickup"></i>
+
+        <h3>بيك-أب بسيارة / نقل</h3>
+
+      </a>
+
+      <a class="card" href="#post">
+
+        <i class="fa-solid fa-couch"></i>
+
+        <h3>نقل أثاث/رفع أثقال</h3>
+
+      </a>
+
+      <a class="card" href="#post">
+
+        <i class="fa-solid fa-broom"></i>
+
+        <h3>تنظيف</h3>
+
+      </a>
+
+      <a class="card" href="#post">
+
+        <i class="fa-solid fa-seedling"></i>
+
+        <h3>قص حشيش</h3>
+
+      </a>
+
+      <a class="card" href="#post">
+
+        <i class="fa-solid fa-pen-to-square"></i>
+
+        <h3>خدمة مخصصة (Other)</h3>
+
+      </a>
+
+    </div>
+
+    <p class="note">لا تتقيد بهذه الخيارات فقط — اختر “خدمة مخصصة” واكتب ما تحتاجه بحرّية.</p>
+
+  </section>
+
+
+
+  <!-- كيف تعمل المنصة -->
+
+  <section id="how" class="how">
+
+    <h2>كيف تعمل المنصة</h2>
+
+    <ol>
+
+      <li><strong>انشر طلبك</strong> مع العنوان والوقت والتفاصيل.</li>
+
+      <li><strong>استلم عروضًا</strong> ورسائل من مساعدين قريبين.</li>
+
+      <li><strong>تواصل واتفقوا</strong> على التفاصيل والسعر بينكم مباشرة.</li>
+
+      <li><strong>قابلوا بأمان</strong> وأنجزوا المهمة.</li>
+
+      <li><strong>قيّم التجربة</strong> وشجّع جارك بكلمة طيبة أو Tip.</li>
+
+    </ol>
+
+  </section>
+
+
+
+  <!-- انشر طلب مساعدة -->
+
+  <section id="post" class="post">
+
+    <h2>انشر طلب مساعدة</h2>
+
+    <form class="post-form" action="#" method="post">
+
+      <div class="row">
+
+        <label>عنوان الطلب</label>
+
+        <input type="text" name="title" placeholder="مثال: نقل كنبة من الطابق الأرضي للطابق الثاني" required>
+
+      </div>
+
+
+
+      <div class="row two">
+
+        <div>
+
+          <label>نوع الخدمة</label>
+
+          <select name="category" required>
+
+            <option value="" disabled selected>اختر</option>
+
+            <option>إزالة أوراق/أغصان</option>
+
+            <option>بيك-أب بسيارة / نقل</option>
+
+            <option>نقل أثاث/رفع أثقال</option>
+
+            <option>تنظيف</option>
+
+            <option>قص حشيش</option>
+
+            <option>خدمة مخصصة (Other)</option>
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label>الموقع</label>
+
+          <input type="text" name="location" placeholder="المدينة / الحي / العنوان التقريبي" required>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="row two">
+
+        <div>
+
+          <label>التاريخ</label>
+
+          <input type="date" name="date" required>
+
+        </div>
+
+        <div>
+
+          <label>الوقت</label>
+
+          <input type="time" name="time" required>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="row">
+
+        <label>التفاصيل</label>
+
+        <textarea name="details" rows="4" placeholder="صف المهمة بدقة (الأبعاد، الوزن، الطوابق، ملاحظات الأمان)…" required></textarea>
+
+      </div>
+
+
+
+      <div class="row">
+
+        <label>صور/ملفات (اختياري)</label>
+
+        <input type="file" name="photos" multiple>
+
+      </div>
+
+
+
+      <div class="row policy">
+
+        <p><i class="fa-regular fa-circle-check"></i> <strong>مهم:</strong> المنصة لا تتدخل في <strong>الدفع أو التسعير</strong> — يتم الاتفاق مباشرة بينك وبين المساعد.</p>
+
+        <label class="tip">
+
+          <input type="checkbox" name="tip_optin">
+
+          أرغب بإضافة <strong>Tip/شكر</strong> للمساعد (تحديده لاحقًا بيننا).
+
+        </label>
+
+        <label class="open-price">
+
+          <input type="checkbox" name="open_price">
+
+          أسمح للمساعدين باقتراح سعر مناسب.
+
+        </label>
+
+      </div>
+
+
+
+      <button class="btn primary" type="submit">
+
+        <i class="fa-solid fa-paper-plane"></i> نشر الطلب
+
+      </button>
+
+    </form>
+
+  </section>
+
+
+
+  <!-- اعثر على مساعدين -->
+
+  <section id="helpers" class="helpers">
+
+    <h2>اعثر على مساعدين قريبين</h2>
+
+    <div class="list">
+
+      <article class="helper">
+
+        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+
+        <div class="info">
+
+          <h3>Ali — Pickup Truck</h3>
+
+          <p>نقل أثاث • إزالة أغصان • بيك-أب • 2 ميل</p>
+
+          <p class="rating"><i class="fa-solid fa-star"></i> 4.9 (32)</p>
+
+        </div>
+
+        <a href="#" class="btn ghost">رسالة</a>
+
+      </article>
+
+      <article class="helper">
+
+        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+
+        <div class="info">
+
+          <h3>Sarah — Cleaning</h3>
+
+          <p>تنظيف منازل • تنظيم • 1.5 ميل</p>
+
+          <p class="rating"><i class="fa-solid fa-star"></i> 5.0 (18)</p>
+
+        </div>
+
+        <a href="#" class="btn ghost">رسالة</a>
+
+      </article>
+
+    </div>
+
+    <p class="safety"><i class="fa-solid fa-shield-heart"></i> للسلامة: قابلوا في مكان آمن، أخبروا شخصًا تثقون به، وتأكدوا من الأجر قبل البدء.</p>
+
+  </section>
+
+
+
+  <!-- تذييل -->
+
+  <footer class="footer">
+
+    <p>© 2025 Neighbours Help</p>
+
+    <p>منصة مجتمعية — دفع الأسعار يتم بين الأطراف مباشرة.</p>
+
+  </footer>
+
+</body>
+
+</html>
