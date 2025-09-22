@@ -8,153 +8,61 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>HelpAroundYou – Get & Give Help Nearby</title>
+  <title>HelpAroundYou – Neighbors helping neighbors</title>
 
-  <meta name="description" content="Request help from neighbors or volunteer to help in your community." />
+  <meta name="description" content="Request help from neighbors or volunteer to help in your city." />
 
   <style>
 
     :root{
 
-      --navy:#0f172a;        /* أزرق غامق */
+      --navy:#0f172a; --sky:#e9f6ff; --mint:#22c55e; --mint-ink:#136c35;
 
-      --sky:#e9f6ff;         /* سماوي فاتح للخلفية */
-
-      --mint:#22c55e;        /* أخضر رئيسي */
-
-      --mint-ink:#136c35;    /* أخضر غامق للنصوص على الأخضر */
-
-      --ink:#111827;         /* أسود ناعم */
-
-      --muted:#6b7280;       /* رمادي للنصوص الثانوية */
-
-      --card:#ffffff;        /* الأبيض للبطاقات */
-
-      --ring:rgba(34,197,94,.25);
+      --ink:#111827; --muted:#6b7280; --card:#fff; --ring:rgba(34,197,94,.25);
 
     }
 
-    *{box-sizing:border-box}
+    *{box-sizing:border-box} html,body{margin:0} body{background:var(--sky);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
 
-    html,body{margin:0;padding:0}
-
-    body{background:var(--sky);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
-
-
-
-    /* ===== NAV / HEADER ===== */
-
-    header{
-
-      position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);
-
-      border-bottom:1px solid #e5eef7; backdrop-filter:saturate(140%) blur(6px);
-
-    }
+    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#fff 0%, #f7fbff 100%);border-bottom:1px solid #e5eef7}
 
     .nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:16px;padding:14px 16px}
 
-    .brand{
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--navy);letter-spacing:.2px;font-size:22px}
 
-      display:flex;align-items:center;gap:10px;font-weight:900;color:var(--navy);letter-spacing:.2px;
-
-      font-size:22px;transition:transform .2s ease;
-
-    }
-
-    .brand::before{
-
-      content:"HA";display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;
-
-      background:var(--mint);color:#fff;font-weight:900;
-
-      box-shadow:0 6px 18px var(--ring);
-
-    }
-
-    .brand:hover{transform:translateY(-1px)}
+    .brand::before{content:"HA";display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--mint);color:#fff;font-weight:900;box-shadow:0 6px 18px var(--ring)}
 
     .spacer{flex:1}
 
+    .btn{appearance:none;border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;color:#fff;background:var(--mint);box-shadow:0 10px 24px var(--ring)}
 
-
-    /* ===== BUTTONS ===== */
-
-    .btn{appearance:none;border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;
-
-         text-decoration:none;display:inline-block;color:#fff;background:var(--mint);
-
-         box-shadow:0 10px 24px var(--ring);transition:transform .15s ease, filter .2s ease}
-
-    .btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+    .btn:hover{filter:brightness(.97)}
 
     .btn-outline{background:#fff;color:var(--navy);border:2px solid #d7eaf7;box-shadow:none}
 
-    .btn-outline:hover{background:#f7fbff}
+    .wrap{max-width:1100px;margin:auto;padding:0 16px}
 
+    .hero{max-width:1100px;margin:28px auto 8px;padding:0 16px;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
 
-
-    /* ===== HERO ===== */
-
-    .hero{
-
-      max-width:1100px;margin:28px auto 8px;padding:0 16px;display:grid;grid-template-columns:1.15fr .85fr;
-
-      gap:28px;align-items:center;
-
-    }
-
-    .title{font-size:44px;line-height:1.08;margin:0 0 12px;color:var(--navy);letter-spacing:.3px}
+    .title{font-size:44px;line-height:1.08;margin:0 0 12px;color:var(--navy)}
 
     .lead{font-size:18px;color:var(--muted);margin:0 0 18px}
 
-    .panel{
-
-      background:var(--card);border-radius:16px;padding:18px 18px 2px;box-shadow:0 16px 40px rgba(2,6,23,.06);
-
-      animation:fadeUp .5s ease both;
-
-    }
-
-    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-
-
-    /* ===== HOW IT WORKS ===== */
+    .panel{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 16px 40px rgba(2,6,23,.06)}
 
     section{padding:26px 0}
-
-    .wrap{max-width:1100px;margin:auto;padding:0 16px}
 
     .h2{font-size:26px;margin:8px 0 14px;color:var(--navy)}
 
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
-    .tile{
-
-      background:var(--card);border-radius:16px;padding:18px;box-shadow:0 12px 28px rgba(2,6,23,.05);
-
-      transition:transform .18s ease, box-shadow .18s ease; position:relative; overflow:hidden;
-
-    }
-
-    .tile:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(2,6,23,.07)}
+    .tile{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 12px 28px rgba(2,6,23,.05)}
 
     .badge{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#dff7e8;color:var(--mint-ink);font-weight:900;margin-bottom:8px}
 
-    .muted{color:var(--muted)}
+    .muted{color:var(--muted)} .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
 
-    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-
-
-
-    /* ===== RECENT/IFRAME ===== */
-
-    iframe.sheet{width:100%;height:520px;border:0;border-radius:14px;background:#fff;box-shadow:0 14px 34px rgba(2,6,23,.06)}
-
-
-
-    /* ===== FOOTER ===== */
+    .donate{background:#fff9;backdrop-filter:saturate(140%) blur(6px);border:1px solid #d7eaf7;padding:14px;border-radius:12px}
 
     footer{padding:28px 12px;text-align:center;color:var(--muted)}
 
@@ -165,8 +73,6 @@
 </head>
 
 <body>
-
-  <!-- NAV -->
 
   <header>
 
@@ -184,21 +90,19 @@
 
 
 
-  <!-- HERO -->
-
   <section class="hero">
 
     <div>
 
       <h1 class="title">Need a hand? Ask your neighbors.</h1>
 
-      <p class="lead">Post a request in minutes and we’ll route it to nearby helpers. Moving, cleaning, lawn care, pickups — you name it.</p>
+      <p class="lead">Tell us what you need — moving help, lawn care, small fixes, pickups — and local neighbors will reach out to help.</p>
 
       <div class="actions">
 
         <a class="btn" href="post.html">Post a Request</a>
 
-        <a class="btn btn-outline" href="#requests">See recent requests</a>
+        <a class="btn btn-outline" href="#how">How it works</a>
 
       </div>
 
@@ -216,11 +120,15 @@
 
         <li>Custom tasks &amp; small fixes</li>
 
-        <li>Upload photos &amp; choose a date</li>
+        <li>Attach photos &amp; choose a date</li>
 
       </ul>
 
-      <p class="muted" style="margin:0 0 12px;">All requests go to our Google Sheet automatically.</p>
+      <div class="donate">
+
+        <strong>Free platform.</strong> We don’t take fees or a cut. If you’d like to support operations, you can make a small <a href="#donate">donation</a>.
+
+      </div>
 
     </div>
 
@@ -228,9 +136,7 @@
 
 
 
-  <!-- HOW IT WORKS -->
-
-  <section>
+  <section id="how">
 
     <div class="wrap">
 
@@ -242,9 +148,9 @@
 
           <div class="badge">1</div>
 
-          <h4>Post</h4>
+          <h4>Post your request</h4>
 
-          <p class="muted">Fill the Google Form (email + details + optional photo). Less than a minute.</p>
+          <p class="muted">Write a short title, add details and an optional photo, and pick the date you prefer.</p>
 
         </div>
 
@@ -252,9 +158,9 @@
 
           <div class="badge">2</div>
 
-          <h4>Route</h4>
+          <h4>Neighbors respond</h4>
 
-          <p class="muted">Your request lands in Google Sheets instantly. We notify helpers by email.</p>
+          <p class="muted">Nearby helpers see your request and message you if they can help. You choose who to work with.</p>
 
         </div>
 
@@ -262,9 +168,9 @@
 
           <div class="badge">3</div>
 
-          <h4>Help</h4>
+          <h4>Agree & get it done</h4>
 
-          <p class="muted">Helpers reply. You coordinate time & details, then mark it completed.</p>
+          <p class="muted">Coordinate time and price directly with the helper. When done, mark it complete. No platform fees.</p>
 
         </div>
 
@@ -278,61 +184,31 @@
 
 
 
-  <!-- RECENT REQUESTS -->
-
   <section id="requests">
 
     <div class="wrap">
 
       <h2 class="h2">Recent Requests</h2>
 
-      <p class="muted" style="margin:6px 0 14px">These entries are powered by Google Sheets.</p>
+      <p class="muted" style="margin:6px 0 14px">A simple log of recent requests (for transparency).</p>
 
 
 
-      <!-- 1) زر يفتح الشيت (استخدم رابط الـ Share الخاص بشيت الردود) -->
+      <!-- زر يفتح سجل الطلبات — بدّل الرابط برابط الشير لملف الردود -->
 
       <div class="actions">
-
-        <!-- TODO: استبدل PASTE-YOUR-SHEET-ID-HERE برقم الشيت الحقيقي -->
 
         <a class="btn btn-outline" target="_blank"
 
            href="https://docs.google.com/spreadsheets/d/PASTE-YOUR-SHEET-ID-HERE/edit?usp=sharing">
 
-          Open Google Sheet
+          Open Requests Log
 
         </a>
 
       </div>
 
-
-
-      <!-- 2) (اختياري) تضمين الشيت داخل الصفحة -->
-
-      <!--
-
-        لفعل ذلك:
-
-        - افتح الشيت → File → Share → Publish to the web → Entire Document → Web page → Publish
-
-        - الصق رابط النشر في src أدناه بدل placeholder
-
-        ⚠ هذا يجعل الجدول قابلاً للعرض للجميع.
-
-      -->
-
-      <!--
-
-      <iframe class="sheet"
-
-        src="https://docs.google.com/spreadsheets/d/e/PASTE-PUBLISH-LINK-ID/pubhtml?gid=0&single=true"
-
-        title="HelpAroundYou Requests (Google Sheets)">
-
-      </iframe>
-
-      -->
+      <!-- يمكنك حذف الزر بالأعلى إن ما تبغى تظهر السجل للعامة -->
 
     </div>
 
@@ -340,7 +216,25 @@
 
 
 
-  <footer>© <span id="y"></span> HelpAroundYou · Built with Google Forms + Sheets</footer>
+  <section id="donate">
+
+    <div class="wrap">
+
+      <h2 class="h2">Support HelpAroundYou</h2>
+
+      <p class="muted">Love the idea? We’re community-run and free. Any small donation helps us cover hosting and tooling.</p>
+
+      <!-- استبدل برابط التبرع الحقيقي (PayPal/Stripe/Ko-fi) -->
+
+      <a class="btn" target="_blank" href="https://your-donation-link.example">Make a Donation</a>
+
+    </div>
+
+  </section>
+
+
+
+  <footer>© <span id="y"></span> HelpAroundYou — Neighbors helping neighbors</footer>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 
