@@ -16,55 +16,149 @@
 
     :root{
 
-      --brand:#2c3e50; --accent:#27ae60; --bg:#f5f7fb; --ink:#222;
+      --navy:#0f172a;        /* أزرق غامق */
+
+      --sky:#e9f6ff;         /* سماوي فاتح للخلفية */
+
+      --mint:#22c55e;        /* أخضر رئيسي */
+
+      --mint-ink:#136c35;    /* أخضر غامق للنصوص على الأخضر */
+
+      --ink:#111827;         /* أسود ناعم */
+
+      --muted:#6b7280;       /* رمادي للنصوص الثانوية */
+
+      --card:#ffffff;        /* الأبيض للبطاقات */
+
+      --ring:rgba(34,197,94,.25);
 
     }
 
     *{box-sizing:border-box}
 
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    html,body{margin:0;padding:0}
 
-    a{color:inherit}
+    body{background:var(--sky);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
 
-    header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e8ecf3;z-index:10}
 
-    .nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:14px;padding:12px 16px}
 
-    .brand{font-weight:800;color:var(--brand)}
+    /* ===== NAV / HEADER ===== */
+
+    header{
+
+      position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);
+
+      border-bottom:1px solid #e5eef7; backdrop-filter:saturate(140%) blur(6px);
+
+    }
+
+    .nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:16px;padding:14px 16px}
+
+    .brand{
+
+      display:flex;align-items:center;gap:10px;font-weight:900;color:var(--navy);letter-spacing:.2px;
+
+      font-size:22px;transition:transform .2s ease;
+
+    }
+
+    .brand::before{
+
+      content:"HA";display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;
+
+      background:var(--mint);color:#fff;font-weight:900;
+
+      box-shadow:0 6px 18px var(--ring);
+
+    }
+
+    .brand:hover{transform:translateY(-1px)}
 
     .spacer{flex:1}
 
-    .btn{appearance:none;border:0;border-radius:10px;padding:12px 16px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;background:var(--accent);color:#fff}
 
-    .btn:hover{filter:brightness(.95)}
 
-    .btn-outline{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+    /* ===== BUTTONS ===== */
+
+    .btn{appearance:none;border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;
+
+         text-decoration:none;display:inline-block;color:#fff;background:var(--mint);
+
+         box-shadow:0 10px 24px var(--ring);transition:transform .15s ease, filter .2s ease}
+
+    .btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+
+    .btn-outline{background:#fff;color:var(--navy);border:2px solid #d7eaf7;box-shadow:none}
+
+    .btn-outline:hover{background:#f7fbff}
+
+
+
+    /* ===== HERO ===== */
+
+    .hero{
+
+      max-width:1100px;margin:28px auto 8px;padding:0 16px;display:grid;grid-template-columns:1.15fr .85fr;
+
+      gap:28px;align-items:center;
+
+    }
+
+    .title{font-size:44px;line-height:1.08;margin:0 0 12px;color:var(--navy);letter-spacing:.3px}
+
+    .lead{font-size:18px;color:var(--muted);margin:0 0 18px}
+
+    .panel{
+
+      background:var(--card);border-radius:16px;padding:18px 18px 2px;box-shadow:0 16px 40px rgba(2,6,23,.06);
+
+      animation:fadeUp .5s ease both;
+
+    }
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+
+
+    /* ===== HOW IT WORKS ===== */
+
+    section{padding:26px 0}
 
     .wrap{max-width:1100px;margin:auto;padding:0 16px}
 
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:36px 0}
+    .h2{font-size:26px;margin:8px 0 14px;color:var(--navy)}
 
-    .hero .card{background:#fff;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.07);padding:22px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
-    h1{font-size:40px;line-height:1.1;margin:0 0 12px;color:var(--brand)}
+    .tile{
 
-    p.lead{font-size:18px;opacity:.9;margin:0 0 18px}
+      background:var(--card);border-radius:16px;padding:18px;box-shadow:0 12px 28px rgba(2,6,23,.05);
 
-    .actions{display:flex;gap:12px;flex-wrap:wrap}
+      transition:transform .18s ease, box-shadow .18s ease; position:relative; overflow:hidden;
 
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:30px 0}
+    }
 
-    .tile{background:#fff;border-radius:12px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+    .tile:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(2,6,23,.07)}
 
-    .h2{font-size:26px;margin:6px 0 12px;color:var(--brand)}
+    .badge{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#dff7e8;color:var(--mint-ink);font-weight:900;margin-bottom:8px}
 
-    section{padding:28px 0}
+    .muted{color:var(--muted)}
 
-    iframe.sheet{width:100%;height:520px;border:0;border-radius:10px;background:#fff}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
 
-    footer{padding:28px 12px;text-align:center;color:#666}
 
-    @media (max-width:900px){ .hero{grid-template-columns:1fr} h1{font-size:32px} }
+
+    /* ===== RECENT/IFRAME ===== */
+
+    iframe.sheet{width:100%;height:520px;border:0;border-radius:14px;background:#fff;box-shadow:0 14px 34px rgba(2,6,23,.06)}
+
+
+
+    /* ===== FOOTER ===== */
+
+    footer{padding:28px 12px;text-align:center;color:var(--muted)}
+
+    @media (max-width:950px){ .hero{grid-template-columns:1fr}.title{font-size:36px} }
 
   </style>
 
@@ -72,17 +166,17 @@
 
 <body>
 
-  <!-- ===== NAV ===== -->
+  <!-- NAV -->
 
   <header>
 
-    <nav class="nav wrap">
+    <nav class="nav">
 
       <div class="brand">HelpAroundYou</div>
 
       <div class="spacer"></div>
 
-      <a href="post.html" class="btn">Post a Request</a>
+      <a class="btn" href="post.html">Post a Request</a>
 
     </nav>
 
@@ -90,55 +184,55 @@
 
 
 
-  <!-- ===== HERO ===== -->
+  <!-- HERO -->
 
-  <main class="wrap">
+  <section class="hero">
 
-    <section class="hero">
+    <div>
 
-      <div>
+      <h1 class="title">Need a hand? Ask your neighbors.</h1>
 
-        <h1>Need a hand? Ask your neighbors.</h1>
+      <p class="lead">Post a request in minutes and we’ll route it to nearby helpers. Moving, cleaning, lawn care, pickups — you name it.</p>
 
-        <p class="lead">Post a request in minutes and we’ll route it to nearby helpers. Moving, cleaning, lawn care, pickups — you name it.</p>
+      <div class="actions">
 
-        <div class="actions">
+        <a class="btn" href="post.html">Post a Request</a>
 
-          <a href="post.html" class="btn">Post a Request</a>
-
-          <a href="#requests" class="btn btn-outline">See recent requests</a>
-
-        </div>
+        <a class="btn btn-outline" href="#requests">See recent requests</a>
 
       </div>
 
-      <div class="card">
+    </div>
 
-        <h3 style="margin:0 0 10px;color:#444">What you can request</h3>
+    <div class="panel">
 
-        <ul style="margin:0;padding-left:18px;line-height:1.7">
+      <h3 style="margin:6px 0 10px;color:#0b1220">What you can request</h3>
 
-          <li>Moving &amp; pickup with truck</li>
+      <ul style="margin:0 0 10px;padding-left:18px;line-height:1.7">
 
-          <li>Cleaning &amp; lawn care</li>
+        <li>Moving &amp; pickup with truck</li>
 
-          <li>Custom tasks &amp; small fixes</li>
+        <li>Cleaning &amp; lawn care</li>
 
-          <li>Upload photos &amp; choose a date</li>
+        <li>Custom tasks &amp; small fixes</li>
 
-        </ul>
+        <li>Upload photos &amp; choose a date</li>
 
-        <p style="margin-top:12px;opacity:.8">All requests go to our Google Sheet automatically.</p>
+      </ul>
 
-      </div>
+      <p class="muted" style="margin:0 0 12px;">All requests go to our Google Sheet automatically.</p>
 
-    </section>
+    </div>
+
+  </section>
 
 
 
-    <!-- ===== HOW IT WORKS ===== -->
+  <!-- HOW IT WORKS -->
 
-    <section>
+  <section>
+
+    <div class="wrap">
 
       <h2 class="h2">How it works</h2>
 
@@ -146,55 +240,61 @@
 
         <div class="tile">
 
-          <h3>1) Post</h3>
+          <div class="badge">1</div>
 
-          <p>Fill the Google Form (email + details + optional photo). It takes less than a minute.</p>
+          <h4>Post</h4>
 
-        </div>
-
-        <div class="tile">
-
-          <h3>2) Route</h3>
-
-          <p>Your request lands in Google Sheets instantly. We notify helpers via email.</p>
+          <p class="muted">Fill the Google Form (email + details + optional photo). Less than a minute.</p>
 
         </div>
 
         <div class="tile">
 
-          <h3>3) Help</h3>
+          <div class="badge">2</div>
 
-          <p>Helpers reply. You coordinate time &amp; details, then mark it completed.</p>
+          <h4>Route</h4>
+
+          <p class="muted">Your request lands in Google Sheets instantly. We notify helpers by email.</p>
+
+        </div>
+
+        <div class="tile">
+
+          <div class="badge">3</div>
+
+          <h4>Help</h4>
+
+          <p class="muted">Helpers reply. You coordinate time & details, then mark it completed.</p>
 
         </div>
 
       </div>
 
-      <div class="actions">
+      <div class="actions"><a class="btn" href="post.html">Post a Request</a></div>
 
-        <a href="post.html" class="btn">Post a Request</a>
+    </div>
 
-      </div>
-
-    </section>
+  </section>
 
 
 
-    <!-- ===== RECENT REQUESTS (Google Sheets) ===== -->
+  <!-- RECENT REQUESTS -->
 
-    <section id="requests">
+  <section id="requests">
+
+    <div class="wrap">
 
       <h2 class="h2">Recent Requests</h2>
 
-      <p style="opacity:.9;margin:6px 0 14px">These entries are powered by Google Sheets.</p>
+      <p class="muted" style="margin:6px 0 14px">These entries are powered by Google Sheets.</p>
 
 
 
-      <!-- 1) زر يفتح Google Sheet (ضع رابط الـ Share الحقيقي) -->
+      <!-- 1) زر يفتح الشيت (استخدم رابط الـ Share الخاص بشيت الردود) -->
 
       <div class="actions">
 
-        <!-- TODO: استبدل برابط الشيت: Share → Anyone with the link → Viewer -->
+        <!-- TODO: استبدل PASTE-YOUR-SHEET-ID-HERE برقم الشيت الحقيقي -->
 
         <a class="btn btn-outline" target="_blank"
 
@@ -212,13 +312,13 @@
 
       <!--
 
-        لتفعيل التضمين:
+        لفعل ذلك:
 
-        - File → Share → Publish to the web → Entire Document → Web page → Publish
+        - افتح الشيت → File → Share → Publish to the web → Entire Document → Web page → Publish
 
-        - انسخ رابط النشر والصقه في src أدناه بدل placeholder
+        - الصق رابط النشر في src أدناه بدل placeholder
 
-        ⚠ هذا يجعل الجدول قابلاً للعرض علنًا.
+        ⚠ هذا يجعل الجدول قابلاً للعرض للجميع.
 
       -->
 
@@ -234,17 +334,13 @@
 
       -->
 
-    </section>
+    </div>
 
-  </main>
+  </section>
 
 
 
-  <footer>
-
-    © <span id="y"></span> HelpAroundYou · Built with Google Forms + Sheets
-
-  </footer>
+  <footer>© <span id="y"></span> HelpAroundYou · Built with Google Forms + Sheets</footer>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 
