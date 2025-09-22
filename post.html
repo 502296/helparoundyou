@@ -4,13 +4,99 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="utf-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>HelpAroundYou — Post a Request</title>
+<title>HelpAroundYou — Post a Request</title>
 
-  <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+  :root{
+
+    --bg:#f6fbff;        /* سماوي فاتح */
+
+    --card:#ffffff;
+
+    --ink:#0f172a;       /* رمادي غامق مائل للأزرق */
+
+    --muted:#5b6b7a;
+
+    --brand:#16a34a;     /* أخضر */
+
+    --brand-ink:#0b5b2a;
+
+    --ring:rgba(22,163,74,.25);
+
+  }
+
+  *{box-sizing:border-box}
+
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif}
+
+  header{position:sticky;top:0;background:rgba(246,251,255,.9);backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid #e6edf3}
+
+  .wrap{max-width:960px;margin:0 auto;padding:16px 20px}
+
+  .title{font-weight:800;letter-spacing:.2px}
+
+  .hero{padding:22px 0 8px}
+
+  .hero h1{font-size:28px;margin:0 0 6px}
+
+  .hero p{margin:0;color:var(--muted)}
+
+  .card{
+
+    background:var(--card);border:1px solid #e6edf3;border-radius:14px;
+
+    padding:18px;box-shadow:0 8px 28px rgba(2,14,32,.04);
+
+  }
+
+  .btn{
+
+    display:inline-flex;gap:10px;align-items:center;justify-content:center;
+
+    background:var(--brand);color:#fff;font-weight:700;border:none;
+
+    padding:10px 14px;border-radius:10px;text-decoration:none;
+
+    box-shadow:0 6px 20px rgba(22,163,74,.25);transition:transform .08s ease, box-shadow .08s ease;
+
+  }
+
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(22,163,74,.28)}
+
+  .btn:active{transform:translateY(0)}
+
+  /* iframe container */
+
+  .frame{
+
+    margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid #e6edf3;
+
+    box-shadow:0 8px 28px rgba(2,14,32,.05);
+
+  }
+
+  .frame iframe{width:100%;height:75vh;min-height:600px;border:0;background:#fff}
+
+  /* small screens tweaks */
+
+  @media (max-width:520px){
+
+    .hero h1{font-size:24px}
+
+    .frame iframe{height:72vh;min-height:520px}
+
+  }
+
+</style>
 
 </head>
 
@@ -18,63 +104,73 @@
 
   <header>
 
-    <h1>HelpAroundYou — Post a Request</h1>
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+
+      <div class="title">HelpAroundYou</div>
+
+      <nav><a class="btn" href="./index.html">Home</a></nav>
+
+    </div>
 
   </header>
 
 
 
-  <main>
+  <main class="wrap">
 
-    <section class="request-form">
+    <section class="hero">
 
-      <h2>Submit Your Request</h2>
+      <h1>Post a Request</h1>
 
       <p>Tell us what you need and when. A neighbor will reach out to help.</p>
 
-
-
-      <!-- زر يفتح الفورم في تاب جديد -->
-
-      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?usp=header" target="_blank">
-
-        Open Form in New Tab
-
-      </a>
+    </section>
 
 
 
-      <!-- تضمين الفورم داخل الموقع -->
+    <section class="card">
 
-      <iframe 
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
 
-        src="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?embedded=true" 
+        <h2 style="margin:0;font-size:18px">Submit Your Request</h2>
 
-        width="100%" 
+        <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?usp=header">
 
-        height="900" 
+          Open Form in New Tab
 
-        frameborder="0" 
+        </a>
 
-        marginheight="0" 
+      </div>
 
-        marginwidth="0">
 
-        Loading…
 
-      </iframe>
+      <!-- Responsive embed -->
+
+      <div class="frame" role="region" aria-label="HelpAroundYou request form">
+
+        <iframe
+
+          src="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?embedded=true"
+
+          allow="clipboard-write; encrypted-media"
+
+          loading="lazy">
+
+        </iframe>
+
+      </div>
+
+
+
+      <p style="margin:14px 4px 0;color:var(--muted);font-size:14px">
+
+        Having trouble? Use the green button to open the form in a new tab.
+
+      </p>
 
     </section>
 
   </main>
-
-
-
-  <footer>
-
-    <p>© 2025 HelpAroundYou — Neighbors helping neighbors</p>
-
-  </footer>
 
 </body>
 
