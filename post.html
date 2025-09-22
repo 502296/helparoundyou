@@ -4,349 +4,183 @@
 
 <head>
 
-<meta charset="utf-8" />
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Post a Request — HelpAroundYou</title>
 
-<title>HelpAroundYou — Post a Request</title>
-
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-
-<style>
-
-  :root{
-
-    --bg:#f5fbff; --card:#ffffff; --text:#0b1723; --muted:#5b6b7a;
-
-    --brand:#24a259; --brandDark:#1E7B34; --ring:rgba(36,162,89,.25);
-
-  }
-
-  *{box-sizing:border-box}
-
-  body{margin:0;background:var(--bg);color:var(--text);
-
-       font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-
-  a{color:inherit;text-decoration:none}
-
-  header,main{max-width:940px;margin:auto;padding:20px}
-
-  /* Brand */
-
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px}
-
-  .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.45rem}
-
-  .brand .bud{width:42px;height:42px;border-radius:50%;
-
-    background:linear-gradient(145deg,#28a745,#b4f1c1);
-
-    position:relative;box-shadow:0 8px 18px rgba(40,167,69,.26)}
-
-  .brand .bud:before,.brand .bud:after{content:"";position:absolute;background:#fff;border-radius:50%}
-
-  .brand .bud:before{width:9px;height:9px;left:12px;top:10px}
-
-  .brand .bud:after{width:16px;height:16px;right:9px;bottom:9px;opacity:.92}
-
-  .brand .name .around{color:var(--brandDark)}
-
-  /* Card & form */
-
-  .card{background:var(--card);border-radius:14px;padding:22px;
-
-        box-shadow:0 10px 30px rgba(16,30,54,.06);border:1px solid #e9eef3}
-
-  h1{margin:8px 0 6px}
-
-  .lead{color:var(--muted);margin:0 0 14px}
-
-  form{display:grid;gap:14px;margin-top:6px}
-
-  label{font-weight:700}
-
-  .row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
-
-  @media (max-width:720px){.row{grid-template-columns:1fr}}
-
-  input,select,textarea{
-
-    width:100%;padding:12px 14px;border-radius:10px;border:1px solid #d9e4ee;background:#fff;
-
-    outline:none;transition:.2s; font:inherit;
-
-  }
-
-  textarea{min-height:120px;resize:vertical}
-
-  input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
-
-  .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px}
-
-  .btn{display:inline-flex;align-items:center;gap:.5rem;border:none;border-radius:999px;padding:11px 16px;font-weight:800;cursor:pointer}
-
-  .btn-primary{background:var(--brand);color:#fff}
-
-  .btn-ghost{background:#e9f6ee;color:var(--brandDark)}
-
-  .hint{color:var(--muted);font-size:.9rem}
-
-  .success,.error{padding:12px 14px;border-radius:10px;display:none;margin-top:8px}
-
-  .success{background:#e9f6ee;color:var(--brandDark);border:1px solid #ccebd8}
-
-  .error{background:#ffefef;color:#8a1f1f;border:1px solid #ffd4d4}
-
-</style>
+<link rel="stylesheet" href="app.css">
 
 </head>
 
 <body>
 
-<header class="topbar">
+<header>
 
-  <a class="brand" href="/">
+  <div class="container" style="display:flex;align-items:center;gap:12px">
 
-    <span class="bud" aria-hidden="true"></span>
+    <a href="index.html" class="brand" style="text-decoration:none;color:inherit">
 
-    <span class="name">Help<span class="around">Around</span>You</span>
+      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
 
-  </a>
+        <defs><linearGradient id="g2" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#bde3ff"/><stop offset="1" stop-color="#7cc4ff"/></linearGradient></defs>
 
-  <nav style="display:flex;gap:10px">
+        <circle cx="32" cy="32" r="30" fill="url(#g2)"/>
 
-    <a class="btn btn-ghost" href="/">Home</a>
+        <circle cx="26" cy="38" r="7" fill="#ffffff"/>
 
-  </nav>
+        <path d="M34 28c6 0 10-6 12-12-6 2-12 6-12 12Z" fill="#16a34a"/><circle cx="42" cy="18" r="4.2" fill="#16a34a"/>
+
+      </svg>
+
+      Help<span class="around">Around</span>You
+
+    </a>
+
+    <nav style="margin-left:auto"><a class="btn ghost" href="requests.html">See requests</a></nav>
+
+  </div>
 
 </header>
 
 
 
-<main>
+<main class="container">
 
-  <h1>Post a Request</h1>
+  <h1 class="h1" style="font-size:30px">Post a Request</h1>
 
   <p class="lead">Tell us what you need and when. A neighbor will reach out to help.</p>
 
 
 
-  <section class="card">
+  <form id="reqForm" class="form-card" enctype="multipart/form-data">
 
-    <form id="hayForm" enctype="multipart/form-data" autocomplete="on">
+    <div class="field"><label>Email *</label><input name="email" type="email" required></div>
 
-      <div class="row">
+    <div class="field"><label>Request Title *</label><input name="title" required placeholder="e.g., Need help moving a couch"></div>
 
-        <div>
+    <div class="field"><label>Description *</label><textarea name="description" rows="4" required></textarea></div>
 
-          <label for="email">Email *</label>
 
-          <input id="email" name="email" type="email" placeholder="you@example.com" required />
 
-        </div>
+    <div class="field">
 
-        <div>
+      <label>Category *</label>
 
-          <label for="title">Request Title *</label>
+      <select name="category" required>
 
-          <input id="title" name="title" type="text" placeholder="Pickup a sofa, lawn care…" required />
+        <option value="">Choose…</option>
 
-        </div>
+        <option>Moving</option><option>Pickup with Truck</option>
 
-      </div>
+        <option>Cleaning</option><option>Lawn Care</option>
 
+        <option>Custom Task</option>
 
+      </select>
 
-      <div>
+    </div>
 
-        <label for="description">Description *</label>
 
-        <textarea id="description" name="description" placeholder="Add details that help the helper estimate time/tools." required></textarea>
 
-      </div>
+    <div style="display:grid;gap:12px;grid-template-columns:1fr 1fr">
 
+      <div class="field"><label>Location (zip or area) *</label><input name="location" required></div>
 
+      <div class="field"><label>Date needed</label><input name="dateNeeded" type="date"></div>
 
-      <div class="row">
+    </div>
 
-        <div>
 
-          <label for="category">Category *</label>
 
-          <select id="category" name="category" required>
+    <div class="field"><label>Contact Info (optional)</label><input name="contact" placeholder="Phone, WhatsApp, or best contact"></div>
 
-            <option value="" disabled selected>Select…</option>
 
-            <option>Moving</option>
 
-            <option>Pickup with Truck</option>
+    <div class="field"><label>Photo / File (optional)</label><input name="file" type="file" accept="image/*,application/pdf"></div>
 
-            <option>Cleaning</option>
 
-            <option>Lawn Care</option>
 
-            <option>Custom Task</option>
+    <div style="display:flex;gap:10px">
 
-            <option>Other</option>
+      <button class="btn primary" type="submit">Submit Request</button>
 
-          </select>
+      <a class="btn ghost" href="index.html">Cancel</a>
 
-        </div>
+    </div>
 
-        <div>
 
-          <label for="date">Date Needed *</label>
 
-          <input id="date" name="date" type="date" required />
+    <div id="ok" class="msg ok">Thanks! Your request was submitted.</div>
 
-        </div>
+    <div id="err" class="msg err">Sorry—something went wrong. Please try again.</div>
 
-      </div>
-
-
-
-      <div class="row">
-
-        <div>
-
-          <label for="location">Location (zip or area) *</label>
-
-          <input id="location" name="location" type="text" placeholder="40218 or J-Town" required />
-
-        </div>
-
-        <div>
-
-          <label for="contact">Contact Info (optional)</label>
-
-          <input id="contact" name="contact" type="text" placeholder="Phone or preferred contact" />
-
-        </div>
-
-      </div>
-
-
-
-      <div>
-
-        <label for="file">Photo / File (optional)</label>
-
-        <input id="file" name="file" type="file" accept="image/*,application/pdf" />
-
-        <div class="hint">Helps the helper understand the task (max ~10MB).</div>
-
-      </div>
-
-
-
-      <div class="actions">
-
-        <button class="btn btn-primary" type="submit">Submit Request</button>
-
-        <a class="btn btn-ghost" href="/">Cancel</a>
-
-        <span class="hint" id="statusHint"></span>
-
-      </div>
-
-
-
-      <div class="success" id="okMsg">Thanks! Your request was received. We’ll notify nearby helpers.</div>
-
-      <div class="error" id="errMsg">Sorry—something went wrong. Please try again.</div>
-
-    </form>
-
-  </section>
+  </form>
 
 </main>
 
 
 
+<footer><div class="container">No commissions. Free to use. Donate any time to support the community ❤️</div></footer>
+
+
+
 <script>
 
-  // رابط الويب آب الخاص بك:
-
-  const APP_URL = 'https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec';
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec";
 
 
 
-  const form = document.getElementById('hayForm');
+const form = document.getElementById('reqForm');
 
-  const okMsg = document.getElementById('okMsg');
+const ok   = document.getElementById('ok');
 
-  const errMsg = document.getElementById('errMsg');
-
-  const statusHint = document.getElementById('statusHint');
+const err  = document.getElementById('err');
 
 
 
-  form.addEventListener('submit', async (ev)=>{
+form.addEventListener('submit', async (e)=>{
 
-    ev.preventDefault();
+  e.preventDefault(); ok.style.display='none'; err.style.display='none';
 
-    okMsg.style.display = 'none';
+  const fd = new FormData(form);
 
-    errMsg.style.display = 'none';
+  // أرسل origin للـ CORS
 
-    statusHint.textContent = 'Submitting…';
+  fd.append('origin', location.origin);
 
+  try{
 
+    const res = await fetch(SCRIPT_URL, { method:'POST', body:fd });
 
-    const fd = new FormData(form);
+    const text = await res.text();
 
+    let data = {};
 
+    try{ data = JSON.parse(text); }catch(_){}
 
-    try {
+    if(res.ok && data.ok){
 
-      const res = await fetch(APP_URL, { method: 'POST', body: fd });
+      ok.style.display='block'; form.reset();
 
-      const data = await res.json();
+      window.scrollTo({top:0,behavior:'smooth'});
 
-      if (data.ok) {
+    }else{
 
-        okMsg.style.display = 'block';
+      err.style.display='block';
 
-        form.reset();
-
-        statusHint.textContent = '';
-
-        // مرّر التاريخ تلقائيًا لليوم الموالي كراحة للمستخدم
-
-        const d = new Date(); d.setDate(d.getDate()+1);
-
-        document.getElementById('date').valueAsDate = d;
-
-      } else {
-
-        throw new Error(data.error || 'Unknown error');
-
-      }
-
-    } catch (e) {
-
-      console.error(e);
-
-      errMsg.style.display = 'block';
-
-      statusHint.textContent = '';
+      console.log('Server response:', text);
 
     }
 
-  });
+  }catch(ex){
 
+    err.style.display='block';
 
+    console.error(ex);
 
-  // افتراضيًا اجعل التاريخ غدًا
+  }
 
-  (function(){
-
-    const d = new Date(); d.setDate(d.getDate()+1);
-
-    document.getElementById('date').valueAsDate = d;
-
-  })();
+});
 
 </script>
 
