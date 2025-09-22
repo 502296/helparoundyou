@@ -1,0 +1,133 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Recent Requests — HelpAroundYou</title>
+
+<link rel="stylesheet" href="app.css">
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="container" style="display:flex;align-items:center;gap:12px">
+
+    <a href="index.html" class="brand" style="text-decoration:none;color:inherit">
+
+      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+
+        <defs><linearGradient id="g3" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#bde3ff"/><stop offset="1" stop-color="#7cc4ff"/></linearGradient></defs>
+
+        <circle cx="32" cy="32" r="30" fill="url(#g3)"/>
+
+        <circle cx="26" cy="38" r="7" fill="#ffffff"/>
+
+        <path d="M34 28c6 0 10-6 12-12-6 2-12 6-12 12Z" fill="#16a34a"/><circle cx="42" cy="18" r="4.2" fill="#16a34a"/>
+
+      </svg>
+
+      Help<span class="around">Around</span>You
+
+    </a>
+
+    <nav style="margin-left:auto"><a class="btn primary" href="post.html">Post a Request</a></nav>
+
+  </div>
+
+</header>
+
+
+
+<main class="container">
+
+  <h1 class="h1" style="font-size:30px">Recent Requests</h1>
+
+  <div id="list" class="list"></div>
+
+</main>
+
+
+
+<script>
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec";
+
+const list = document.getElementById('list');
+
+
+
+(async ()=>{
+
+  try{
+
+    const res = await fetch(SCRIPT_URL + '?origin=' + encodeURIComponent(location.origin));
+
+    const data = await res.json();
+
+    if(!data.ok) throw new Error('API error');
+
+
+
+    if(data.items.length === 0){
+
+      list.innerHTML = '<div class="item">No requests yet. Be the first!</div>';
+
+      return;
+
+    }
+
+
+
+    list.innerHTML = data.items.reverse().map(it => `
+
+      <div class="item">
+
+        <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+
+          <h3>${escapeHtml(it.title || '(No title)')}</h3>
+
+          <span class="badge">${escapeHtml(it.category || '')}</span>
+
+        </div>
+
+        <div style="color:#475569;margin:6px 0">${escapeHtml(it.description || '')}</div>
+
+        <div style="font-size:14px;color:#475569">
+
+          <b>Area:</b> ${escapeHtml(it.location||'')} &nbsp;·&nbsp;
+
+          <b>Date:</b> ${escapeHtml(it.dateNeeded||'')}
+
+        </div>
+
+        ${it.fileUrl ? `<div style="margin-top:8px"><a href="${it.fileUrl}" target="_blank">View attachment</a></div>`:''}
+
+      </div>
+
+    `).join('');
+
+  }catch(err){
+
+    list.innerHTML = '<div class="item">Could not load requests.</div>';
+
+    console.error(err);
+
+  }
+
+})();
+
+
+
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+</script>
+
+</body>
+
+</html>
