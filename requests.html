@@ -8,35 +8,29 @@
 
 <title>Recent Requests — Help Around You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
-:root{--ink:#0e1b2b;--muted:#5d6b7a;--halo:#bfe8ff;--card:#fff;--radius:22px;--shadow:0 18px 40px rgba(14,27,43,.08)}
+:root{--bg:#faf7f2;--ink:#111827;--muted:#6b7280;--card:#fff;--shadow:0 14px 38px rgba(0,0,0,.08);--radius:16px}
 
-*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#f7fbff,#eaf4ff);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-.container{max-width:1040px;margin:0 auto;padding:28px}
+.container{max-width:1100px;margin:0 auto;padding:28px}
 
-header{display:flex;align-items:center;gap:16px;margin-bottom:4px}
+header{display:flex;align-items:center;gap:12px}
 
-.logo{width:78px;height:78px;border-radius:50%;
+.logo{width:56px;height:56px;border-radius:12px;background:conic-gradient(from 190deg at 70% 30%, #6c5ce7, #ff6b6b);
 
-  background:
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.7), var(--shadow)}
 
-    radial-gradient(circle at 34% 34%, #c9f2da 0 34px, #97e6b7 34px 72px),
+h1{margin:0;font-weight:800}
 
-    radial-gradient(circle at 70% 68%, #22c063 0 12px, #0000 13px);
-
-  box-shadow:inset 0 0 0 8px var(--halo), 0 10px 18px rgba(0,0,0,.04);}
-
-h1{font-family:Nunito,Inter,sans-serif;margin:0;font-size:28px} h1 .around{color:#117a3e}
-
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
 
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
 
-.card h3{margin:0 0 6px;font-family:Nunito,Inter,sans-serif}
+.card h3{margin:0 0 6px}
 
 small{color:var(--muted)}
 
@@ -54,19 +48,19 @@ small{color:var(--muted)}
 
   <header>
 
-    <div class="logo" aria-hidden="true"></div>
+    <div class="logo"></div>
 
-    <h1>Help <span class="around">Around</span> You</h1>
+    <h1>Help Around You</h1>
 
   </header>
 
 
 
-  <h2 style="margin:8px 0 10px;font-family:Nunito,Inter,sans-serif">Recent requests</h2>
+  <h2 style="margin:12px 0 8px">Recent requests</h2>
 
   <div id="grid" class="grid"></div>
 
-  <p id="empty" style="display:none;color:#6b7683">No requests yet.</p>
+  <p id="empty" style="display:none;color:#6b7280">No requests yet.</p>
 
 </div>
 
@@ -75,8 +69,6 @@ small{color:var(--muted)}
 <script>
 
 const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec";
-
-
 
 const grid  = document.getElementById('grid');
 
@@ -104,11 +96,11 @@ const empty = document.getElementById('empty');
 
       const d = it.timestamp ? new Date(it.timestamp) : null;
 
-      const div = document.createElement('div');
+      const el = document.createElement('div');
 
-      div.className='card';
+      el.className='card';
 
-      div.innerHTML = `
+      el.innerHTML = `
 
         <h3>${esc(it.title||'Untitled')}</h3>
 
@@ -122,7 +114,7 @@ const empty = document.getElementById('empty');
 
       `;
 
-      grid.appendChild(div);
+      grid.appendChild(el);
 
     }
 
