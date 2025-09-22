@@ -8,7 +8,31 @@
 
 <title>Recent Requests — HelpAroundYou</title>
 
-<link rel="stylesheet" href="app.css">
+<style>
+
+:root{--bg:#f6fbff;--card:#fff;--ink:#0f172a;--muted:#475569;--brand:#16a34a}
+
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;color:var(--ink);background:var(--bg)}
+
+.container{max-width:980px;margin:0 auto;padding:24px}
+
+header{background:var(--card);border-bottom:1px solid #e5e7eb}
+
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:24px}.brand .around{color:#0f7c2e}
+
+.logo{width:48px;height:48px}nav{margin-left:auto}
+
+.btn{border:0;border-radius:999px;padding:10px 16px;font-weight:600;cursor:pointer}
+
+.btn.primary{background:var(--brand);color:#fff}
+
+.list{display:grid;gap:12px}
+
+.item{background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+
+.item h3{margin:0 0 6px}.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;font-size:12px}
+
+</style>
 
 </head>
 
@@ -26,7 +50,7 @@
 
         <circle cx="32" cy="32" r="30" fill="url(#g3)"/>
 
-        <circle cx="26" cy="38" r="7" fill="#ffffff"/>
+        <circle cx="26" cy="38" r="7" fill="#fff"/>
 
         <path d="M34 28c6 0 10-6 12-12-6 2-12 6-12 12Z" fill="#16a34a"/><circle cx="42" cy="18" r="4.2" fill="#16a34a"/>
 
@@ -46,7 +70,7 @@
 
 <main class="container">
 
-  <h1 class="h1" style="font-size:30px">Recent Requests</h1>
+  <h1 style="font-weight:800;margin:16px 0">Recent Requests</h1>
 
   <div id="list" class="list"></div>
 
@@ -56,7 +80,7 @@
 
 <script>
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec";
+const SCRIPT_URL = "PUT_YOUR_SCRIPT_URL_HERE"; // <-- نفس رابط الويب-أب
 
 const list = document.getElementById('list');
 
@@ -72,37 +96,29 @@ const list = document.getElementById('list');
 
     if(!data.ok) throw new Error('API error');
 
+    const items = data.items.reverse();
 
+    if(items.length === 0){ list.innerHTML = '<div class="item">No requests yet. Be the first!</div>'; return; }
 
-    if(data.items.length === 0){
-
-      list.innerHTML = '<div class="item">No requests yet. Be the first!</div>';
-
-      return;
-
-    }
-
-
-
-    list.innerHTML = data.items.reverse().map(it => `
+    list.innerHTML = items.map(it => `
 
       <div class="item">
 
         <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
 
-          <h3>${escapeHtml(it.title || '(No title)')}</h3>
+          <h3>${esc(it.title||'(No title)')}</h3>
 
-          <span class="badge">${escapeHtml(it.category || '')}</span>
+          <span class="badge">${esc(it.category||'')}</span>
 
         </div>
 
-        <div style="color:#475569;margin:6px 0">${escapeHtml(it.description || '')}</div>
+        <div style="color:#475569;margin:6px 0">${esc(it.description||'')}</div>
 
         <div style="font-size:14px;color:#475569">
 
-          <b>Area:</b> ${escapeHtml(it.location||'')} &nbsp;·&nbsp;
+          <b>Area:</b> ${esc(it.location||'')} &nbsp;·&nbsp;
 
-          <b>Date:</b> ${escapeHtml(it.dateNeeded||'')}
+          <b>Date:</b> ${esc(it.dateNeeded||'')}
 
         </div>
 
@@ -114,17 +130,13 @@ const list = document.getElementById('list');
 
   }catch(err){
 
-    list.innerHTML = '<div class="item">Could not load requests.</div>';
-
-    console.error(err);
+    list.innerHTML = '<div class="item">Could not load requests.</div>'; console.error(err);
 
   }
 
 })();
 
-
-
-function escapeHtml(s){return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function esc(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 
 </script>
 
