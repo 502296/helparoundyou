@@ -1,208 +1,352 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-  <meta charset="utf-8" />
+  <meta charset="UTF-8"/>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Post a request — HelpAroundYou</title>
+  <title>Post a Request — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="styles.css" />
 
-  <script>
 
-    // عدّل هذا إلى رابط الويب الخاص بك:
+  <!-- Main site styles (same file used by index.html) -->
 
-    const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+  <link rel="stylesheet" href="style.css"/>
 
-  </script>
+
+
+  <!-- Page-specific polish (kept minimal) -->
+
+  <style>
+
+    /* Layout */
+
+    .page-wrap{max-width:1100px;margin:0 auto;padding:24px}
+
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+
+    .brand{font-weight:800;font-size:20px;letter-spacing:.2px}
+
+    .brand .a{color:#42a5f5} .brand .y{color:#7b2ff7}
+
+
+
+    /* Card */
+
+    .form-card{
+
+      max-width:640px;margin:0 auto;
+
+      padding:20px;border-radius:14px;
+
+      background:#ffffff10; /* translucent matches dark theme */
+
+      box-shadow:0 8px 28px rgba(0,0,0,.25);
+
+      backdrop-filter:saturate(120%) blur(4px);
+
+    }
+
+
+
+    /* Form controls */
+
+    form label{display:block;margin:12px 0 6px;font-weight:600}
+
+    form input[type="text"],
+
+    form input[type="email"],
+
+    form input[type="date"],
+
+    form input[type="tel"],
+
+    form select,
+
+    form textarea{
+
+      width:100%;padding:12px 14px;border-radius:10px;
+
+      border:1px solid #80808055;background:#0b0b0f; color:#fff;
+
+      font-size:16px; outline:none;
+
+    }
+
+    form textarea{min-height:120px;resize:vertical}
+
+    .help{font-size:13px;opacity:.75;margin-top:4px}
+
+
+
+    /* Actions */
+
+    .actions{display:flex;gap:12px;align-items:center;margin-top:14px}
+
+    .btn{
+
+      appearance:none;border:none;border-radius:999px; padding:12px 18px;
+
+      font-weight:700;cursor:pointer;transition:.2s;
+
+      background:#7b2ff7;color:#fff;
+
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+
+    .link-cancel{color:#ddd;text-decoration:underline}
+
+
+
+    /* Mobile spacing */
+
+    @media (max-width:600px){
+
+      .page-wrap{padding:16px}
+
+      .form-card{padding:16px}
+
+    }
+
+  </style>
 
 </head>
 
+
+
 <body>
 
-  <header class="site-header">
+  <div class="page-wrap">
 
-    <a class="brand" href="/">
+    <!-- Mini header -->
 
-      <svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" aria-hidden="true">
+    <div class="topbar">
 
-        <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+      <a href="index.html" class="brand">Help<span class="a">Around</span><span class="y">You</span></a>
 
-        <circle cx="32" cy="32" r="28" fill="url(#g2)"/><circle cx="22" cy="42" r="7" fill="#fff" opacity=".95"/><path d="M46 26c0 6-12 2-12 2s6-8 12-8v6z" fill="#fff" opacity=".95"/>
+      <div class="nav-actions" style="display:flex;gap:8px">
 
-      </svg>
+        <a class="btn" href="list.html" style="text-decoration:none;display:inline-block">See Requests</a>
 
-      <span class="brand-name"><strong>Help</strong><strong>Around</strong><strong>You</strong></span>
+        <a class="btn" aria-current="page" style="text-decoration:none;display:inline-block;background:#a45bff">Post a Request</a>
 
-    </a>
+      </div>
 
-    <nav class="top-actions">
-
-      <a class="btn ghost" href="requests.html">See requests</a>
-
-    </nav>
-
-  </header>
+    </div>
 
 
 
-  <main class="page-narrow">
-
-    <h1>Post a request</h1>
-
-    <form id="requestForm" class="card form-grid">
-
-      <label>Email <small>We’ll send updates here</small>
-
-        <input name="email" type="email" placeholder="you@example.com" required>
-
-      </label>
+    <h1 style="margin:10px 0 18px">Post a request</h1>
 
 
 
-      <label>Request Title *
+    <div class="form-card">
 
-        <input name="title" required placeholder="e.g., Need help moving couch">
+      <!--
 
-      </label>
+        NOTE: Leave action="#" for now.
+
+        We’ll wire this to Airtable/Tally (no Google login) in the next step.
+
+      -->
+
+      <form id="requestForm" action="#" method="POST" enctype="multipart/form-data" novalidate>
+
+        <!-- Email -->
+
+        <label for="email">Email <span aria-hidden="true">*</span></label>
+
+        <input id="email" name="email" type="email" placeholder="you@example.com" required
+
+               inputmode="email" autocomplete="email"/>
 
 
 
-      <label>Description *
+        <!-- Title -->
 
-        <textarea name="description" required placeholder="Add details that help the neighbor understand the task"></textarea>
+        <label for="title">Request Title <span aria-hidden="true">*</span></label>
 
-      </label>
+        <input id="title" name="title" type="text" placeholder="e.g., Need help moving couch" maxlength="120" required/>
 
 
 
-      <label>Category *
+        <!-- Description -->
 
-        <select name="category" required>
+        <label for="description">Description <span aria-hidden="true">*</span></label>
 
-          <option value="" selected disabled>Select…</option>
+        <textarea id="description" name="description" placeholder="Add details that help the neighbor understand the task…" required></textarea>
 
-          <option>Moving</option>
+        <div class="help">What, where, any tools needed, time window, stairs, heavy items, etc.</div>
 
-          <option>Pickup with Truck</option>
+
+
+        <!-- Category / Date / Location -->
+
+        <label for="category">Category <span aria-hidden="true">*</span></label>
+
+        <select id="category" name="category" required>
+
+          <option value="" disabled selected>Select…</option>
+
+          <option>Moving help</option>
+
+          <option>Pickup with truck</option>
+
+          <option>Yard cleanup (leaves/branches)</option>
 
           <option>Cleaning</option>
 
-          <option>Lawn Care</option>
+          <option>Small fix / handyman</option>
 
-          <option>Custom Task</option>
+          <option>Other</option>
 
         </select>
 
-      </label>
+
+
+        <label for="location">Location (zip or area) <span aria-hidden="true">*</span></label>
+
+        <input id="location" name="location" type="text" placeholder="e.g., 40218 or Highlands" required/>
 
 
 
-      <div class="two-col">
+        <label for="date">Date needed <span aria-hidden="true">*</span></label>
 
-        <label>Location (zip or area) *
-
-          <input name="location" required placeholder="e.g., 40218">
-
-        </label>
+        <input id="date" name="date" type="date" required/>
 
 
 
-        <label>Date needed *
+        <!-- Optional contact preference -->
 
-          <input name="date" type="date" required>
+        <label for="contact">Contact Info (optional)</label>
 
-        </label>
-
-      </div>
+        <input id="contact" name="contact" type="text" placeholder="Phone or preferred method (optional)"/>
 
 
 
-      <label>Contact Info (optional) <small>Phone or preferred method</small>
+        <!-- File -->
 
-        <input name="contact" placeholder="(optional)">
+        <label for="file">Photo / File (optional)</label>
 
-      </label>
+        <input id="file" name="file" type="file" accept="image/*,application/pdf"/>
 
-
-
-      <label>Photo / File (optional)
-
-        <input name="file" type="file" accept="image/*,.pdf,.jpg,.png">
-
-        <small>Helps the helper understand the task (max ~10MB).</small>
-
-      </label>
+        <div class="help">Helps the helper understand the task (max ~10MB).</div>
 
 
 
-      <div class="form-actions">
+        <!-- Actions -->
 
-        <button class="btn primary" type="submit">Submit Request</button>
+        <div class="actions">
 
-        <a class="btn ghost" href="/">Cancel</a>
+          <button id="submitBtn" class="btn" type="submit">Submit Request</button>
 
-        <span id="status" class="form-status" role="status"></span>
+          <a class="link-cancel" href="index.html">Cancel</a>
 
-      </div>
-
-    </form>
-
-  </main>
+        </div>
 
 
 
-  <footer class="site-footer">No commissions. Free to use. Donate any time to support the community ♥</footer>
+        <p class="help" style="margin-top:10px">
+
+          No commissions. Free to use. Share only what’s needed. Donate any time to support the community ♥
+
+        </p>
 
 
+
+        <!-- Success / error messages -->
+
+        <p id="formMsg" role="status" style="margin-top:12px;font-weight:600"></p>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Small, safe JS: one primary button, size check, “Submitting…” state -->
 
   <script>
 
-    const form = document.getElementById('requestForm');
+    (function(){
 
-    const statusEl = document.getElementById('status');
+      const form = document.getElementById('requestForm');
 
+      const btn  = document.getElementById('submitBtn');
 
+      const msg  = document.getElementById('formMsg');
 
-    form.addEventListener('submit', async (e) => {
-
-      e.preventDefault();
-
-      statusEl.textContent = 'Submitting…';
-
-      const fd = new FormData(form);
+      const file = document.getElementById('file');
 
 
 
-      try {
+      form.addEventListener('submit', function(e){
 
-        const res = await fetch(WEB_APP_URL, { method: 'POST', body: fd });
+        // basic client validation
 
-        if (!res.ok) throw new Error('Network response not ok');
+        if (file && file.files.length){
 
-        const data = await res.json().catch(()=>({ok:true}));
+          const f = file.files[0];
 
-        if (data.ok === false) throw new Error(data.message || 'Server error');
+          const max = 10 * 1024 * 1024; // 10MB
+
+          if (f.size > max){
+
+            e.preventDefault();
+
+            msg.textContent = 'File is too large (max ~10MB). Please choose a smaller file.';
+
+            msg.style.color = '#ffb74d';
+
+            return;
+
+          }
+
+        }
+
+        // prevent double submits
+
+        btn.disabled = true;
+
+        btn.textContent = 'Submitting…';
+
+        msg.textContent = 'Submitting…';
+
+        msg.style.color = '#aaa';
 
 
 
-        statusEl.textContent = '✅ Request submitted!';
+        // If no backend yet, stop actual navigation and show a friendly success.
 
-        form.reset();
+        if (form.getAttribute('action') === '#'){
 
-      } catch (err) {
+          e.preventDefault();
 
-        console.error(err);
+          setTimeout(()=>{
 
-        statusEl.textContent = '❌ Sorry — something went wrong. Please try again.';
+            msg.textContent = 'Request saved locally (demo). We will connect this form to Airtable/Tally next.';
 
-      }
+            msg.style.color = '#8de1a1';
 
-    });
+            btn.disabled = false;
+
+            btn.textContent = 'Submit Request';
+
+          }, 600);
+
+        }
+
+      }, false);
+
+    })();
 
   </script>
 
