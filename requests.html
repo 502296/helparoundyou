@@ -4,33 +4,39 @@
 
 <head>
 
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
 
 <title>Recent Requests — HelpAroundYou</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 
-:root{--bg:#f6fbff;--card:#fff;--ink:#0f172a;--muted:#475569;--brand:#16a34a}
+  :root{--bg:#f6fbff;--ink:#0f172a;--sub:#475569;--brand:#1a9f53;--card:#fff;--stroke:#e2e8f0}
 
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;color:var(--ink);background:var(--bg)}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
 
-.container{max-width:980px;margin:0 auto;padding:24px}
+  .wrap{max-width:1000px;margin:auto;padding:22px}
 
-header{background:var(--card);border-bottom:1px solid #e5e7eb}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 
-.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:24px}.brand .around{color:#0f7c2e}
+  .logo{width:40px;height:40px}
 
-.logo{width:48px;height:48px}nav{margin-left:auto}
+  .brand{font-weight:900;font-size:20px}
 
-.btn{border:0;border-radius:999px;padding:10px 16px;font-weight:600;cursor:pointer}
+  .brand .around{color:var(--brand)}
 
-.btn.primary{background:var(--brand);color:#fff}
+  h1{margin:8px 0 16px}
 
-.list{display:grid;gap:12px}
+  .grid{display:grid;gap:14px}
 
-.item{background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+  @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
 
-.item h3{margin:0 0 6px}.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;font-size:12px}
+  .card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:16px}
+
+  .muted{color:var(--sub);font-size:14px}
+
+  .chip{display:inline-block;padding:3px 8px;border-radius:999px;background:#eaf7ef;color:#0f6c3a;font-weight:700;font-size:12px}
 
 </style>
 
@@ -38,105 +44,97 @@ header{background:var(--card);border-bottom:1px solid #e5e7eb}
 
 <body>
 
-<header>
+  <div class="wrap">
 
-  <div class="container" style="display:flex;align-items:center;gap:12px">
-
-    <a href="index.html" class="brand" style="text-decoration:none;color:inherit">
+    <header>
 
       <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
 
-        <defs><linearGradient id="g3" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#bde3ff"/><stop offset="1" stop-color="#7cc4ff"/></linearGradient></defs>
+        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#cdefff"/><stop offset="1" stop-color="#a9defb"/></linearGradient></defs>
 
-        <circle cx="32" cy="32" r="30" fill="url(#g3)"/>
+        <circle cx="32" cy="32" r="30" fill="url(#g)"/>
 
-        <circle cx="26" cy="38" r="7" fill="#fff"/>
+        <circle cx="24" cy="40" r="7" fill="#1a9f53"/>
 
-        <path d="M34 28c6 0 10-6 12-12-6 2-12 6-12 12Z" fill="#16a34a"/><circle cx="42" cy="18" r="4.2" fill="#16a34a"/>
+        <path d="M24 33c10-11 21-7 21 4" fill="none" stroke="#1a9f53" stroke-width="5" stroke-linecap="round"/>
 
       </svg>
 
-      Help<span class="around">Around</span>You
+      <div class="brand">Help <span class="around">Around</span> You</div>
 
-    </a>
+    </header>
 
-    <nav style="margin-left:auto"><a class="btn primary" href="post.html">Post a Request</a></nav>
+
+
+    <h1>Recent Requests</h1>
+
+    <div id="list" class="grid"></div>
+
+    <p id="empty" class="muted" style="display:none">No requests yet.</p>
 
   </div>
-
-</header>
-
-
-
-<main class="container">
-
-  <h1 style="font-weight:800;margin:16px 0">Recent Requests</h1>
-
-  <div id="list" class="list"></div>
-
-</main>
 
 
 
 <script>
 
-const SCRIPT_URL = "PUT_YOUR_SCRIPT_URL_HERE"; // <-- نفس رابط الويب-أب
-
-const list = document.getElementById('list');
+const WEBAPP = 'YOUR_WEB_APP_URL'; // نفس رابط الويب آب
 
 
 
-(async ()=>{
+async function load() {
 
-  try{
+  const box = document.getElementById('list');
 
-    const res = await fetch(SCRIPT_URL + '?origin=' + encodeURIComponent(location.origin));
+  const empty = document.getElementById('empty');
 
-    const data = await res.json();
+  try {
 
-    if(!data.ok) throw new Error('API error');
+    const r = await fetch(`${WEBAPP}?list=1&limit=24`);
 
-    const items = data.items.reverse();
+    const j = await r.json();
 
-    if(items.length === 0){ list.innerHTML = '<div class="item">No requests yet. Be the first!</div>'; return; }
+    if (!j.ok || !j.items.length){ empty.style.display='block'; return; }
 
-    list.innerHTML = items.map(it => `
+    j.items.forEach(item=>{
 
-      <div class="item">
+      const el = document.createElement('div');
 
-        <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+      el.className='card';
 
-          <h3>${esc(it.title||'(No title)')}</h3>
+      el.innerHTML = `
 
-          <span class="badge">${esc(it.category||'')}</span>
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
 
-        </div>
+          <strong>${escapeHtml(item.title || '(Untitled)')}</strong>
 
-        <div style="color:#475569;margin:6px 0">${esc(it.description||'')}</div>
-
-        <div style="font-size:14px;color:#475569">
-
-          <b>Area:</b> ${esc(it.location||'')} &nbsp;·&nbsp;
-
-          <b>Date:</b> ${esc(it.dateNeeded||'')}
+          <span class="chip">${escapeHtml(item.category || 'Other')}</span>
 
         </div>
 
-        ${it.fileUrl ? `<div style="margin-top:8px"><a href="${it.fileUrl}" target="_blank">View attachment</a></div>`:''}
+        <div class="muted">${escapeHtml(item.location || '')} · ${escapeHtml(item.dateNeeded || '')}</div>
 
-      </div>
+        <p>${escapeHtml(item.description || '')}</p>
 
-    `).join('');
+        ${item.fileUrl ? `<a href="${item.fileUrl}" target="_blank" rel="noopener">View attachment</a>` : ''}
 
-  }catch(err){
+      `;
 
-    list.innerHTML = '<div class="item">Could not load requests.</div>'; console.error(err);
+      box.appendChild(el);
+
+    });
+
+  } catch(err){
+
+    empty.textContent = 'Could not load requests.'; empty.style.display='block';
 
   }
 
-})();
+}
 
-function esc(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));}
+
+load();
 
 </script>
 
