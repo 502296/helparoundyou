@@ -2,6 +2,8 @@
 
 <html lang="en">
 
+
+
 <head>
 
   <meta charset="UTF-8"/>
@@ -23,6 +25,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
 </head>
+
+
 
 <body>
 
@@ -184,121 +188,25 @@
 
     <h2>Post a help</h2>
 
-    <form class="form" action="#" method="post">
-
-      <div class="row">
-
-        <label for="title">Title</label>
-
-        <input id="title" name="title" type="text" placeholder="Move a sofa from garage to living room" required>
-
-      </div>
 
 
+    <!-- Airtable Embed -->
 
-      <div class="row two">
+    <iframe 
 
-        <div>
+      class="airtable-embed"
 
-          <label for="category">Category</label>
+      src="https://airtable.com/embed/appJ86MDtQdDOh289/pagHQurVeMUK6im83/form"
 
-          <select id="category" name="category" required>
+      frameborder="0"
 
-            <option value="" disabled selected>Select</option>
+      width="100%"
 
-            <option>Leaf & Branch Removal</option>
+      height="800"
 
-            <option>Pickup with Truck</option>
+      style="background: transparent; border: 1px solid #ccc; border-radius: 8px;">
 
-            <option>Furniture Move / Heavy Lifting</option>
-
-            <option>Cleaning</option>
-
-            <option>Lawn Care</option>
-
-            <option>Custom Task (Other)</option>
-
-          </select>
-
-        </div>
-
-        <div>
-
-          <label for="location">Location</label>
-
-          <input id="location" name="location" type="text" placeholder="Neighborhood / address (approx.)" required>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="row two">
-
-        <div>
-
-          <label for="date">Date</label>
-
-          <input id="date" name="date" type="date" required>
-
-        </div>
-
-        <div>
-
-          <label for="time">Time</label>
-
-          <input id="time" name="time" type="time" required>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="row">
-
-        <label for="details">Details</label>
-
-        <textarea id="details" name="details" rows="4" placeholder="Describe the task: dimensions/weight, floors, safety notes…" required></textarea>
-
-      </div>
-
-
-
-      <div class="row">
-
-        <label for="photos">Photos (optional)</label>
-
-        <input id="photos" name="photos" type="file" multiple>
-
-      </div>
-
-
-
-      <div class="policy">
-
-        <p><i class="fa-regular fa-circle-check" aria-hidden="true"></i> Payment & pricing are <strong>not handled</strong> by the platform — neighbors agree directly.</p>
-
-        <label class="inline">
-
-          <input type="checkbox" name="tip_optin"> I may add a tip as a thank-you.
-
-        </label>
-
-        <label class="inline">
-
-          <input type="checkbox" name="open_price"> Allow helpers to propose a fair price.
-
-        </label>
-
-      </div>
-
-
-
-      <button class="btn primary full" type="submit"><i class="fa-solid fa-paper-plane"></i> Publish request</button>
-
-    </form>
+    </iframe>
 
   </section>
 
