@@ -1,185 +1,49 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html lang="ar" dir="rtl">
 <head>
-
-<meta charset="utf-8"/>
-
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-
-<title>Help Around You — Local help, beautifully simple</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-<style>
-
-:root{
-
-  --bg:#faf7f2;        /* عاجي دافئ */
-
-  --ink:#111827;       /* فحمي */
-
-  --muted:#6b7280;     /* رمادي هادئ */
-
-  --violet:#6c5ce7;    /* بنفسجي أكسنت */
-
-  --violet-700:#574bd8;
-
-  --coral:#ff6b6b;     /* لمسة كورال */
-
-  --card:#ffffff;
-
-  --shadow:0 14px 38px rgba(0,0,0,.08);
-
-  --radius:16px;
-
-}
-
-*{box-sizing:border-box} html,body{margin:0}
-
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-
-.container{max-width:1100px;margin:0 auto;padding:28px}
-
-header{display:flex;align-items:center;justify-content:space-between}
-
-.brand{display:flex;align-items:center;gap:14px}
-
-.logo{width:64px;height:64px;border-radius:14px;background:
-
-  conic-gradient(from 190deg at 70% 30%, var(--violet), var(--coral));
-
-  box-shadow:inset 0 0 0 6px rgba(255,255,255,.7), var(--shadow)}
-
-.brand h1{margin:0;font-weight:800;letter-spacing:.2px}
-
-.brand h1 .around{color:var(--violet)}
-
-.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;
-
-  font-weight:700;border:0;border-radius:12px;padding:12px 18px;cursor:pointer}
-
-.btn-primary{background:var(--violet);color:#fff;box-shadow:0 10px 24px rgba(108,92,231,.28)}
-
-.btn-primary:hover{background:var(--violet-700)}
-
-.btn-ghost{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
-
-/* hero */
-
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center;margin-top:26px}
-
-.panel{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:28px}
-
-h2.big{margin:0 0 10px;font-size:44px;line-height:1.08}
-
-.lead{color:var(--muted);margin:0 0 18px}
-
-/* cards */
-
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-
-.card h3{margin:0 0 6px}
-
-.list{margin:8px 0 0 18px;color:var(--muted)}
-
-footer{padding:26px 0;text-align:center;color:#777}
-
-@media (max-width:980px){.hero{grid-template-columns:1fr} h2.big{font-size:36px}}
-
-</style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خدمات الجيران</title>
+<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+<header>
+<h1>خدمات الجيران</h1>
+<nav>
+<a href="#home">الرئيسية</a>
+<a href="#services">الخدمات</a>
+<a href="#login">تسجيل الدخول</a>
+</nav>
+</header>
 
-  <header class="container">
+<section id="hero">
+<h2>ابحث عن خدمات محلية بسهولة</h2>
+<input type="text" id="search" placeholder="ابحث عن خدمة (مثل نقل أثاث)">
+<button onclick="searchServices()">بحث</button>
+</section>
 
-    <div class="brand">
+<section id="services">
+<h2>الخدمات المتوفرة</h2>
+<div class="service-list">
+<div class="service-card">
+<h3>نقل أثاث</h3>
+<p>انقل أثاثك بسهولة مع جيرانك</p>
+</div>
+<div class="service-card">
+<h3>جز العشب</h3>
+<p>حافظ على حديقتك نظيفة</p>
+</div>
+<div class="service-card">
+<h3>تنظيف المنزل</h3>
+<p>خدمات تنظيف احترافية</p>
+</div>
+</div>
+</section>
 
-      <div class="logo" aria-hidden="true"></div>
+<footer>
+<p>© 2025 خدمات الجيران. جميع الحقوق محفوظة.</p>
+</footer>
 
-      <h1>Help <span class="around">Around</span> You</h1>
-
-    </div>
-
-    <nav style="display:flex;gap:10px">
-
-      <a class="btn btn-ghost" href="requests.html">See requests</a>
-
-      <a class="btn btn-primary" href="post.html">Post a request</a>
-
-    </nav>
-
-  </header>
-
-
-
-  <main class="container hero">
-
-    <section class="panel">
-
-      <h2 class="big">Get things done — clear, safe, on your schedule.</h2>
-
-      <p class="lead">From quick pickups to small fixes, we connect you with trusted local doers. No middlemen and no commissions — just neighbors helping neighbors.</p>
-
-      <a class="btn btn-primary" href="post.html">Post a request</a>
-
-    </section>
-
-
-
-    <section class="grid">
-
-      <div class="panel card">
-
-        <h3>How it works</h3>
-
-        <ol class="list">
-
-          <li>Describe the task (title, details, date, area).</li>
-
-          <li>We route it to nearby helpers instantly.</li>
-
-          <li>You coordinate directly, then mark it done — that’s it.</li>
-
-        </ol>
-
-      </div>
-
-      <div class="panel card">
-
-        <h3>Why us?</h3>
-
-        <ul class="list">
-
-          <li>Totally free to use — zero commissions.</li>
-
-          <li>Simple flows and clear communication.</li>
-
-          <li>Privacy-first: share only what’s needed.</li>
-
-        </ul>
-
-        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-
-          <a class="btn btn-ghost" href="requests.html">See recent</a>
-
-          <a class="btn btn-ghost" href="#" onclick="window.open('https://buy.stripe.com/test_00','_blank')">Donate</a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-
-  <footer>© 2025 Help Around You · Free to use. Built with care for our community.</footer>
-
+<script src="script.js"></script>
 </body>
-
 </html>
