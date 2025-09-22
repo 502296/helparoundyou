@@ -8,35 +8,41 @@
 
 <title>Recent Requests — Help Around You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
-:root{--green:#18a355;--ink:#0f172a;--muted:#5b677a;--card:#f7fafc;--shadow:0 12px 28px rgba(15,23,42,.08);--radius:18px}
+:root{--ink:#0e1b2b;--muted:#5d6b7a;--halo:#bfe8ff;--card:#fff;--radius:22px;--shadow:0 18px 40px rgba(14,27,43,.08)}
 
-*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#f7fbff,#eaf4ff);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-.container{max-width:980px;margin:0 auto;padding:24px}
+.container{max-width:1040px;margin:0 auto;padding:28px}
 
-header{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:4px}
 
-.logo{width:68px;height:68px;border-radius:50%;
+.logo{width:78px;height:78px;border-radius:50%;
 
-  background:radial-gradient(circle at 34% 34%, #b5f0c9 0 30px, #89e0a3 30px 62px),
+  background:
 
-             radial-gradient(circle at 70% 68%, #18a355 0 10px, #18a35500 11px);
+    radial-gradient(circle at 34% 34%, #c9f2da 0 34px, #97e6b7 34px 72px),
 
-  box-shadow:inset 0 0 0 6px #cfe7ff;}
+    radial-gradient(circle at 70% 68%, #22c063 0 12px, #0000 13px);
 
-h1{margin:0;font-weight:800;font-size:26px} h1 .around{color:#0f7a3b}
+  box-shadow:inset 0 0 0 8px var(--halo), 0 10px 18px rgba(0,0,0,.04);}
 
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+h1{font-family:Nunito,Inter,sans-serif;margin:0;font-size:28px} h1 .around{color:#117a3e}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
 
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
 
+.card h3{margin:0 0 6px;font-family:Nunito,Inter,sans-serif}
+
 small{color:var(--muted)}
 
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
+@media (max-width:1020px){.grid{grid-template-columns:1fr 1fr}}
+
+@media (max-width:720px){.grid{grid-template-columns:1fr}}
 
 </style>
 
@@ -56,11 +62,11 @@ small{color:var(--muted)}
 
 
 
-  <h2 style="margin:0 0 14px">Recent requests</h2>
+  <h2 style="margin:8px 0 10px;font-family:Nunito,Inter,sans-serif">Recent requests</h2>
 
   <div id="grid" class="grid"></div>
 
-  <p id="empty" style="display:none;color:#6b7280">No requests yet.</p>
+  <p id="empty" style="display:none;color:#6b7683">No requests yet.</p>
 
 </div>
 
@@ -68,7 +74,7 @@ small{color:var(--muted)}
 
 <script>
 
-const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec"; // نفس الرابط
+const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec";
 
 
 
@@ -82,19 +88,21 @@ const empty = document.getElementById('empty');
 
   try{
 
-    const res = await fetch(API + '?limit=50');
+    const res = await fetch(API + '?limit=60');
 
     const data = await res.json();
 
     if(!data.ok) throw new Error('API error');
 
-    if(!data.items || !data.items.length){ empty.style.display='block'; return; }
+    const items = data.items || [];
+
+    if(!items.length){ empty.style.display='block'; return; }
 
 
 
-    data.items.forEach(it=>{
+    for(const it of items){
 
-      const d = new Date(it.timestamp);
+      const d = it.timestamp ? new Date(it.timestamp) : null;
 
       const div = document.createElement('div');
 
@@ -102,21 +110,21 @@ const empty = document.getElementById('empty');
 
       div.innerHTML = `
 
-        <h3 style="margin:0 0 6px">${esc(it.title||'Untitled')}</h3>
+        <h3>${esc(it.title||'Untitled')}</h3>
 
-        <small>${d.toLocaleDateString()} · ${esc(it.category||'')}</small>
+        <small>${d?d.toLocaleDateString():''} ${it.category?('· '+esc(it.category)) : ''}</small>
 
         <p style="margin:8px 0 0">${esc(it.description||'')}</p>
 
-        <p style="margin:6px 0 0"><strong>Area:</strong> ${esc(it.location||'')}</p>
+        <p style="margin:8px 0 0"><strong>Area:</strong> ${esc(it.location||'')}</p>
 
-        ${it.fileUrl ? `<p style="margin:6px 0 0"><a href="${it.fileUrl}" target="_blank" rel="noopener">Attachment</a></p>` : ``}
+        ${it.fileUrl?`<p style="margin:8px 0 0"><a href="${it.fileUrl}" target="_blank" rel="noopener">Attachment</a></p>`:''}
 
       `;
 
       grid.appendChild(div);
 
-    });
+    }
 
   }catch(e){
 
@@ -128,7 +136,7 @@ const empty = document.getElementById('empty');
 
 })();
 
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]))}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
 </script>
 
