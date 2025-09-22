@@ -4,46 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>خدمات الجيران</title>
-<link rel="stylesheet" href="styles.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-<header>
+<header class="bg-dark text-white text-center py-3">
 <h1>خدمات الجيران</h1>
 <nav>
-<a href="#home">الرئيسية</a>
-<a href="#services">الخدمات</a>
-<a href="#login">تسجيل الدخول</a>
+<a href="{{ url_for('index') }}" class="text-white mx-2">الرئيسية</a>
+<a href="{{ url_for('register') }}" class="text-white mx-2">تسجيل</a>
+<a href="{{ url_for('login') }}" class="text-white mx-2">تسجيل دخول</a>
 </nav>
 </header>
 
-<section id="hero">
-<h2>ابحث عن خدمات محلية بسهولة</h2>
-<input type="text" id="search" placeholder="ابحث عن خدمة (مثل نقل أثاث)">
-<button onclick="searchServices()">بحث</button>
+<section class="container my-5">
+<h2>ابحث عن خدمة</h2>
+<form action="{{ url_for('index') }}" method="GET">
+<input type="text" class="form-control" placeholder="ابحث عن خدمة (مثل نقل أثاث)" name="search">
+<button type="submit" class="btn btn-primary mt-2">بحث</button>
+</form>
+
+<h2 class="mt-4">الخدمات المتوفرة</h2>
+<div class="row">
+{% for service in services %}
+<div class="col-md-4 mb-3">
+<div class="card">
+<div class="card-body">
+<h5 class="card-title">{{ service[1] }}</h5>
+<p class="card-text">{{ service[2] }}</p>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+{% if session.user_id %}
+<h2 class="mt-4">أضف خدمة جديدة</h2>
+<form action="{{ url_for('add_service') }}" method="POST">
+<input type="text" name="name" class="form-control mb-2" placeholder="اسم الخدمة" required>
+<textarea name="description" class="form-control mb-2" placeholder="وصف الخدمة" required></textarea>
+<button type="submit" class="btn btn-success">إضافة</button>
+</form>
+{% endif %}
 </section>
 
-<section id="services">
-<h2>الخدمات المتوفرة</h2>
-<div class="service-list">
-<div class="service-card">
-<h3>نقل أثاث</h3>
-<p>انقل أثاثك بسهولة مع جيرانك</p>
-</div>
-<div class="service-card">
-<h3>جز العشب</h3>
-<p>حافظ على حديقتك نظيفة</p>
-</div>
-<div class="service-card">
-<h3>تنظيف المنزل</h3>
-<p>خدمات تنظيف احترافية</p>
-</div>
-</div>
-</section>
-
-<footer>
-<p>© 2025 خدمات الجيران. جميع الحقوق محفوظة.</p>
-</footer>
-
-<script src="script.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
