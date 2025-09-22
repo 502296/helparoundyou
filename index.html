@@ -4,131 +4,227 @@
 
 <head>
 
-  <meta charset="UTF-8" />
+<meta charset="utf-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>HelpAroundYou – Neighbors helping neighbors</title>
+<title>HelpAroundYou — Simple, Safe, Local Help</title>
 
-  <meta name="description" content="Request help from neighbors or volunteer to help in your city." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-  <style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-    :root{
+<style>
 
-      --navy:#0f172a; --sky:#e9f6ff; --mint:#22c55e; --mint-ink:#136c35;
+  :root{
 
-      --ink:#111827; --muted:#6b7280; --card:#fff; --ring:rgba(34,197,94,.25);
+    --bg:#f6fbff;         /* سماوي فاتح */
 
-    }
+    --panel:#ffffff;
 
-    *{box-sizing:border-box} html,body{margin:0} body{background:var(--sky);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    --ink:#0f172a;        /* رمادي مزرق داكن */
 
-    header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#fff 0%, #f7fbff 100%);border-bottom:1px solid #e5eef7}
+    --muted:#5b6b7a;
 
-    .nav{max-width:1100px;margin:auto;display:flex;align-items:center;gap:16px;padding:14px 16px}
+    --brand:#16a34a;      /* أخضر أساسي */
 
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--navy);letter-spacing:.2px;font-size:22px}
+    --brand-ink:#0b5b2a;
 
-    .brand::before{content:"HA";display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--mint);color:#fff;font-weight:900;box-shadow:0 6px 18px var(--ring)}
+    --chip:#e8f6ee;
 
-    .spacer{flex:1}
+    --ring:rgba(22,163,74,.22);
 
-    .btn{appearance:none;border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;color:#fff;background:var(--mint);box-shadow:0 10px 24px var(--ring)}
+    --border:#e6edf3;
 
-    .btn:hover{filter:brightness(.97)}
+  }
 
-    .btn-outline{background:#fff;color:var(--navy);border:2px solid #d7eaf7;box-shadow:none}
+  *{box-sizing:border-box}
 
-    .wrap{max-width:1100px;margin:auto;padding:0 16px}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-    .hero{max-width:1100px;margin:28px auto 8px;padding:0 16px;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
+  a{color:inherit}
 
-    .title{font-size:44px;line-height:1.08;margin:0 0 12px;color:var(--navy)}
+  .wrap{max-width:1080px;margin:0 auto;padding:18px 20px}
 
-    .lead{font-size:18px;color:var(--muted);margin:0 0 18px}
+  /* Header */
 
-    .panel{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 16px 40px rgba(2,6,23,.06)}
+  header{
 
-    section{padding:26px 0}
+    position:sticky;top:0;z-index:50;
 
-    .h2{font-size:26px;margin:8px 0 14px;color:var(--navy)}
+    background:rgba(246,251,255,.9);
 
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    border-bottom:1px solid var(--border);
 
-    .tile{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 12px 28px rgba(2,6,23,.05)}
+    backdrop-filter:saturate(140%) blur(6px);
 
-    .badge{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#dff7e8;color:var(--mint-ink);font-weight:900;margin-bottom:8px}
+  }
 
-    .muted{color:var(--muted)} .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:16px}
 
-    .donate{background:#fff9;backdrop-filter:saturate(140%) blur(6px);border:1px solid #d7eaf7;padding:14px;border-radius:12px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
 
-    footer{padding:28px 12px;text-align:center;color:var(--muted)}
+  .brand svg{width:28px;height:28px}
 
-    @media (max-width:950px){ .hero{grid-template-columns:1fr}.title{font-size:36px} }
+  .cta{display:inline-flex;gap:10px;align-items:center;justify-content:center;
 
-  </style>
+       background:var(--brand);color:#fff;font-weight:700;border:none;
+
+       padding:10px 14px;border-radius:10px;text-decoration:none;
+
+       box-shadow:0 6px 20px rgba(22,163,74,.25);transition:transform .08s ease, box-shadow .08s ease;}
+
+  .cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(22,163,74,.28)}
+
+  .cta:active{transform:translateY(0)}
+
+  /* Hero */
+
+  .hero{padding:26px 0}
+
+  .hero h1{margin:0 0 10px;font-size:34px;line-height:1.15}
+
+  .hero p{margin:0;color:var(--muted);max-width:52ch}
+
+  .hero-actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+
+  /* Cards */
+
+  .card{
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:18px;
+
+    box-shadow:0 8px 28px rgba(2,14,32,.05);
+
+  }
+
+  .grid{display:grid;gap:16px}
+
+  @media(min-width:900px){ .grid{grid-template-columns:1.2fr .9fr} }
+
+  h2{margin:0 0 10px;font-size:20px}
+
+  small.muted{color:var(--muted)}
+
+  /* Collapsible */
+
+  .collapse{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel)}
+
+  .collapse summary{
+
+    cursor:pointer;list-style:none;padding:14px 16px;font-weight:700;display:flex;align-items:center;gap:10px;
+
+  }
+
+  .collapse summary::marker{display:none}
+
+  .chev{transition:transform .15s ease}
+
+  details[open] .chev{transform:rotate(180deg)}
+
+  .collapse .body{padding:0 16px 14px 16px;border-top:1px dashed var(--border);color:var(--muted)}
+
+  /* Chips */
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+
+  .chip{
+
+    background:var(--chip);border:1px solid #d8f0e2;color:var(--brand-ink);
+
+    padding:8px 12px;border-radius:999px;font-weight:600;font-size:14px;
+
+  }
+
+  /* Booking block */
+
+  .booking{display:flex;flex-direction:column;gap:10px}
+
+  .book-card{
+
+    border:1px solid var(--border);border-radius:14px;background:var(--panel);
+
+    padding:18px;box-shadow:0 8px 28px rgba(2,14,32,.05);
+
+  }
+
+  .book-card p{margin:6px 0;color:var(--muted)}
+
+  .subtle{background:#eef7ff;border:1px solid #d7e8f7;color:#1f3b57;padding:8px 12px;border-radius:10px;font-weight:600}
+
+  footer{padding:26px 0;color:var(--muted);text-align:center}
+
+  .donate{background:#0ea5e9;color:#fff}
+
+</style>
 
 </head>
 
 <body>
 
-  <header>
 
-    <nav class="nav">
 
-      <div class="brand">HelpAroundYou</div>
+<header>
 
-      <div class="spacer"></div>
+  <div class="wrap row">
 
-      <a class="btn" href="post.html">Post a Request</a>
+    <div class="brand">
+
+      <!-- Sprout Logo -->
+
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs>
+
+        <circle cx="32" cy="32" r="30" fill="#eaf8ef"/>
+
+        <path d="M32 46c0-10 2-16 8-22 5-5 12-6 17-6-1 5-2 12-7 17-6 6-12 8-18 8z" fill="url(#g)"/>
+
+        <path d="M32 46c0-8-2-14-8-20-5-5-12-6-17-6 1 5 2 12 7 17 6 6 12 8 18 9z" fill="#34d399"/>
+
+        <path d="M32 18v28" stroke="#0b5b2a" stroke-width="3" stroke-linecap="round"/>
+
+      </svg>
+
+      <span>HelpAroundYou</span>
+
+    </div>
+
+    <nav class="row" style="gap:10px">
+
+      <a class="cta" href="./post.html">Post a Request</a>
+
+      <a class="cta donate" target="_blank" rel="noopener" href="https://www.paypal.com/donate">Donate</a>
 
     </nav>
 
-  </header>
+  </div>
+
+</header>
 
 
+
+<main class="wrap">
+
+  <!-- HERO -->
 
   <section class="hero">
 
-    <div>
+    <h1>Get reliable local help — simple, safe, on your schedule.</h1>
 
-      <h1 class="title">Need a hand? Ask your neighbors.</h1>
+    <p>From small fixes to quick pickups, we connect you with trusted local doers. No middlemen, no commissions — just neighbors helping neighbors in a lightweight, respectful way.</p>
 
-      <p class="lead">Tell us what you need — moving help, lawn care, small fixes, pickups — and local neighbors will reach out to help.</p>
+    <div class="hero-actions">
 
-      <div class="actions">
+      <a class="cta" href="./post.html">Post a Request</a>
 
-        <a class="btn" href="post.html">Post a Request</a>
-
-        <a class="btn btn-outline" href="#how">How it works</a>
-
-      </div>
-
-    </div>
-
-    <div class="panel">
-
-      <h3 style="margin:6px 0 10px;color:#0b1220">What you can request</h3>
-
-      <ul style="margin:0 0 10px;padding-left:18px;line-height:1.7">
-
-        <li>Moving &amp; pickup with truck</li>
-
-        <li>Cleaning &amp; lawn care</li>
-
-        <li>Custom tasks &amp; small fixes</li>
-
-        <li>Attach photos &amp; choose a date</li>
-
-      </ul>
-
-      <div class="donate">
-
-        <strong>Free platform.</strong> We don’t take fees or a cut. If you’d like to support operations, you can make a small <a href="#donate">donation</a>.
-
-      </div>
+      <a class="subtle" href="#how">How it works</a>
 
     </div>
 
@@ -136,107 +232,123 @@
 
 
 
-  <section id="how">
+  <div class="grid">
 
-    <div class="wrap">
+    <!-- LEFT: How it works (collapsible) + What you can request -->
 
-      <h2 class="h2">How it works</h2>
+    <section class="grid-col">
 
-      <div class="grid3">
+      <details id="how" class="collapse">
 
-        <div class="tile">
+        <summary>
 
-          <div class="badge">1</div>
+          <span class="chev">▾</span> How it works
 
-          <h4>Post your request</h4>
+        </summary>
 
-          <p class="muted">Write a short title, add details and an optional photo, and pick the date you prefer.</p>
+        <div class="body">
+
+          <ol style="margin:10px 0 0 18px">
+
+            <li><strong>Post</strong> your request with the task, date, and (optionally) a photo.</li>
+
+            <li><strong>Route</strong> we notify nearby helpers instantly by email.</li>
+
+            <li><strong>Agree</strong> on time & details directly with a helper. Mark it done when completed.</li>
+
+          </ol>
+
+          <p style="margin:10px 0 0">The platform is <strong>free</strong> — we don’t take any cuts. If you’d like to support the project, you can leave a small donation.</p>
 
         </div>
 
-        <div class="tile">
+      </details>
 
-          <div class="badge">2</div>
 
-          <h4>Neighbors respond</h4>
 
-          <p class="muted">Nearby helpers see your request and message you if they can help. You choose who to work with.</p>
+      <details class="collapse" style="margin-top:14px">
+
+        <summary><span class="chev">▾</span> What you can request</summary>
+
+        <div class="body">
+
+          <div class="chips" style="margin-top:10px">
+
+            <span class="chip">Moving / Pickup with truck</span>
+
+            <span class="chip">Cleaning</span>
+
+            <span class="chip">Lawn care</span>
+
+            <span class="chip">Small fixes</span>
+
+            <span class="chip">Custom task</span>
+
+            <span class="chip">Upload photos & choose a date</span>
+
+          </div>
 
         </div>
 
-        <div class="tile">
+      </details>
 
-          <div class="badge">3</div>
-
-          <h4>Agree & get it done</h4>
-
-          <p class="muted">Coordinate time and price directly with the helper. When done, mark it complete. No platform fees.</p>
-
-        </div>
-
-      </div>
-
-      <div class="actions"><a class="btn" href="post.html">Post a Request</a></div>
-
-    </div>
-
-  </section>
+    </section>
 
 
 
-  <section id="requests">
+    <!-- RIGHT: Booking -->
 
-    <div class="wrap">
+    <aside class="booking">
 
-      <h2 class="h2">Recent Requests</h2>
+      <div class="book-card">
 
-      <p class="muted" style="margin:6px 0 14px">A simple log of recent requests (for transparency).</p>
+        <h2>Ready to book?</h2>
 
+        <p>It takes less than a minute. Your request is routed instantly.</p>
 
+        <a class="cta" href="./post.html">Post a Request</a>
 
-      <!-- زر يفتح سجل الطلبات — بدّل الرابط برابط الشير لملف الردود -->
-
-      <div class="actions">
-
-        <a class="btn btn-outline" target="_blank"
-
-           href="https://docs.google.com/spreadsheets/d/PASTE-YOUR-SHEET-ID-HERE/edit?usp=sharing">
-
-          Open Requests Log
-
-        </a>
+        <p class="small muted" style="margin-top:8px">Prefer to preview first? You can open the form in a new tab from the next page.</p>
 
       </div>
 
-      <!-- يمكنك حذف الزر بالأعلى إن ما تبغى تظهر السجل للعامة -->
-
-    </div>
-
-  </section>
 
 
+      <div class="card">
 
-  <section id="donate">
+        <h2>Why HelpAroundYou?</h2>
 
-    <div class="wrap">
+        <ul style="margin:8px 0 0 18px;color:var(--muted)">
 
-      <h2 class="h2">Support HelpAroundYou</h2>
+          <li>No commissions — totally free to use.</li>
 
-      <p class="muted">Love the idea? We’re community-run and free. Any small donation helps us cover hosting and tooling.</p>
+          <li>Simple requests; clear communication.</li>
 
-      <!-- استبدل برابط التبرع الحقيقي (PayPal/Stripe/Ko-fi) -->
+          <li>Built for comfort: you share only what’s needed.</li>
 
-      <a class="btn" target="_blank" href="https://your-donation-link.example">Make a Donation</a>
+        </ul>
 
-    </div>
+      </div>
 
-  </section>
+    </aside>
+
+  </div>
+
+</main>
 
 
 
-  <footer>© <span id="y"></span> HelpAroundYou — Neighbors helping neighbors</footer>
+<footer>
 
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <div class="wrap">
+
+    © 2025 HelpAroundYou · Built with care for our community
+
+  </div>
+
+</footer>
+
+
 
 </body>
 
