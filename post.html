@@ -6,107 +6,41 @@
 
   <meta charset="UTF-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Post a Request – HelpAroundYou</title>
 
+  <meta name="description" content="Submit a help request to your local community" />
+
   <style>
 
-    body {
+    :root { --brand:#2c3e50; --accent:#27ae60; --bg:#f5f7fb; }
 
-      font-family: Arial, sans-serif;
+    * { box-sizing: border-box; }
 
-      margin: 0;
+    body { margin:0; background:var(--bg); color:#222; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; }
 
-      padding: 0;
+    header { background:var(--brand); color:#fff; padding:14px 18px; font-weight:700; }
 
-      background: #f4f6f9;
+    .wrap { max-width:960px; margin:24px auto; padding:0 16px; }
 
-      color: #333;
+    .card { background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.06); padding:18px; }
 
-      text-align: center;
+    h2 { margin:6px 0 12px; color:#2c3e50; }
 
-    }
+    p { margin:0 0 16px; opacity:.9; }
 
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 16px; }
 
+    .btn { appearance:none; border:0; border-radius:8px; padding:12px 16px; font-weight:700; cursor:pointer; text-decoration:none; color:#fff; background:var(--accent); }
 
-    header {
+    .btn:hover { filter:brightness(.95); }
 
-      background: #2c3e50;
+    iframe { width:100%; height:900px; border:0; border-radius:10px; background:#fff; }
 
-      color: white;
+    @media (max-width:600px){ iframe{ height:1050px } }
 
-      padding: 15px;
-
-      font-size: 20px;
-
-      font-weight: bold;
-
-    }
-
-
-
-    .container {
-
-      max-width: 900px;
-
-      margin: 20px auto;
-
-      background: white;
-
-      padding: 20px;
-
-      border-radius: 8px;
-
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
-    }
-
-
-
-    iframe {
-
-      width: 100%;
-
-      height: 850px;
-
-      border: none;
-
-      border-radius: 8px;
-
-    }
-
-
-
-    .button {
-
-      display: inline-block;
-
-      margin-top: 15px;
-
-      padding: 12px 20px;
-
-      background: #27ae60;
-
-      color: white;
-
-      text-decoration: none;
-
-      border-radius: 6px;
-
-      font-weight: bold;
-
-      transition: background 0.3s ease;
-
-    }
-
-
-
-    .button:hover {
-
-      background: #219150;
-
-    }
+    footer { text-align:center; padding:24px 8px; color:#666; font-size:14px; }
 
   </style>
 
@@ -114,37 +48,63 @@
 
 <body>
 
-  <header>HelpAroundYou – Post a Request</header>
+  <header>HelpAroundYou — Post a Request</header>
 
 
 
-  <div class="container">
+  <main class="wrap">
 
-    <h2>Submit Your Request</h2>
+    <section class="card" aria-label="Request form">
 
-    <p>Fill out the form below to request help from neighbors:</p>
+      <h2>Submit Your Request</h2>
 
-
-
-    <!-- هنا ضع رابط Google Form الخاص بك -->
-
-    <iframe src="https://docs.google.com/forms/d/12345example/viewform?embedded=true">
-
-      Loading…
-
-    </iframe>
+      <p>Fill out the form below and we’ll route your request to nearby helpers.</p>
 
 
 
-    <!-- زر يفتح الفورم في تبويب جديد -->
+      <!-- زر احتياطي يفتح الفورم في تبويب جديد -->
 
-    <a href="https://docs.google.com/forms/d/12345example/viewform" target="_blank" class="button">
+      <div class="actions">
 
-      Open in New Tab
+        <a class="btn" target="_blank"
 
-    </a>
+           href="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform">
 
-  </div>
+          Open Form in New Tab
+
+        </a>
+
+      </div>
+
+
+
+      <!-- تضمين Google Form (رابطك بصيغة embed) -->
+
+      <iframe
+
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?embedded=true"
+
+        allow="camera; microphone; fullscreen"
+
+        title="HelpAroundYou Request Form">
+
+        Loading…
+
+      </iframe>
+
+
+
+      <noscript>JavaScript is disabled. Please use the button above to open the form.</noscript>
+
+    </section>
+
+  </main>
+
+
+
+  <footer>© <span id="y"></span> HelpAroundYou</footer>
+
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 
 </body>
 
