@@ -10,97 +10,83 @@
 
 <title>Help Around You — Local help, beautifully simple</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
 
-  --ink:#0e1b2b; --muted:#5d6b7a;
+  --bg:#faf7f2;        /* عاجي دافئ */
 
-  --sky-start:#f7fbff; --sky-end:#e9f4ff;
+  --ink:#111827;       /* فحمي */
 
-  --green:#19a857; --green-700:#0e7c3e;
+  --muted:#6b7280;     /* رمادي هادئ */
 
-  --bud:#22c063; --halo:#bfe8ff;
+  --violet:#6c5ce7;    /* بنفسجي أكسنت */
 
-  --card:#ffffff; --radius:20px; --shadow:0 18px 40px rgba(14,27,43,.08);
+  --violet-700:#574bd8;
+
+  --coral:#ff6b6b;     /* لمسة كورال */
+
+  --card:#ffffff;
+
+  --shadow:0 14px 38px rgba(0,0,0,.08);
+
+  --radius:16px;
 
 }
 
 *{box-sizing:border-box} html,body{margin:0}
 
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
 
-  background:linear-gradient(180deg,var(--sky-start),var(--sky-end));}
-
-.container{max-width:1120px;margin:0 auto;padding:28px}
+.container{max-width:1100px;margin:0 auto;padding:28px}
 
 header{display:flex;align-items:center;justify-content:space-between}
 
-.brand{display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:14px}
 
-.logo{
+.logo{width:64px;height:64px;border-radius:14px;background:
 
-  width:84px;height:84px;border-radius:50%;
+  conic-gradient(from 190deg at 70% 30%, var(--violet), var(--coral));
 
-  background:
+  box-shadow:inset 0 0 0 6px rgba(255,255,255,.7), var(--shadow)}
 
-    radial-gradient(circle at 34% 34%, #c9f2da 0 36px, #97e6b7 36px 78px),
+.brand h1{margin:0;font-weight:800;letter-spacing:.2px}
 
-    radial-gradient(circle at 70% 68%, var(--bud) 0 12px, #0000 13px);
+.brand h1 .around{color:var(--violet)}
 
-  box-shadow:inset 0 0 0 8px var(--halo), 0 10px 18px rgba(0,0,0,.04);
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;
 
-}
+  font-weight:700;border:0;border-radius:12px;padding:12px 18px;cursor:pointer}
 
-.site-title{font-family:Nunito,Inter,sans-serif;margin:0;font-weight:800;font-size:30px;letter-spacing:.2px}
+.btn-primary{background:var(--violet);color:#fff;box-shadow:0 10px 24px rgba(108,92,231,.28)}
 
-.site-title .around{color:#117a3e}
+.btn-primary:hover{background:var(--violet-700)}
 
-nav a{display:inline-block;text-decoration:none;font-weight:700}
+.btn-ghost{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
 
-.pill{border-radius:999px;padding:12px 18px;background:#fff;box-shadow:var(--shadow);color:var(--ink)}
+/* hero */
 
-.cta{border-radius:999px;padding:12px 20px;background:var(--green);color:#fff;box-shadow:0 14px 28px rgba(25,168,87,.22)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center;margin-top:26px}
 
-.cta:hover{background:var(--green-700)}
+.panel{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:28px}
 
-/* HERO */
+h2.big{margin:0 0 10px;font-size:44px;line-height:1.08}
 
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;margin-top:28px}
+.lead{color:var(--muted);margin:0 0 18px}
 
-.hero-card{background:var(--card);border-radius:28px;box-shadow:var(--shadow);padding:36px}
+/* cards */
 
-.hero h1{font-family:Nunito,Inter,sans-serif;margin:0 0 12px;font-size:48px;line-height:1.06}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-.hero p{margin:0 0 18px;color:var(--muted);font-size:17px}
+.card h3{margin:0 0 6px}
 
-.big-cta{display:inline-flex;gap:12px;align-items:center}
+.list{margin:8px 0 0 18px;color:var(--muted)}
 
-.spark{width:14px;height:14px;border-radius:50%;background:var(--green);box-shadow:0 0 0 6px rgba(25,168,87,.18)}
+footer{padding:26px 0;text-align:center;color:#777}
 
-/* INFO CARDS */
-
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
-
-.card{background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:20px}
-
-.card h3{margin:0 0 8px;font-family:Nunito,Inter,sans-serif}
-
-/* footer */
-
-footer{color:#6b7683;text-align:center;padding:26px 0}
-
-@media (max-width:980px){
-
-  .hero{grid-template-columns:1fr}
-
-  .logo{width:72px;height:72px}
-
-  .hero h1{font-size:40px}
-
-}
+@media (max-width:980px){.hero{grid-template-columns:1fr} h2.big{font-size:36px}}
 
 </style>
 
@@ -114,15 +100,15 @@ footer{color:#6b7683;text-align:center;padding:26px 0}
 
       <div class="logo" aria-hidden="true"></div>
 
-      <h2 class="site-title">Help <span class="around">Around</span> You</h2>
+      <h1>Help <span class="around">Around</span> You</h1>
 
     </div>
 
     <nav style="display:flex;gap:10px">
 
-      <a class="pill" href="requests.html">See requests</a>
+      <a class="btn btn-ghost" href="requests.html">See requests</a>
 
-      <a class="cta"  href="post.html">Post a request</a>
+      <a class="btn btn-primary" href="post.html">Post a request</a>
 
     </nav>
 
@@ -132,13 +118,13 @@ footer{color:#6b7683;text-align:center;padding:26px 0}
 
   <main class="container hero">
 
-    <section class="hero-card">
+    <section class="panel">
 
-      <h1>Local help that feels good — simple, safe, on your time.</h1>
+      <h2 class="big">Get things done — clear, safe, on your schedule.</h2>
 
-      <p>No middlemen, no commissions. Just neighbors helping neighbors. Post in seconds, match fast, and keep control of your details.</p>
+      <p class="lead">From quick pickups to small fixes, we connect you with trusted local doers. No middlemen and no commissions — just neighbors helping neighbors.</p>
 
-      <a class="cta big-cta" href="post.html"><span class="spark"></span> Post a request</a>
+      <a class="btn btn-primary" href="post.html">Post a request</a>
 
     </section>
 
@@ -146,31 +132,31 @@ footer{color:#6b7683;text-align:center;padding:26px 0}
 
     <section class="grid">
 
-      <div class="card">
+      <div class="panel card">
 
         <h3>How it works</h3>
 
-        <ol style="margin:8px 0 0 18px">
+        <ol class="list">
 
-          <li>Tell us what you need (title, details, date, area).</li>
+          <li>Describe the task (title, details, date, area).</li>
 
           <li>We route it to nearby helpers instantly.</li>
 
-          <li>You coordinate directly, then mark it done.</li>
+          <li>You coordinate directly, then mark it done — that’s it.</li>
 
         </ol>
 
       </div>
 
-      <div class="card">
+      <div class="panel card">
 
-        <h3>Why Help Around You?</h3>
+        <h3>Why us?</h3>
 
-        <ul style="margin:8px 0 0 18px">
+        <ul class="list">
 
-          <li>Free to use — no commissions ever.</li>
+          <li>Totally free to use — zero commissions.</li>
 
-          <li>Clean design; clear communication.</li>
+          <li>Simple flows and clear communication.</li>
 
           <li>Privacy-first: share only what’s needed.</li>
 
@@ -178,9 +164,9 @@ footer{color:#6b7683;text-align:center;padding:26px 0}
 
         <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
 
-          <a class="pill" href="requests.html">See recent</a>
+          <a class="btn btn-ghost" href="requests.html">See recent</a>
 
-          <a class="pill" href="https://buy.stripe.com/test_00" target="_blank" rel="noopener">Donate</a>
+          <a class="btn btn-ghost" href="#" onclick="window.open('https://buy.stripe.com/test_00','_blank')">Donate</a>
 
         </div>
 
@@ -192,7 +178,7 @@ footer{color:#6b7683;text-align:center;padding:26px 0}
 
 
 
-  <footer>© 2025 Help Around You — Free to use. Built with care for our community.</footer>
+  <footer>© 2025 Help Around You · Free to use. Built with care for our community.</footer>
 
 </body>
 
