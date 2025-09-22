@@ -1,56 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8"/>
 
-<title>HelpAroundYou — Simple Local Help</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help Around You — Simple local help</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
-  :root{--bg:#f6fbff;--ink:#0f172a;--sub:#475569;--brand:#1a9f53;--brand-ink:#0f6c3a;--card:#fff;--stroke:#e2e8f0}
+:root{
 
-  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+  --green:#18A355; --green-600:#118246; --ink:#0f172a; --muted:#556276;
 
-  .wrap{max-width:1000px;margin:auto;padding:22px}
+  --sky:#EAF5FF; --surface:#F7FAFC; --radius:16px; --shadow:0 10px 30px rgba(15,23,42,.08);
 
-  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+}
 
-  .hgroup{display:flex;align-items:center;gap:12px}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:#fff}
 
-  .logo{width:44px;height:44px}
+.container{max-width:1080px;margin:0 auto;padding:24px}
 
-  .brand{font-weight:900;font-size:22px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
 
-  .brand .around{color:var(--brand)}
+.brand{display:flex;align-items:center;gap:14px}
 
-  .btn{appearance:none;border:0;border-radius:999px;padding:12px 18px;font-weight:800;cursor:pointer}
+.logo{
 
-  .btn-primary{background:var(--brand);color:#fff}
+  width:58px;height:58px;border-radius:50%;
 
-  .btn-primary:hover{background:var(--brand-ink)}
+  background:
 
-  .hero h1{font-size:38px;line-height:1.15;margin:0 0 10px}
+    radial-gradient(circle at 30% 30%, #A6EAC0 0 28px, #7FDB91 28px 60px),
 
-  .muted{color:var(--sub);margin:0 0 18px}
+    radial-gradient(circle at 73% 68%, #18A355 0 9px, #18A35500 10px);
 
-  .cta{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+  box-shadow:inset 0 0 0 5px #CFEAFF;
 
-  .grid{display:grid;gap:16px}
+}
 
-  @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+h1{margin:0;font-weight:800;letter-spacing:.2px}
 
-  .card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(2,15,31,.06)}
+h1 .around{color:var(--green)} /* Help Around You */
 
-  details{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:10px 14px}
+nav a.btn{display:inline-block;padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:600}
 
-  summary{cursor:pointer;font-weight:800;outline:none}
+.btn-primary{background:var(--green);color:#fff}.btn-primary:hover{background:var(--green-600)}
 
-  footer{padding:32px 0;color:var(--sub);text-align:center}
+.btn-ghost{background:#eef2f6;color:var(--ink)}
+
+/* hero */
+
+.hero{padding:28px 0 10px}
+
+.title{font-size:42px;line-height:1.1;margin:0 0 12px}
+
+.sub{color:var(--muted);margin:0 0 18px;max-width:720px}
+
+.actions{display:flex;gap:12px}
+
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+
+.accordion details{background:#fff;border-radius:14px;padding:12px 16px;box-shadow:var(--shadow)}
+
+.accordion details+details{margin-top:12px}
+
+.accordion summary{cursor:pointer;font-weight:600}
+
+/* footer */
+
+footer{color:#6b7280;text-align:center;padding:28px 0}
+
+@media(max-width:900px){.grid{grid-template-columns:1fr} .title{font-size:32px}}
 
 </style>
 
@@ -58,47 +88,41 @@
 
 <body>
 
-  <div class="wrap">
+  <header class="container">
 
-    <header>
+    <div class="brand">
 
-      <div class="hgroup">
+      <div class="logo" aria-hidden="true"></div>
 
-        <!-- نفس الشعار لكن أكبر قليلاً -->
+      <h1>Help <span class="around">Around</span> You</h1>
 
-        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+    </div>
 
-          <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#cdefff"/><stop offset="1" stop-color="#a9defb"/></linearGradient></defs>
+    <nav>
 
-          <circle cx="32" cy="32" r="30" fill="url(#g)"/>
+      <a class="btn-ghost btn" href="requests.html">See requests</a>
 
-          <circle cx="24" cy="40" r="7" fill="#1a9f53"/>
+      <a class="btn-primary btn" href="post.html">Post a request</a>
 
-          <path d="M24 33c10-11 21-7 21 4" fill="none" stroke="#1a9f53" stroke-width="5" stroke-linecap="round"/>
+    </nav>
 
-        </svg>
-
-        <div class="brand">Help <span class="around">Around</span> You</div>
-
-      </div>
-
-      <a class="btn btn-primary" href="/post.html">Post a Request</a>
-
-    </header>
+  </header>
 
 
+
+  <main class="container">
 
     <section class="hero">
 
-      <h1>Get reliable local help — simple, safe, on your schedule.</h1>
+      <h2 class="title">Get reliable local help — simple, safe, on your schedule.</h2>
 
-      <p class="muted">From small fixes to quick pickups, we connect you with trusted local doers. No middlemen, no commissions — just neighbors helping neighbors in a lightweight, respectful way.</p>
+      <p class="sub">From small fixes to quick pickups, we connect you with trusted local doers. No middlemen, no commissions — just neighbors helping neighbors in a lightweight, respectful way.</p>
 
-      <div class="cta">
+      <div class="actions">
 
-        <a class="btn btn-primary" href="/post.html">Post a Request</a>
+        <a class="btn-primary btn" href="post.html">Post a request</a>
 
-        <a class="btn" href="#how">How it works</a>
+        <a class="btn-ghost btn" href="#how">How it works</a>
 
       </div>
 
@@ -106,15 +130,15 @@
 
 
 
-    <div class="grid">
+    <section class="grid" style="margin-top:8px">
 
       <div class="card">
 
         <h3>Ready to book?</h3>
 
-        <p>It takes less than a minute. Your request is routed instantly.</p>
+        <p>It takes less than a minute. Your request is routed instantly to nearby helpers.</p>
 
-        <a class="btn btn-primary" href="/post.html">Post a Request</a>
+        <a class="btn-primary btn" href="post.html">Post a request</a>
 
       </div>
 
@@ -126,27 +150,27 @@
 
           <li>No commissions — totally free to use.</li>
 
-          <li>Simple requests; clear communication.</li>
+          <li>Simple requests and clear communication.</li>
 
-          <li>Built for comfort: share only what’s needed.</li>
+          <li>Share only what’s needed. Built for comfort.</li>
 
         </ul>
 
       </div>
 
-    </div>
+    </section>
 
 
 
-    <div id="how" style="margin-top:18px" class="grid">
+    <section id="how" class="accordion" style="margin-top:20px">
 
       <details open>
 
         <summary>How it works</summary>
 
-        <ol>
+        <ol style="margin:12px 0 0 18px">
 
-          <li>Post what you need (title, details, date, location).</li>
+          <li>Tell us what you need (title, details, date, area).</li>
 
           <li>Your request reaches nearby helpers instantly.</li>
 
@@ -156,43 +180,41 @@
 
       </details>
 
-
-
-      <details>
+      <details style="margin-top:12px">
 
         <summary>What you can request</summary>
 
-        <ul>
+        <ul style="margin:12px 0 0 18px">
 
-          <li>Moving &amp; pickup with truck</li>
+          <li>Moving & pickup with truck</li>
 
-          <li>Cleaning &amp; lawn care</li>
+          <li>Cleaning & lawn care</li>
 
-          <li>Custom tasks &amp; small fixes</li>
+          <li>Small fixes & custom tasks</li>
 
-          <li>Upload a photo &amp; choose a date</li>
+          <li>Upload photos & choose a date</li>
 
         </ul>
 
       </details>
 
+    </section>
+
+
+
+    <div style="margin-top:16px">
+
+      <a class="btn-ghost btn" href="requests.html">See recent requests</a>
+
+      <a class="btn-ghost btn" href="https://buy.stripe.com/test_00" target="_blank" rel="noopener">Donate</a>
+
     </div>
 
-
-
-    <div style="margin-top:18px">
-
-      <a class="btn" href="/requests.html">See recent requests</a>
-
-      <a class="btn" href="https://www.buymeacoffee.com/" target="_blank" rel="noopener">Donate</a>
-
-    </div>
+  </main>
 
 
 
-    <footer>© 2025 HelpAroundYou · Built with care for our community</footer>
-
-  </div>
+  <footer>© 2025 Help Around You · Free to use. Built with care for our community</footer>
 
 </body>
 
