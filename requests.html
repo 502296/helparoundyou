@@ -1,42 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-<title>Recent Requests — HelpAroundYou</title>
+<title>Recent Requests — Help Around You</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
-  :root{--bg:#f6fbff;--ink:#0f172a;--sub:#475569;--brand:#1a9f53;--card:#fff;--stroke:#e2e8f0}
+:root{--green:#18A355;--ink:#0f172a;--muted:#556276;--surface:#F7FAFC;--shadow:0 10px 30px rgba(15,23,42,.08);--radius:16px}
 
-  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
 
-  .wrap{max-width:1000px;margin:auto;padding:22px}
+.container{max-width:980px;margin:0 auto;padding:24px}
 
-  header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 
-  .logo{width:40px;height:40px}
+.logo{width:54px;height:54px;border-radius:50%;
 
-  .brand{font-weight:900;font-size:20px}
+  background:radial-gradient(circle at 30% 30%, #A6EAC0 0 26px, #7FDB91 26px 56px),
 
-  .brand .around{color:var(--brand)}
+             radial-gradient(circle at 73% 68%, #18A355 0 8px, #18A35500 10px);
 
-  h1{margin:8px 0 16px}
+  box-shadow:inset 0 0 0 4px #CFEAFF;}
 
-  .grid{display:grid;gap:14px}
+h1{margin:0;font-weight:800} h1 .around{color:var(--green)}
 
-  @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+.list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-  .card{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:16px}
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
 
-  .muted{color:var(--sub);font-size:14px}
+small{color:var(--muted)}
 
-  .chip{display:inline-block;padding:3px 8px;border-radius:999px;background:#eaf7ef;color:#0f6c3a;font-weight:700;font-size:12px}
+@media(max-width:900px){.list{grid-template-columns:1fr}}
 
 </style>
 
@@ -44,33 +44,23 @@
 
 <body>
 
-  <div class="wrap">
+  <div class="container">
 
     <header>
 
-      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+      <div class="logo" aria-hidden="true"></div>
 
-        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#cdefff"/><stop offset="1" stop-color="#a9defb"/></linearGradient></defs>
-
-        <circle cx="32" cy="32" r="30" fill="url(#g)"/>
-
-        <circle cx="24" cy="40" r="7" fill="#1a9f53"/>
-
-        <path d="M24 33c10-11 21-7 21 4" fill="none" stroke="#1a9f53" stroke-width="5" stroke-linecap="round"/>
-
-      </svg>
-
-      <div class="brand">Help <span class="around">Around</span> You</div>
+      <h1>Help <span class="around">Around</span> You</h1>
 
     </header>
 
 
 
-    <h1>Recent Requests</h1>
+    <h2 style="margin:0 0 14px">Recent Requests</h2>
 
-    <div id="list" class="grid"></div>
+    <div id="list" class="list"></div>
 
-    <p id="empty" class="muted" style="display:none">No requests yet.</p>
+    <p id="empty" style="display:none;color:#6b7280">No requests yet.</p>
 
   </div>
 
@@ -78,25 +68,33 @@
 
 <script>
 
-const WEBAPP = 'YOUR_WEB_APP_URL'; // نفس رابط الويب آب
+const API = "YOUR_GAS_WEB_APP_URL"; // نفس رابط الويب-آب
+
+const list = document.getElementById('list');
+
+const empty = document.getElementById('empty');
 
 
 
-async function load() {
+(async ()=>{
 
-  const box = document.getElementById('list');
+  try{
 
-  const empty = document.getElementById('empty');
+    const res = await fetch(API + '?limit=50');
 
-  try {
+    const data = await res.json();
 
-    const r = await fetch(`${WEBAPP}?list=1&limit=24`);
+    if(!data.ok) throw new Error('API error');
 
-    const j = await r.json();
 
-    if (!j.ok || !j.items.length){ empty.style.display='block'; return; }
 
-    j.items.forEach(item=>{
+    if(!data.items.length){ empty.style.display='block'; return; }
+
+
+
+    data.items.forEach(it=>{
+
+      const d = new Date(it.timestamp);
 
       const el = document.createElement('div');
 
@@ -104,37 +102,35 @@ async function load() {
 
       el.innerHTML = `
 
-        <div style="display:flex;justify-content:space-between;gap:8px;align-items:center">
+        <h3 style="margin:0 0 6px">${escapeHtml(it.title||'Untitled')}</h3>
 
-          <strong>${escapeHtml(item.title || '(Untitled)')}</strong>
+        <small>${d.toLocaleString()} — ${escapeHtml(it.category||'')}</small>
 
-          <span class="chip">${escapeHtml(item.category || 'Other')}</span>
+        <p style="margin:8px 0 0">${escapeHtml(it.description||'')}</p>
 
-        </div>
+        <p style="margin:6px 0 0"><strong>Area:</strong> ${escapeHtml(it.location||'')}</p>
 
-        <div class="muted">${escapeHtml(item.location || '')} · ${escapeHtml(item.dateNeeded || '')}</div>
-
-        <p>${escapeHtml(item.description || '')}</p>
-
-        ${item.fileUrl ? `<a href="${item.fileUrl}" target="_blank" rel="noopener">View attachment</a>` : ''}
+        ${it.fileUrl ? `<p style="margin:6px 0 0"><a href="${it.fileUrl}" target="_blank" rel="noopener">View attachment</a></p>` : ''}
 
       `;
 
-      box.appendChild(el);
+      list.appendChild(el);
 
     });
 
-  } catch(err){
+  }catch(err){
 
-    empty.textContent = 'Could not load requests.'; empty.style.display='block';
+    empty.style.display='block';
+
+    empty.textContent = 'Could not load requests.';
 
   }
 
-}
+})();
 
-function escapeHtml(s){return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));}
 
-load();
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
 
 </script>
 
