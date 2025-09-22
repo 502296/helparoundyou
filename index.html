@@ -2,8 +2,6 @@
 
 <html lang="en">
 
-
-
 <head>
 
   <meta charset="UTF-8"/>
@@ -23,6 +21,30 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+
+
+  <style>
+
+    /* تحسينات صغيرة لتوحيد التجربة */
+
+    html { scroll-behavior: smooth; }
+
+    .btn.primary { background: #22a55b; color:#fff; border:0; }
+
+    .btn.ghost { background:#fff; border:1px solid #dcdcdc; }
+
+    .post .form-wrap { display:none; margin-top:1rem; }
+
+    .post.open .form-wrap { display:block; }
+
+    .toggle-row { display:flex; gap:.75rem; align-items:center; }
+
+    .hint { color:#666; font-size:.9rem; }
+
+    .airtable-embed { width:100%; height:800px; background:transparent; border:1px solid #ccc; border-radius:8px; }
+
+  </style>
 
 </head>
 
@@ -50,7 +72,13 @@
 
       <a href="#helpers">Find helpers</a>
 
-      <a href="#post" class="btn pill">Post a help (Free)</a>
+      <!-- زر واحد موحّد لفتح نفس الفورم -->
+
+      <button class="btn pill js-open-form" type="button">
+
+        Post a help (Free)
+
+      </button>
 
     </nav>
 
@@ -82,7 +110,13 @@
 
     <div class="cta-row">
 
-      <a class="btn primary" href="#post"><i class="fa-solid fa-plus"></i> Post a help</a>
+      <!-- نفس السلوك: فتح نفس الفورم -->
+
+      <button class="btn primary js-open-form" type="button">
+
+        <i class="fa-solid fa-plus"></i> Post a help
+
+      </button>
 
       <a class="btn ghost" href="#helpers"><i class="fa-solid fa-users"></i> Find nearby helpers</a>
 
@@ -104,53 +138,55 @@
 
     <div class="grid cards">
 
-      <a class="card" href="#post" aria-label="Leaf and branch removal">
+      <!-- كل الكروت تفتح الفورم نفسه -->
+
+      <button class="card js-open-form" type="button" aria-label="Leaf and branch removal">
 
         <i class="fa-solid fa-leaf"></i>
 
         <h3>Leaf & Branch Removal</h3>
 
-      </a>
+      </button>
 
-      <a class="card" href="#post" aria-label="Pickup with truck">
+      <button class="card js-open-form" type="button" aria-label="Pickup with truck">
 
         <i class="fa-solid fa-truck-pickup"></i>
 
         <h3>Pickup with Truck</h3>
 
-      </a>
+      </button>
 
-      <a class="card" href="#post" aria-label="Furniture move">
+      <button class="card js-open-form" type="button" aria-label="Furniture move">
 
         <i class="fa-solid fa-couch"></i>
 
         <h3>Furniture Move</h3>
 
-      </a>
+      </button>
 
-      <a class="card" href="#post" aria-label="Home cleaning">
+      <button class="card js-open-form" type="button" aria-label="Home cleaning">
 
         <i class="fa-solid fa-broom"></i>
 
         <h3>Cleaning</h3>
 
-      </a>
+      </button>
 
-      <a class="card" href="#post" aria-label="Lawn care">
+      <button class="card js-open-form" type="button" aria-label="Lawn care">
 
         <i class="fa-solid fa-seedling"></i>
 
         <h3>Lawn Care</h3>
 
-      </a>
+      </button>
 
-      <a class="card" href="#post" aria-label="Custom task">
+      <button class="card js-open-form" type="button" aria-label="Custom task">
 
         <i class="fa-solid fa-pen-to-square"></i>
 
         <h3>Custom Task (Other)</h3>
 
-      </a>
+      </button>
 
     </div>
 
@@ -184,29 +220,41 @@
 
   <!-- Post a help -->
 
-  <section id="post" class="section post">
+  <section id="post" class="section post" aria-labelledby="post-title">
 
-    <h2>Post a help</h2>
+    <div class="toggle-row">
+
+      <h2 id="post-title">Post a help</h2>
+
+      <!-- زر إظهار/إخفاء واضح -->
+
+      <button class="btn js-toggle-form" type="button" aria-controls="post-form">
+
+        Open form
+
+      </button>
+
+      <span class="hint">Fill the form to publish your request.</span>
+
+    </div>
 
 
 
-    <!-- Airtable Embed -->
+    <div id="post-form" class="form-wrap">
 
-    <iframe 
+      <!-- Airtable Embed -->
 
-      class="airtable-embed"
+      <iframe
 
-      src="https://airtable.com/embed/appJ86MDtQdDOh289/pagHQurVeMUK6im83/form"
+        class="airtable-embed"
 
-      frameborder="0"
+        src="https://airtable.com/embed/appJ86MDtQdDOh289/pagHQurVeMUK6im83/form"
 
-      width="100%"
+        frameborder="0">
 
-      height="800"
+      </iframe>
 
-      style="background: transparent; border: 1px solid #ccc; border-radius: 8px;">
-
-    </iframe>
+    </div>
 
   </section>
 
@@ -277,6 +325,62 @@
     <p>Community platform — payment happens directly between neighbors.</p>
 
   </footer>
+
+
+
+  <!-- سلوك موحّد لكل الأزرار -->
+
+  <script>
+
+    const postSection = document.querySelector('#post');
+
+    const formWrap = document.querySelector('#post-form');
+
+    const toggleBtn = document.querySelector('.js-toggle-form');
+
+
+
+    function openForm() {
+
+      postSection.classList.add('open');
+
+      formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      toggleBtn.textContent = 'Hide form';
+
+    }
+
+    function closeForm() {
+
+      postSection.classList.remove('open');
+
+      toggleBtn.textContent = 'Open form';
+
+    }
+
+    toggleBtn?.addEventListener('click', () => {
+
+      postSection.classList.contains('open') ? closeForm() : openForm();
+
+    });
+
+
+
+    // كل الأزرار الموحّدة تفتح نفس الفورم
+
+    document.querySelectorAll('.js-open-form').forEach(btn => {
+
+      btn.addEventListener('click', () => {
+
+        if (!postSection.classList.contains('open')) openForm();
+
+        else formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      });
+
+    });
+
+  </script>
 
 </body>
 
