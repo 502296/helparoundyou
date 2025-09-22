@@ -8,61 +8,55 @@
 
 <title>Post a Request — Help Around You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
 
-  --ink:#0e1b2b; --muted:#5d6b7a; --green:#19a857; --green-700:#0e7c3e;
+  --bg:#faf7f2; --ink:#111827; --muted:#6b7280;
 
-  --sky:#eef6ff; --card:#fff; --halo:#bfe8ff; --radius:22px; --shadow:0 18px 40px rgba(14,27,43,.08);
+  --violet:#6c5ce7; --violet-700:#574bd8; --card:#fff;
+
+  --shadow:0 14px 38px rgba(0,0,0,.08); --radius:16px;
 
 }
 
-*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#f7fbff,#eaf4ff);color:var(--ink);
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.container{max-width:860px;margin:0 auto;padding:28px}
 
-.container{max-width:880px;margin:0 auto;padding:28px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:4px}
 
-header{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.logo{width:56px;height:56px;border-radius:12px;background:conic-gradient(from 190deg at 70% 30%, var(--violet), #ff6b6b);
 
-.logo{width:78px;height:78px;border-radius:50%;
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.7), var(--shadow)}
 
-  background:
+h1{margin:0;font-weight:800}
 
-    radial-gradient(circle at 34% 34%, #c9f2da 0 34px, #97e6b7 34px 72px),
+.panel{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:22px}
 
-    radial-gradient(circle at 70% 68%, #22c063 0 12px, #0000 13px);
+label{display:block;margin:12px 0 6px;font-weight:600}
 
-  box-shadow:inset 0 0 0 8px var(--halo), 0 10px 18px rgba(0,0,0,.04);}
-
-h1{font-family:Nunito,Inter,sans-serif;margin:0;font-size:28px} h1 .around{color:#117a3e}
-
-.form{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
-
-label{display:block;font-weight:600;margin:12px 0 6px}
-
-input,select,textarea{width:100%;padding:12px 14px;border-radius:14px;border:1px solid #dfe3ea;font:inherit}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e2da;border-radius:12px;font:inherit}
 
 textarea{min-height:120px;resize:vertical}
 
-.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-.actions{display:flex;gap:12px;margin-top:16px}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}
 
-.btn{border:0;border-radius:999px;padding:12px 20px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--violet);color:#fff;box-shadow:0 10px 24px rgba(108,92,231,.28)}
 
-.btn-primary{background:var(--green);color:#fff}.btn-primary:hover{background:var(--green-700)}
+.btn-primary:hover{background:var(--violet-700)}
 
-.btn-lite{background:#eef2f6}
+.btn-ghost{background:#fff;box-shadow:var(--shadow)}
 
-.alert{margin-top:14px;padding:12px 14px;border-radius:14px;display:none}
+.note{color:var(--muted);margin-top:8px}
 
-.err{background:#fee2e2;color:#991b1b}.ok{background:#e8f8ef;color:#0d6b3d}
+.alert{display:none;margin-top:12px;padding:12px;border-radius:12px}
 
-small{color:var(--muted)}
+.ok{background:#e8f8ef;color:#0d6b3d}.err{background:#fee2e2;color:#991b1b}
 
 </style>
 
@@ -74,21 +68,21 @@ small{color:var(--muted)}
 
   <header>
 
-    <div class="logo" aria-hidden="true"></div>
+    <div class="logo"></div>
 
-    <h1>Help <span class="around">Around</span> You</h1>
+    <h1>Help Around You</h1>
 
   </header>
 
 
 
-  <h2 style="margin:0 0 10px;font-family:Nunito,Inter,sans-serif">Post a request</h2>
+  <h2 style="margin:6px 0 12px">Post a request</h2>
 
-  <p style="margin:0 0 16px;color:var(--muted)">Fill the fields below. A neighbor will reach out to help.</p>
+  <p style="color:#6b7280;margin:0 0 16px">Fill the fields. A neighbor will reach out to help.</p>
 
 
 
-  <form id="f" class="form">
+  <form id="f" class="panel">
 
     <label>Email *</label>
 
@@ -156,11 +150,11 @@ small{color:var(--muted)}
 
 
 
-    <div class="actions">
+    <div style="display:flex;gap:10px;margin-top:14px">
 
       <button class="btn btn-primary" type="submit">Post a request</button>
 
-      <a class="btn btn-lite" href="index.html">Cancel</a>
+      <a class="btn btn-ghost" href="index.html">Cancel</a>
 
     </div>
 
@@ -168,7 +162,7 @@ small{color:var(--muted)}
 
     <div id="msg" class="alert"></div>
 
-    <small>No commissions. Free to use. You can donate anytime ♥</small>
+    <div class="note">No commissions. Free to use. You can donate anytime ♥</div>
 
   </form>
 
@@ -178,7 +172,7 @@ small{color:var(--muted)}
 
 <script>
 
-const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec"; // ← Web App
+const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec";
 
 
 
@@ -196,9 +190,7 @@ form.addEventListener('submit', async (e)=>{
 
     const fd = new FormData(form);
 
-    // لا ترسل حقل ملف فارغ (Safari يعطي File بلا اسم أحياناً)
-
-    const file = fd.get('file'); if(!file || !file.name) fd.delete('file');
+    const file = fd.get('file'); if(!file || !file.name) fd.delete('file'); // لا ترسل ملف فارغ
 
 
 
