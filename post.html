@@ -8,33 +8,43 @@
 
 <title>Post a Request — Help Around You</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
-:root{--green:#18a355;--green-700:#117c40;--ink:#0f172a;--muted:#5b677a;--card:#f7fafc;--shadow:0 12px 28px rgba(15,23,42,.08);--radius:18px}
+:root{
 
-*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
+  --ink:#0e1b2b; --muted:#5d6b7a; --green:#19a857; --green-700:#0e7c3e;
 
-.container{max-width:860px;margin:0 auto;padding:24px}
+  --sky:#eef6ff; --card:#fff; --halo:#bfe8ff; --radius:22px; --shadow:0 18px 40px rgba(14,27,43,.08);
 
-header{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+}
 
-.logo{width:68px;height:68px;border-radius:50%;
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#f7fbff,#eaf4ff);color:var(--ink);
 
-  background:radial-gradient(circle at 34% 34%, #b5f0c9 0 30px, #89e0a3 30px 62px),
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-             radial-gradient(circle at 70% 68%, #18a355 0 10px, #18a35500 11px);
+.container{max-width:880px;margin:0 auto;padding:28px}
 
-  box-shadow:inset 0 0 0 6px #cfe7ff;}
+header{display:flex;align-items:center;gap:16px;margin-bottom:8px}
 
-h1{margin:0;font-weight:800;font-size:26px} h1 .around{color:#0f7a3b}
+.logo{width:78px;height:78px;border-radius:50%;
 
-.form{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+  background:
+
+    radial-gradient(circle at 34% 34%, #c9f2da 0 34px, #97e6b7 34px 72px),
+
+    radial-gradient(circle at 70% 68%, #22c063 0 12px, #0000 13px);
+
+  box-shadow:inset 0 0 0 8px var(--halo), 0 10px 18px rgba(0,0,0,.04);}
+
+h1{font-family:Nunito,Inter,sans-serif;margin:0;font-size:28px} h1 .around{color:#117a3e}
+
+.form{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
 
 label{display:block;font-weight:600;margin:12px 0 6px}
 
-input,select,textarea{width:100%;padding:12px 14px;border:1px solid #dfe3ea;border-radius:14px;font:inherit}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:14px;border:1px solid #dfe3ea;font:inherit}
 
 textarea{min-height:120px;resize:vertical}
 
@@ -42,17 +52,17 @@ textarea{min-height:120px;resize:vertical}
 
 .actions{display:flex;gap:12px;margin-top:16px}
 
-.btn{border:0;border-radius:999px;padding:12px 18px;font-weight:700;cursor:pointer}
+.btn{border:0;border-radius:999px;padding:12px 20px;font-weight:700;cursor:pointer}
 
 .btn-primary{background:var(--green);color:#fff}.btn-primary:hover{background:var(--green-700)}
 
 .btn-lite{background:#eef2f6}
 
-.note{color:var(--muted);font-size:14px}
-
-.alert{margin-top:14px;padding:12px 14px;border-radius:12px;display:none}
+.alert{margin-top:14px;padding:12px 14px;border-radius:14px;display:none}
 
 .err{background:#fee2e2;color:#991b1b}.ok{background:#e8f8ef;color:#0d6b3d}
+
+small{color:var(--muted)}
 
 </style>
 
@@ -72,9 +82,9 @@ textarea{min-height:120px;resize:vertical}
 
 
 
-  <h2 style="margin:0 0 10px">Post a request</h2>
+  <h2 style="margin:0 0 10px;font-family:Nunito,Inter,sans-serif">Post a request</h2>
 
-  <p class="note" style="margin:0 0 16px">Fill the fields below. A neighbor will reach out to help.</p>
+  <p style="margin:0 0 16px;color:var(--muted)">Fill the fields below. A neighbor will reach out to help.</p>
 
 
 
@@ -88,13 +98,13 @@ textarea{min-height:120px;resize:vertical}
 
     <label>Request Title *</label>
 
-    <input name="title" required placeholder="e.g., Move a couch"/>
+    <input name="title" required/>
 
 
 
     <label>Description *</label>
 
-    <textarea name="description" required placeholder="Add helpful details"></textarea>
+    <textarea name="description" required></textarea>
 
 
 
@@ -158,7 +168,7 @@ textarea{min-height:120px;resize:vertical}
 
     <div id="msg" class="alert"></div>
 
-    <p class="note">No commissions. Free to use. Donate any time to support the community ♥</p>
+    <small>No commissions. Free to use. You can donate anytime ♥</small>
 
   </form>
 
@@ -168,7 +178,7 @@ textarea{min-height:120px;resize:vertical}
 
 <script>
 
-const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec"; // ← ضع/ثبّت رابطك
+const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec"; // ← Web App
 
 
 
@@ -186,9 +196,9 @@ form.addEventListener('submit', async (e)=>{
 
     const fd = new FormData(form);
 
-    const file = fd.get('file');
+    // لا ترسل حقل ملف فارغ (Safari يعطي File بلا اسم أحياناً)
 
-    if (!file || (file && !file.name)) fd.delete('file'); // لا ترسل حقل فارغ
+    const file = fd.get('file'); if(!file || !file.name) fd.delete('file');
 
 
 
@@ -196,9 +206,7 @@ form.addEventListener('submit', async (e)=>{
 
     const data = await res.json().catch(()=>({ok:false,error:'Bad JSON'}));
 
-
-
-    if (!res.ok || !data.ok) throw new Error(data.error || ('HTTP '+res.status));
+    if(!res.ok || !data.ok) throw new Error(data.error || ('HTTP '+res.status));
 
 
 
