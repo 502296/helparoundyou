@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
 
@@ -8,159 +8,101 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>HelpAroundYou — Simple, Safe, Local Help</title>
+<title>HelpAroundYou</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
 <style>
 
   :root{
 
-    --bg:#f6fbff;         /* سماوي فاتح */
+    --bg:#f5fbff; --card:#ffffff; --text:#0b1723; --muted:#5b6b7a;
 
-    --panel:#ffffff;
-
-    --ink:#0f172a;        /* رمادي مزرق داكن */
-
-    --muted:#5b6b7a;
-
-    --brand:#16a34a;      /* أخضر أساسي */
-
-    --brand-ink:#0b5b2a;
-
-    --chip:#e8f6ee;
-
-    --ring:rgba(22,163,74,.22);
-
-    --border:#e6edf3;
+    --brand:#24a259; --brandDark:#1E7B34; --ring:rgba(36,162,89,.25);
 
   }
 
   *{box-sizing:border-box}
 
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+  body{margin:0;background:var(--bg);color:var(--text);
 
-  a{color:inherit}
+       font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-  .wrap{max-width:1080px;margin:0 auto;padding:18px 20px}
+  a{color:inherit;text-decoration:none}
 
-  /* Header */
+  header,main,footer{max-width:980px;margin:auto;padding:20px}
 
-  header{
+  /* Brand */
 
-    position:sticky;top:0;z-index:50;
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px}
 
-    background:rgba(246,251,255,.9);
+  .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;
 
-    border-bottom:1px solid var(--border);
+         font-size:1.45rem;letter-spacing:.2px}
 
-    backdrop-filter:saturate(140%) blur(6px);
+  .brand .bud{width:42px;height:42px;border-radius:50%;
 
-  }
+    background:linear-gradient(145deg,#28a745,#b4f1c1);
 
-  .row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    position:relative;box-shadow:0 8px 18px rgba(40,167,69,.26)}
 
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+  .brand .bud:before,.brand .bud:after{content:"";position:absolute;background:#fff;border-radius:50%}
 
-  .brand svg{width:28px;height:28px}
+  .brand .bud:before{width:9px;height:9px;left:12px;top:10px}
 
-  .cta{display:inline-flex;gap:10px;align-items:center;justify-content:center;
+  .brand .bud:after{width:16px;height:16px;right:9px;bottom:9px;opacity:.92}
 
-       background:var(--brand);color:#fff;font-weight:700;border:none;
+  .brand .name .around{color:var(--brandDark)}
 
-       padding:10px 14px;border-radius:10px;text-decoration:none;
+  /* Buttons */
 
-       box-shadow:0 6px 20px rgba(22,163,74,.25);transition:transform .08s ease, box-shadow .08s ease;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;border:none;border-radius:999px;
 
-  .cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(22,163,74,.28)}
+       padding:11px 18px;font-weight:800;cursor:pointer}
 
-  .cta:active{transform:translateY(0)}
+  .btn-primary{background:var(--brand);color:#fff}
+
+  .btn-ghost{background:#e9f6ee;color:var(--brandDark)}
+
+  .btn:hover{filter:brightness(.98)}
+
+  .nav-actions{display:flex;gap:10px;flex-wrap:wrap}
 
   /* Hero */
 
-  .hero{padding:26px 0}
+  .hero{padding:18px 20px 6px}
 
-  .hero h1{margin:0 0 10px;font-size:34px;line-height:1.15}
+  .hero h1{margin:.4rem 0 .6rem;font-size:34px;line-height:1.2}
 
-  .hero p{margin:0;color:var(--muted);max-width:52ch}
+  .lead{color:var(--muted);max-width:700px;margin:0 0 16px}
 
-  .hero-actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 
-  /* Cards */
+  /* Grid cards */
 
-  .card{
+  .grid{display:grid;gap:16px;grid-template-columns:1fr 1fr}
 
-    background:var(--panel);
+  @media (max-width:840px){.grid{grid-template-columns:1fr}}
 
-    border:1px solid var(--border);
+  .card{background:var(--card);border-radius:14px;padding:18px 16px;
 
-    border-radius:14px;
+        box-shadow:0 10px 30px rgba(16,30,54,.06);border:1px solid #e9eef3}
 
-    padding:18px;
+  .card h3{margin:.2rem 0 .4rem}
 
-    box-shadow:0 8px 28px rgba(2,14,32,.05);
+  .muted{color:var(--muted)}
 
-  }
+  /* Accordions */
 
-  .grid{display:grid;gap:16px}
+  details{background:var(--card);border:1px solid #e9eef3;border-radius:12px;
 
-  @media(min-width:900px){ .grid{grid-template-columns:1.2fr .9fr} }
+          padding:10px 14px}
 
-  h2{margin:0 0 10px;font-size:20px}
+  summary{cursor:pointer;font-weight:800}
 
-  small.muted{color:var(--muted)}
+  /* Footer */
 
-  /* Collapsible */
-
-  .collapse{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel)}
-
-  .collapse summary{
-
-    cursor:pointer;list-style:none;padding:14px 16px;font-weight:700;display:flex;align-items:center;gap:10px;
-
-  }
-
-  .collapse summary::marker{display:none}
-
-  .chev{transition:transform .15s ease}
-
-  details[open] .chev{transform:rotate(180deg)}
-
-  .collapse .body{padding:0 16px 14px 16px;border-top:1px dashed var(--border);color:var(--muted)}
-
-  /* Chips */
-
-  .chips{display:flex;flex-wrap:wrap;gap:10px}
-
-  .chip{
-
-    background:var(--chip);border:1px solid #d8f0e2;color:var(--brand-ink);
-
-    padding:8px 12px;border-radius:999px;font-weight:600;font-size:14px;
-
-  }
-
-  /* Booking block */
-
-  .booking{display:flex;flex-direction:column;gap:10px}
-
-  .book-card{
-
-    border:1px solid var(--border);border-radius:14px;background:var(--panel);
-
-    padding:18px;box-shadow:0 8px 28px rgba(2,14,32,.05);
-
-  }
-
-  .book-card p{margin:6px 0;color:var(--muted)}
-
-  .subtle{background:#eef7ff;border:1px solid #d7e8f7;color:#1f3b57;padding:8px 12px;border-radius:10px;font-weight:600}
-
-  footer{padding:26px 0;color:var(--muted);text-align:center}
-
-  .donate{background:#0ea5e9;color:#fff}
+  footer{color:var(--muted);font-size:.95rem}
 
 </style>
 
@@ -168,63 +110,47 @@
 
 <body>
 
+<header class="topbar">
 
+  <a class="brand" href="/">
 
-<header>
+    <span class="bud" aria-hidden="true"></span>
 
-  <div class="wrap row">
+    <span class="name">Help<span class="around">Around</span>You</span>
 
-    <div class="brand">
+  </a>
 
-      <!-- Sprout Logo -->
+  <nav class="nav-actions">
 
-      <svg viewBox="0 0 64 64" aria-hidden="true">
+    <a class="btn btn-primary" href="post.html">Post a Request</a>
 
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs>
+    <a class="btn btn-ghost" href="https://www.buymeacoffee.com/" target="_blank" rel="noopener">Donate</a>
 
-        <circle cx="32" cy="32" r="30" fill="#eaf8ef"/>
-
-        <path d="M32 46c0-10 2-16 8-22 5-5 12-6 17-6-1 5-2 12-7 17-6 6-12 8-18 8z" fill="url(#g)"/>
-
-        <path d="M32 46c0-8-2-14-8-20-5-5-12-6-17-6 1 5 2 12 7 17 6 6 12 8 18 9z" fill="#34d399"/>
-
-        <path d="M32 18v28" stroke="#0b5b2a" stroke-width="3" stroke-linecap="round"/>
-
-      </svg>
-
-      <span>HelpAroundYou</span>
-
-    </div>
-
-    <nav class="row" style="gap:10px">
-
-      <a class="cta" href="./post.html">Post a Request</a>
-
-      <a class="cta donate" target="_blank" rel="noopener" href="https://www.paypal.com/donate">Donate</a>
-
-    </nav>
-
-  </div>
+  </nav>
 
 </header>
 
 
 
-<main class="wrap">
-
-  <!-- HERO -->
+<main>
 
   <section class="hero">
 
     <h1>Get reliable local help — simple, safe, on your schedule.</h1>
 
-    <p>From small fixes to quick pickups, we connect you with trusted local doers. No middlemen, no commissions — just neighbors helping neighbors in a lightweight, respectful way.</p>
+    <p class="lead">
 
-    <div class="hero-actions">
+      From small fixes to quick pickups, we connect you with trusted local doers.
 
-      <a class="cta" href="./post.html">Post a Request</a>
+      No middlemen, no commissions — just neighbors helping neighbors in a lightweight, respectful way.
 
-      <a class="subtle" href="#how">How it works</a>
+    </p>
+
+    <div class="cta">
+
+      <a class="btn btn-primary" href="post.html">Post a Request</a>
+
+      <a class="btn btn-ghost" href="#how">How it works</a>
 
     </div>
 
@@ -232,107 +158,81 @@
 
 
 
-  <div class="grid">
+  <section class="grid" style="margin-top:16px">
 
-    <!-- LEFT: How it works (collapsible) + What you can request -->
+    <div class="card">
 
-    <section class="grid-col">
+      <h3>Ready to book?</h3>
 
-      <details id="how" class="collapse">
+      <p class="muted">It takes less than a minute. Your request is routed instantly.</p>
 
-        <summary>
+      <a class="btn btn-primary" href="post.html">Post a Request</a>
 
-          <span class="chev">▾</span> How it works
+      <p class="muted" style="margin-top:10px">Prefer to preview? You can open the form in a new tab on the next page.</p>
 
-        </summary>
-
-        <div class="body">
-
-          <ol style="margin:10px 0 0 18px">
-
-            <li><strong>Post</strong> your request with the task, date, and (optionally) a photo.</li>
-
-            <li><strong>Route</strong> we notify nearby helpers instantly by email.</li>
-
-            <li><strong>Agree</strong> on time & details directly with a helper. Mark it done when completed.</li>
-
-          </ol>
-
-          <p style="margin:10px 0 0">The platform is <strong>free</strong> — we don’t take any cuts. If you’d like to support the project, you can leave a small donation.</p>
-
-        </div>
-
-      </details>
+    </div>
 
 
 
-      <details class="collapse" style="margin-top:14px">
+    <div class="card">
 
-        <summary><span class="chev">▾</span> What you can request</summary>
+      <h3>Why HelpAroundYou?</h3>
 
-        <div class="body">
+      <ul class="muted" style="margin-top:.4rem">
 
-          <div class="chips" style="margin-top:10px">
+        <li>No commissions — totally free to use.</li>
 
-            <span class="chip">Moving / Pickup with truck</span>
+        <li>Simple requests; clear communication.</li>
 
-            <span class="chip">Cleaning</span>
+        <li>Built for comfort: share only what’s needed.</li>
 
-            <span class="chip">Lawn care</span>
+      </ul>
 
-            <span class="chip">Small fixes</span>
+    </div>
 
-            <span class="chip">Custom task</span>
-
-            <span class="chip">Upload photos & choose a date</span>
-
-          </div>
-
-        </div>
-
-      </details>
-
-    </section>
+  </section>
 
 
 
-    <!-- RIGHT: Booking -->
+  <section id="how" style="margin-top:16px;display:grid;gap:12px">
 
-    <aside class="booking">
+    <details>
 
-      <div class="book-card">
+      <summary>How it works</summary>
 
-        <h2>Ready to book?</h2>
+      <ol class="muted" style="margin:8px 0 0 18px">
 
-        <p>It takes less than a minute. Your request is routed instantly.</p>
+        <li><b>Post.</b> Share what you need, where, and when.</li>
 
-        <a class="cta" href="./post.html">Post a Request</a>
+        <li><b>Route.</b> We notify nearby helpers instantly.</li>
 
-        <p class="small muted" style="margin-top:8px">Prefer to preview first? You can open the form in a new tab from the next page.</p>
+        <li><b>Help.</b> A helper messages you to coordinate and complete the task.</li>
 
-      </div>
+      </ol>
+
+    </details>
 
 
 
-      <div class="card">
+    <details>
 
-        <h2>Why HelpAroundYou?</h2>
+      <summary>What you can request</summary>
 
-        <ul style="margin:8px 0 0 18px;color:var(--muted)">
+      <ul class="muted" style="margin:8px 0 0 18px">
 
-          <li>No commissions — totally free to use.</li>
+        <li>Moving &amp; pickup with truck</li>
 
-          <li>Simple requests; clear communication.</li>
+        <li>Cleaning &amp; lawn care</li>
 
-          <li>Built for comfort: you share only what’s needed.</li>
+        <li>Custom tasks &amp; small fixes</li>
 
-        </ul>
+        <li>Upload photos &amp; choose a date</li>
 
-      </div>
+      </ul>
 
-    </aside>
+    </details>
 
-  </div>
+  </section>
 
 </main>
 
@@ -340,15 +240,9 @@
 
 <footer>
 
-  <div class="wrap">
-
-    © 2025 HelpAroundYou · Built with care for our community
-
-  </div>
+  © 2025 HelpAroundYou · Built with care for our community
 
 </footer>
-
-
 
 </body>
 
