@@ -4,39 +4,45 @@
 
 <head>
 
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
 
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>HelpAroundYou — Post</title>
+  <title>Post a request — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css" />
+
+  <script>
+
+    // عدّل هذا إلى رابط الويب الخاص بك:
+
+    const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+
+  </script>
 
 </head>
 
 <body>
 
-  <header class="container header">
+  <header class="site-header">
 
-    <a class="brand" href="./">
+    <a class="brand" href="/">
 
-      <svg viewBox="0 0 64 64" aria-hidden="true">
+      <svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" aria-hidden="true">
 
-        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#C7C4FF"/><stop offset="1" stop-color="#7C73FF"/></linearGradient></defs>
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
 
-        <circle cx="32" cy="32" r="28" fill="url(#g)"/><circle cx="23" cy="38" r="6" fill="#fff" opacity=".95"/>
-
-        <path d="M44 18c-6 1-10 5-12 10 6-3 11-2 16 1-1-5-2-8-4-11z" fill="#fff" opacity=".95"/>
+        <circle cx="32" cy="32" r="28" fill="url(#g2)"/><circle cx="22" cy="42" r="7" fill="#fff" opacity=".95"/><path d="M46 26c0 6-12 2-12 2s6-8 12-8v6z" fill="#fff" opacity=".95"/>
 
       </svg>
 
-      <div class="name"><span class="tight">Help</span><span class="accent">Around</span><span class="tight">You</span></div>
+      <span class="brand-name"><strong>Help</strong><strong>Around</strong><strong>You</strong></span>
 
     </a>
 
-    <nav class="actions">
+    <nav class="top-actions">
 
-      <a class="btn btn-soft" href="requests.html">See requests</a>
+      <a class="btn ghost" href="requests.html">See requests</a>
 
     </nav>
 
@@ -44,51 +50,37 @@
 
 
 
-  <main class="container">
+  <main class="page-narrow">
 
-    <h1 style="font-size:30px;margin:8px 0 16px">Post a request</h1>
+    <h1>Post a request</h1>
 
+    <form id="requestForm" class="card form-grid">
 
+      <label>Email <small>We’ll send updates here</small>
 
-    <form id="reqForm" class="card form">
+        <input name="email" type="email" placeholder="you@example.com" required>
 
-      <div id="msg" style="display:none" class="alert"></div>
-
-
-
-      <div class="field">
-
-        <label class="label">Email <small>We’ll send updates here</small></label>
-
-        <input class="input" type="email" name="email" required placeholder="you@example.com"/>
-
-      </div>
+      </label>
 
 
 
-      <div class="field">
+      <label>Request Title *
 
-        <label class="label">Request Title *</label>
+        <input name="title" required placeholder="e.g., Need help moving couch">
 
-        <input class="input" type="text" name="title" required placeholder="e.g., Need help moving couch"/>
-
-      </div>
+      </label>
 
 
 
-      <div class="field">
+      <label>Description *
 
-        <label class="label">Description *</label>
+        <textarea name="description" required placeholder="Add details that help the neighbor understand the task"></textarea>
 
-        <textarea name="description" required placeholder="Add details that help the neighbor understand the task."></textarea>
-
-      </div>
+      </label>
 
 
 
-      <div class="field">
-
-        <label class="label">Category *</label>
+      <label>Category *
 
         <select name="category" required>
 
@@ -102,69 +94,61 @@
 
           <option>Lawn Care</option>
 
-          <option>Small Fix</option>
-
           <option>Custom Task</option>
 
         </select>
 
-      </div>
+      </label>
 
 
 
-      <div class="field inline">
+      <div class="two-col">
 
-        <div>
+        <label>Location (zip or area) *
 
-          <label class="label">Location (zip or area) *</label>
+          <input name="location" required placeholder="e.g., 40218">
 
-          <input class="input" name="location" required placeholder="e.g., 40218"/>
+        </label>
 
-        </div>
 
-        <div>
 
-          <label class="label">Date needed *</label>
+        <label>Date needed *
 
-          <input class="input" type="date" name="date" required/>
+          <input name="date" type="date" required>
 
-        </div>
+        </label>
 
       </div>
 
 
 
-      <div class="field">
+      <label>Contact Info (optional) <small>Phone or preferred method</small>
 
-        <label class="label">Contact Info (optional) <small>Phone or preferred method</small></label>
+        <input name="contact" placeholder="(optional)">
 
-        <input class="input" name="contact" placeholder="(optional)"/>
-
-      </div>
+      </label>
 
 
 
-      <div class="field">
+      <label>Photo / File (optional)
 
-        <label class="label">Photo / File (optional)</label>
+        <input name="file" type="file" accept="image/*,.pdf,.jpg,.png">
 
-        <input class="input" type="file" name="file" accept="image/*,application/pdf"/>
+        <small>Helps the helper understand the task (max ~10MB).</small>
 
-        <p class="hint">Helps the helper understand the task (max ~10MB).</p>
-
-      </div>
+      </label>
 
 
 
       <div class="form-actions">
 
-        <button class="btn btn-primary" type="submit" id="submitBtn">Submit request</button>
+        <button class="btn primary" type="submit">Submit Request</button>
 
-        <a class="btn btn-soft" href="./">Cancel</a>
+        <a class="btn ghost" href="/">Cancel</a>
+
+        <span id="status" class="form-status" role="status"></span>
 
       </div>
-
-      <p class="hint">No commissions. Free to use. Donate any time to support the community ♥</p>
 
     </form>
 
@@ -172,69 +156,49 @@
 
 
 
+  <footer class="site-footer">No commissions. Free to use. Donate any time to support the community ♥</footer>
+
+
+
   <script>
 
-    // 🔗 ضع رابط السكربت هنا:
+    const form = document.getElementById('requestForm');
 
-    const WEB_APP_URL = "PUT_YOUR_WEB_APP_URL_HERE";
-
-
-
-    const f = document.getElementById('reqForm');
-
-    const msg = document.getElementById('msg');
-
-    const submitBtn = document.getElementById('submitBtn');
+    const statusEl = document.getElementById('status');
 
 
 
-    f.addEventListener('submit', async (e)=>{
+    form.addEventListener('submit', async (e) => {
 
       e.preventDefault();
 
-      msg.style.display='none';
+      statusEl.textContent = 'Submitting…';
 
-      submitBtn.disabled = true; submitBtn.textContent='Submitting…';
-
-
-
-      try{
-
-        const fd = new FormData(f);
-
-        // اسماء الحقول كما يتوقعها السكربت (عدّلها إذا سكربتك يستخدم مفاتيح مختلفة):
-
-        // email, title, description, category, location, date, contact, file
+      const fd = new FormData(form);
 
 
 
-        const res = await fetch(WEB_APP_URL, { method:'POST', body: fd });
+      try {
 
-        if(!res.ok){ throw new Error('HTTP '+res.status); }
+        const res = await fetch(WEB_APP_URL, { method: 'POST', body: fd });
+
+        if (!res.ok) throw new Error('Network response not ok');
 
         const data = await res.json().catch(()=>({ok:true}));
 
+        if (data.ok === false) throw new Error(data.message || 'Server error');
 
 
-        msg.className='alert alert-ok';
 
-        msg.textContent='Your request has been submitted. Thanks!';
+        statusEl.textContent = '✅ Request submitted!';
 
-        msg.style.display='block';
+        form.reset();
 
-        f.reset();
+      } catch (err) {
 
-      }catch(err){
+        console.error(err);
 
-        msg.className='alert alert-err';
-
-        msg.textContent='Sorry — something went wrong. Please try again.';
-
-        msg.style.display='block';
-
-      }finally{
-
-        submitBtn.disabled = false; submitBtn.textContent='Submit request';
+        statusEl.textContent = '❌ Sorry — something went wrong. Please try again.';
 
       }
 
