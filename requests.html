@@ -6,121 +6,189 @@
 
   <meta charset="utf-8"/>
 
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>HelpAroundYou — Recent Requests</title>
+  <title>Recent requests — HelpAroundYou</title>
 
   <link rel="stylesheet" href="styles.css"/>
+
+  <script>
+
+    // عدّل حسبك:
+
+    const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";  // يجب أن يدعم ?action=list
+
+    const SHEET_ID = "PASTE_YOUR_SHEET_ID_HERE";        // fallback
+
+    const SHEET_GID = "0"; // غيّرها لو كانت التبويبة ليست الأولى
+
+  </script>
 
 </head>
 
 <body>
 
-  <header class="container header">
+<header class="site-header">
 
-    <a class="brand" href="./">
+  <a class="brand" href="/">
 
-      <svg viewBox="0 0 64 64" aria-hidden="true">
+    <svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" aria-hidden="true">
 
-        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#C7C4FF"/><stop offset="1" stop-color="#7C73FF"/></linearGradient></defs>
+      <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
 
-        <circle cx="32" cy="32" r="28" fill="url(#g)"/><circle cx="23" cy="38" r="6" fill="#fff" opacity=".95"/>
+      <circle cx="32" cy="32" r="28" fill="url(#g3)"/><circle cx="22" cy="42" r="7" fill="#fff" opacity=".95"/><path d="M46 26c0 6-12 2-12 2s6-8 12-8v6z" fill="#fff" opacity=".95"/>
 
-        <path d="M44 18c-6 1-10 5-12 10 6-3 11-2 16 1-1-5-2-8-4-11z" fill="#fff" opacity=".95"/>
+    </svg>
 
-      </svg>
+    <span class="brand-name"><strong>Help</strong><strong>Around</strong><strong>You</strong></span>
 
-      <div class="name"><span class="tight">Help</span><span class="accent">Around</span><span class="tight">You</span></div>
+  </a>
 
-    </a>
+  <nav class="top-actions">
 
-    <nav class="actions">
+    <a class="btn primary" href="post.html">Post a request</a>
 
-      <a class="btn btn-primary" href="post.html">Post a request</a>
+  </nav>
 
-    </nav>
-
-  </header>
+</header>
 
 
 
-  <main class="container">
+<main class="page-wide">
 
-    <h1 style="font-size:32px;margin:8px 0 18px">Recent Requests</h1>
+  <h1>Recent Requests</h1>
 
+  <div id="list" class="cards"></div>
 
+  <p id="fallback" class="muted" style="display:none">
 
-    <div id="list" class="grid"></div>
+    Could not load requests.
 
-    <div id="fallback" class="card" style="display:none">
+  </p>
 
-      Could not load requests yet. Please check back later.
-
-    </div>
-
-  </main>
+</main>
 
 
 
-  <script>
-
-    // إذا عندك Endpoint للعرض اجعله يرجع JSON بشكل:
-
-    // [{timestamp, title, description, category, location, date, contact}]
-
-    const LIST_URL = "PUT_YOUR_WEB_APP_LIST_URL_HERE"; // مثال: WEB_APP_URL + "?action=list"
+<footer class="site-footer">© 2025 HelpAroundYou</footer>
 
 
 
-    async function load(){
+<script>
 
-      try{
+async function loadFromWebApp() {
 
-        const r = await fetch(LIST_URL, {cache:'no-store'});
+  const url = `${WEB_APP_URL}?action=list&limit=25`;
 
-        if(!r.ok) throw new Error('http');
+  const res = await fetch(url);
 
-        const rows = await r.json();
+  if (!res.ok) throw new Error('webapp list failed');
 
-        const wrap = document.getElementById('list');
+  return res.json();
 
-        wrap.innerHTML = '';
+}
 
-        rows.slice(0,24).forEach(row=>{
 
-          const card = document.createElement('div');
 
-          card.className = 'card req';
+async function loadFromSheetCSV() {
 
-          card.innerHTML = `
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${SHEET_GID}`;
 
-            <h4>${escapeHtml(row.title || '')}</h4>
+  const res = await fetch(url);
 
-            <p>${escapeHtml(row.description || '')}</p>
+  if (!res.ok) throw new Error('sheet csv failed');
 
-            <p class="hint">${escapeHtml(row.category || '')} • ${escapeHtml(row.location || '')} • ${escapeHtml(row.date || '')}</p>
+  const csv = await res.text();
 
-          `;
+  // بسيط: نفصل أول 25 صف بعد العناوين
 
-          wrap.appendChild(card);
+  const rows = csv.split(/\r?\n/).map(r => r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
 
-        });
+  const header = rows.shift();
 
-        if(!rows.length){ document.getElementById('fallback').style.display='block'; }
+  const items = rows.slice(0,25).filter(r=>r.length>3).map(r => ({
 
-      }catch(e){
+    timestamp: r[0], email: r[1], title: r[2], description: r[3],
 
-        document.getElementById('fallback').style.display='block';
+    category: r[4], location: r[5], date: r[6], contact: r[7] || ''
 
-      }
+  }));
+
+  return items;
+
+}
+
+
+
+function render(items) {
+
+  const wrap = document.getElementById('list');
+
+  if (!items || !items.length) {
+
+    document.getElementById('fallback').style.display = 'block';
+
+    return;
+
+  }
+
+  wrap.innerHTML = items.map(item => `
+
+    <article class="card request">
+
+      <div class="req-head">
+
+        <h3>${escapeHtml(item.title || '')}</h3>
+
+        <span class="pill">${escapeHtml(item.category || '')}</span>
+
+      </div>
+
+      <p class="muted">${escapeHtml(item.location || '')} · ${escapeHtml(item.date || '')}</p>
+
+      <p>${escapeHtml(item.description || '')}</p>
+
+    </article>
+
+  `).join('');
+
+}
+
+
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));}
+
+
+
+(async () => {
+
+  try {
+
+    let items;
+
+    try {
+
+      items = await loadFromWebApp(); // يتوقع {title, description, category, location, date}
+
+    } catch(_) {
+
+      items = await loadFromSheetCSV();
 
     }
 
-    function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
+    render(items);
 
-    load();
+  } catch (err) {
 
-  </script>
+    console.error(err);
+
+    document.getElementById('fallback').style.display = 'block';
+
+  }
+
+})();
+
+</script>
 
 </body>
 
