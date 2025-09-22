@@ -1,136 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/>
 
-<title>Recent Requests — Help Around You</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>HelpAroundYou — Recent Requests</title>
 
-<style>
-
-:root{--bg:#faf7f2;--ink:#111827;--muted:#6b7280;--card:#fff;--shadow:0 14px 38px rgba(0,0,0,.08);--radius:16px}
-
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-
-.container{max-width:1100px;margin:0 auto;padding:28px}
-
-header{display:flex;align-items:center;gap:12px}
-
-.logo{width:56px;height:56px;border-radius:12px;background:conic-gradient(from 190deg at 70% 30%, #6c5ce7, #ff6b6b);
-
-  box-shadow:inset 0 0 0 5px rgba(255,255,255,.7), var(--shadow)}
-
-h1{margin:0;font-weight:800}
-
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
-
-.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
-
-.card h3{margin:0 0 6px}
-
-small{color:var(--muted)}
-
-@media (max-width:1020px){.grid{grid-template-columns:1fr 1fr}}
-
-@media (max-width:720px){.grid{grid-template-columns:1fr}}
-
-</style>
+  <link rel="stylesheet" href="styles.css"/>
 
 </head>
 
 <body>
 
-<div class="container">
+  <header class="container header">
 
-  <header>
+    <a class="brand" href="./">
 
-    <div class="logo"></div>
+      <svg viewBox="0 0 64 64" aria-hidden="true">
 
-    <h1>Help Around You</h1>
+        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#C7C4FF"/><stop offset="1" stop-color="#7C73FF"/></linearGradient></defs>
+
+        <circle cx="32" cy="32" r="28" fill="url(#g)"/><circle cx="23" cy="38" r="6" fill="#fff" opacity=".95"/>
+
+        <path d="M44 18c-6 1-10 5-12 10 6-3 11-2 16 1-1-5-2-8-4-11z" fill="#fff" opacity=".95"/>
+
+      </svg>
+
+      <div class="name"><span class="tight">Help</span><span class="accent">Around</span><span class="tight">You</span></div>
+
+    </a>
+
+    <nav class="actions">
+
+      <a class="btn btn-primary" href="post.html">Post a request</a>
+
+    </nav>
 
   </header>
 
 
 
-  <h2 style="margin:12px 0 8px">Recent requests</h2>
+  <main class="container">
 
-  <div id="grid" class="grid"></div>
-
-  <p id="empty" style="display:none;color:#6b7280">No requests yet.</p>
-
-</div>
+    <h1 style="font-size:32px;margin:8px 0 18px">Recent Requests</h1>
 
 
 
-<script>
+    <div id="list" class="grid"></div>
 
-const API = "https://script.google.com/macros/s/AKfycbwMAf07IKqdgu1GxdrEbqVCwcD-ChSOvd5qLQqm9AFYMow4xRe_ym9uSAmfMULMrntD/exec";
+    <div id="fallback" class="card" style="display:none">
 
-const grid  = document.getElementById('grid');
+      Could not load requests yet. Please check back later.
 
-const empty = document.getElementById('empty');
+    </div>
 
-
-
-(async()=>{
-
-  try{
-
-    const res = await fetch(API + '?limit=60');
-
-    const data = await res.json();
-
-    if(!data.ok) throw new Error('API error');
-
-    const items = data.items || [];
-
-    if(!items.length){ empty.style.display='block'; return; }
+  </main>
 
 
 
-    for(const it of items){
+  <script>
 
-      const d = it.timestamp ? new Date(it.timestamp) : null;
+    // إذا عندك Endpoint للعرض اجعله يرجع JSON بشكل:
 
-      const el = document.createElement('div');
+    // [{timestamp, title, description, category, location, date, contact}]
 
-      el.className='card';
+    const LIST_URL = "PUT_YOUR_WEB_APP_LIST_URL_HERE"; // مثال: WEB_APP_URL + "?action=list"
 
-      el.innerHTML = `
 
-        <h3>${esc(it.title||'Untitled')}</h3>
 
-        <small>${d?d.toLocaleDateString():''} ${it.category?('· '+esc(it.category)) : ''}</small>
+    async function load(){
 
-        <p style="margin:8px 0 0">${esc(it.description||'')}</p>
+      try{
 
-        <p style="margin:8px 0 0"><strong>Area:</strong> ${esc(it.location||'')}</p>
+        const r = await fetch(LIST_URL, {cache:'no-store'});
 
-        ${it.fileUrl?`<p style="margin:8px 0 0"><a href="${it.fileUrl}" target="_blank" rel="noopener">Attachment</a></p>`:''}
+        if(!r.ok) throw new Error('http');
 
-      `;
+        const rows = await r.json();
 
-      grid.appendChild(el);
+        const wrap = document.getElementById('list');
+
+        wrap.innerHTML = '';
+
+        rows.slice(0,24).forEach(row=>{
+
+          const card = document.createElement('div');
+
+          card.className = 'card req';
+
+          card.innerHTML = `
+
+            <h4>${escapeHtml(row.title || '')}</h4>
+
+            <p>${escapeHtml(row.description || '')}</p>
+
+            <p class="hint">${escapeHtml(row.category || '')} • ${escapeHtml(row.location || '')} • ${escapeHtml(row.date || '')}</p>
+
+          `;
+
+          wrap.appendChild(card);
+
+        });
+
+        if(!rows.length){ document.getElementById('fallback').style.display='block'; }
+
+      }catch(e){
+
+        document.getElementById('fallback').style.display='block';
+
+      }
 
     }
 
-  }catch(e){
+    function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
 
-    empty.style.display='block';
+    load();
 
-    empty.textContent='Could not load requests.';
-
-  }
-
-})();
-
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-
-</script>
+  </script>
 
 </body>
 
