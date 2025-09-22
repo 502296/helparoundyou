@@ -16,13 +16,7 @@
 
     :root{
 
-      --brand:#2c3e50;
-
-      --accent:#27ae60;
-
-      --bg:#f5f7fb;
-
-      --ink:#222;
+      --brand:#2c3e50; --accent:#27ae60; --bg:#f5f7fb; --ink:#222;
 
     }
 
@@ -88,11 +82,7 @@
 
       <div class="spacer"></div>
 
-      <a href="/post.html" class="btn">Post a Request</a>
-
-      <!-- اختياري: رابط للمُتطوعين -->
-
-      <!-- <a href="#volunteer" class="btn btn-outline">Become a Helper</a> -->
+      <a href="post.html" class="btn">Post a Request</a>
 
     </nav>
 
@@ -114,7 +104,7 @@
 
         <div class="actions">
 
-          <a href="/post.html" class="btn">Post a Request</a>
+          <a href="post.html" class="btn">Post a Request</a>
 
           <a href="#requests" class="btn btn-outline">See recent requests</a>
 
@@ -182,7 +172,7 @@
 
       <div class="actions">
 
-        <a href="/post.html" class="btn">Post a Request</a>
+        <a href="post.html" class="btn">Post a Request</a>
 
       </div>
 
@@ -200,13 +190,15 @@
 
 
 
-      <!-- زر يفتح الشيت مباشرة (ضع رابط Google Sheet أو View فقط) -->
+      <!-- 1) زر يفتح Google Sheet (ضع رابط الـ Share الحقيقي) -->
 
       <div class="actions">
 
+        <!-- TODO: استبدل برابط الشيت: Share → Anyone with the link → Viewer -->
+
         <a class="btn btn-outline" target="_blank"
 
-           href="PASTE_YOUR_GOOGLE_SHEET_LINK_HERE">
+           href="https://docs.google.com/spreadsheets/d/PASTE-YOUR-SHEET-ID-HERE/edit?usp=sharing">
 
           Open Google Sheet
 
@@ -216,29 +208,31 @@
 
 
 
-      <!-- تضمين الشيت داخل الصفحة (اختياري) -->
+      <!-- 2) (اختياري) تضمين الشيت داخل الصفحة -->
 
       <!--
 
-        لإظهار الشيت هنا داخل الصفحة:
+        لتفعيل التضمين:
 
-        1) افتح Google Sheet المرتبط بالفورم.
+        - File → Share → Publish to the web → Entire Document → Web page → Publish
 
-        2) File → Share → Publish to the web → Entire Document → Web page → Publish.
+        - انسخ رابط النشر والصقه في src أدناه بدل placeholder
 
-        3) انسخ رابط النشر واستبدله مكان القيمة أدناه.
-
-        ⚠ نشر الشيت يجعله متاحًا للعموم للعرض؛ استخدمه فقط إذا مناسب لخصوصيتك.
+        ⚠ هذا يجعل الجدول قابلاً للعرض علنًا.
 
       -->
 
+      <!--
+
       <iframe class="sheet"
 
-        src="PASTE_YOUR_PUBLISHED_SHEET_URL_IF_YOU_DECIDE_TO_PUBLISH"
+        src="https://docs.google.com/spreadsheets/d/e/PASTE-PUBLISH-LINK-ID/pubhtml?gid=0&single=true"
 
         title="HelpAroundYou Requests (Google Sheets)">
 
       </iframe>
+
+      -->
 
     </section>
 
