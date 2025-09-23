@@ -10,109 +10,11 @@
 
   <title>Requests — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="style.css?v=5"/>
-
-
-
-  <style>
-
-    .page-wrap{max-width:1100px;margin:0 auto;padding:24px 5%}
-
-
-
-    /* Filters bar */
-
-    .filters{
-
-      background:#fff;border:1px solid #eee;border-radius:14px;
-
-      box-shadow:0 8px 28px rgba(0,0,0,.06);
-
-      padding:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-
-      position:sticky; top:10px; z-index:5;
-
-    }
-
-    .filters .group{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
-
-    .filters input,.filters select{
-
-      padding:10px 12px;border-radius:10px;border:1px solid #d9d9e3;background:#f9f9f9;
-
-      outline:none;transition:.2s;font-size:15px;
-
-    }
-
-    .filters input:focus,.filters select:focus{
-
-      background:#fff;border-color:#7b42f6;box-shadow:0 0 0 4px rgba(123,66,246,.15);
-
-    }
-
-    .filters .btn{padding:.65rem 1rem;border-radius:10px;font-weight:600}
-
-    .filters .btn.clear{background:#f0f0f0}
-
-
-
-    /* Cards grid */
-
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
-
-    @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
-
-    @media (max-width:640px){.grid{grid-template-columns:1fr}}
-
-
-
-    .req-card{
-
-      background:#fff;border-radius:14px;border:1px solid #eee;
-
-      box-shadow:0 8px 28px rgba(0,0,0,.06); padding:16px; display:flex; flex-direction:column; gap:10px;
-
-    }
-
-    .req-title{font-size:1.05rem;font-weight:800;color:#222;line-height:1.35}
-
-    .req-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.9rem;color:#555}
-
-    .badge{display:inline-block;padding:.25rem .55rem;border-radius:999px;font-size:.78rem;font-weight:700}
-
-    .badge.violet{background:#efe7ff;color:#4b2bb9}
-
-    .badge.blue{background:#e6f3ff;color:#196399}
-
-    .desc{color:#444; font-size:.95rem}
-
-    .actions{display:flex;gap:8px;margin-top:6px}
-
-    .actions .btn{font-weight:700}
-
-    .muted{color:#777;font-size:.9rem}
-
-
-
-    /* Empty / loading */
-
-    .empty{
-
-      text-align:center;background:#fff;border:1px dashed #d9d9e3;border-radius:14px;padding:28px;color:#666;
-
-    }
-
-    .spinner{display:inline-block;width:18px;height:18px;border:3px solid #ddd;border-top-color:#7b42f6;border-radius:50%;animation:spin 1s linear infinite;vertical-align:-3px}
-
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-  </style>
+  <link rel="stylesheet" href="style.css?v=7"/>
 
 </head>
 
 <body>
-
-  <!-- Header الموحد -->
 
   <header class="hay-header">
 
@@ -166,13 +68,11 @@
 
         </select>
 
-        <input id="area" type="text" inputmode="text" placeholder="ZIP / Area (e.g., 40218 or Highlands)"/>
+        <input id="area" type="text" placeholder="ZIP / Area (e.g., 40218 or Highlands)"/>
 
         <input id="date" type="date" />
 
       </div>
-
-
 
       <div class="group">
 
@@ -186,7 +86,7 @@
 
         <button class="btn primary" id="applyBtn">Apply</button>
 
-        <button class="btn clear" id="clearBtn" type="button">Clear</button>
+        <button class="btn secondary" id="clearBtn" type="button">Clear</button>
 
       </div>
 
@@ -214,8 +114,6 @@
 
 
 
-  <!-- Footer الموحد -->
-
   <footer class="hay-footer">
 
     © 2025 HelpAroundYou — Free to use. Built with care for our community ♥
@@ -226,19 +124,13 @@
 
   <script>
 
-    // =======================
-
-    // CONFIG (Google Sheets)
-
-    // =======================
+    // Google Sheets config
 
     const SHEET_ID = '1OAw6rFiPPyKXSk7Je4hU_dZdzWwLT3x23i8TRBnoj04';
 
     const SHEET_GID = '407846975'; // Form Responses 1
 
 
-
-    // أسماء الأعمدة كما تظهر في الصف الأول بالجدول (Header)
 
     const COLS = {
 
@@ -248,7 +140,7 @@
 
       category: 'Category',
 
-      area: 'Location',           // عندك العمود اسمه "Location"
+      area: 'Location',
 
       date: 'Date Needed',
 
@@ -261,12 +153,6 @@
     };
 
 
-
-    // =======================
-
-    // Helpers
-
-    // =======================
 
     const $ = (s, p=document)=>p.querySelector(s);
 
@@ -284,53 +170,31 @@
 
 
 
-    // =======================
-
-    // Fetch from Google Sheets (gviz)
-
-    // =======================
-
     async function getRequestsFromSheet(){
 
       let url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
       if (SHEET_GID) url += `&gid=${encodeURIComponent(SHEET_GID)}`;
 
-
-
       const res = await fetch(url, {cache:'no-store'});
 
       const text = await res.text();
 
-
-
-      // قص JSON من gviz
-
       const json = JSON.parse(text.substr(47).slice(0,-2));
 
+
+
       const headers = json.table.cols.map(c => (c && c.label) ? c.label.trim() : '');
-
-
 
       const idx = name => headers.findIndex(h => h.toLowerCase() === (name||'').toLowerCase());
 
       const I = {
 
-        title: idx(COLS.title),
+        title: idx(COLS.title), description: idx(COLS.description),
 
-        description: idx(COLS.description),
+        category: idx(COLS.category), area: idx(COLS.area), date: idx(COLS.date),
 
-        category: idx(COLS.category),
-
-        area: idx(COLS.area),
-
-        date: idx(COLS.date),
-
-        email: idx(COLS.email),
-
-        contact: idx(COLS.contact),
-
-        file: idx(COLS.file)
+        email: idx(COLS.email), contact: idx(COLS.contact), file: idx(COLS.file)
 
       };
 
@@ -338,7 +202,7 @@
 
       const rows = json.table.rows || [];
 
-      const items = rows.map(r => {
+      return rows.map(r => {
 
         const c = r.c || [];
 
@@ -364,23 +228,11 @@
 
         };
 
-      });
-
-
-
-      // تجاهل صفوف فارغة (لو بالخطأ)
-
-      return items.filter(x => x.title || x.blurb);
+      }).filter(x => x.title || x.blurb);
 
     }
 
 
-
-    // =======================
-
-    // Render
-
-    // =======================
 
     function render(list){
 
@@ -402,9 +254,9 @@
 
       for (const r of list){
 
-        const hasFile = !!r.file;
+        const fileBtn = r.file ? `<a class="btn secondary" href="${esc(r.file)}" target="_blank" rel="noopener">View file</a>` : '';
 
-        const fileBtn = hasFile ? `<a class="btn secondary" href="${esc(r.file)}" target="_blank" rel="noopener">View file</a>` : '';
+        const helpHref = `help.html?title=${encodeURIComponent(r.title||'')}&cat=${encodeURIComponent(r.category||'')}&area=${encodeURIComponent(r.area||'')}&date=${encodeURIComponent(r.date||'')}`;
 
         const card = document.createElement('div');
 
@@ -428,7 +280,7 @@
 
           <div class="actions">
 
-            <a class="btn primary" href="post.html">Offer to help</a>
+            <a class="btn primary" href="${helpHref}">Offer to help</a>
 
             ${fileBtn}
 
@@ -446,12 +298,6 @@
 
 
 
-    // =======================
-
-    // Filters
-
-    // =======================
-
     let RAW = [];
 
     function applyFilters(){
@@ -468,19 +314,7 @@
 
       let list = [...RAW];
 
-
-
-      if(q){
-
-        list = list.filter(r =>
-
-          (r.title||'').toLowerCase().includes(q) ||
-
-          (r.blurb||'').toLowerCase().includes(q)
-
-        );
-
-      }
+      if(q){ list = list.filter(r => (r.title||'').toLowerCase().includes(q) || (r.blurb||'').toLowerCase().includes(q)); }
 
       if(cat){ list = list.filter(r => (r.category||'') === cat); }
 
@@ -488,31 +322,15 @@
 
       if(date){ list = list.filter(r => (r.date||'') >= date); }
 
-
-
-      list.sort((a,b)=>{
-
-        const da = (a.date||''), db = (b.date||'');
-
-        return sortEl.value==='new' ? (db>da?1:-1) : (da>db?1:-1);
-
-      });
+      list.sort((a,b)=> sortEl.value==='new' ? ((b.date||'')>(a.date||'')?1:-1) : ((a.date||'')>(b.date||'')?1:-1));
 
 
 
-      render(list);
-
-      saveQueryToURL();
+      render(list); saveQueryToURL();
 
     }
 
-    function clearFilters(){
-
-      qEl.value=''; catEl.value=''; areaEl.value=''; dateEl.value=''; sortEl.value='new';
-
-      applyFilters();
-
-    }
+    function clearFilters(){ qEl.value=''; catEl.value=''; areaEl.value=''; dateEl.value=''; sortEl.value='new'; applyFilters(); }
 
     document.getElementById('applyBtn').addEventListener('click', applyFilters);
 
@@ -522,61 +340,47 @@
 
 
 
-    // URL sync
-
     function saveQueryToURL(){
 
       const p = new URLSearchParams();
 
-      if(qEl.value)   p.set('q', qEl.value);
+      if(qEl.value) p.set('q', qEl.value);
 
       if(catEl.value) p.set('cat', catEl.value);
 
-      if(areaEl.value)p.set('area', areaEl.value);
+      if(areaEl.value) p.set('area', areaEl.value);
 
-      if(dateEl.value)p.set('date', dateEl.value);
+      if(dateEl.value) p.set('date', dateEl.value);
 
       if(sortEl.value!=='new') p.set('sort', sortEl.value);
 
-      history.replaceState(null,'',location.pathname+(p.toString()?('?'+p.toString()):''));
+      history.replaceState(null,'',location.pathname+(p.toString()?('?'+p.toString()):'')); }
 
-    }
+
 
     function restoreFromURL(){
 
       const p = new URLSearchParams(location.search);
 
-      if(p.get('q'))    qEl.value   = p.get('q');
+      if(p.get('q')) qEl.value=p.get('q');
 
-      if(p.get('cat'))  catEl.value = p.get('cat');
+      if(p.get('cat')) catEl.value=p.get('cat');
 
-      if(p.get('area')) areaEl.value= p.get('area');
+      if(p.get('area')) areaEl.value=p.get('area');
 
-      if(p.get('date')) dateEl.value= p.get('date');
+      if(p.get('date')) dateEl.value=p.get('date');
 
-      if(p.get('sort')) sortEl.value= p.get('sort');
-
-    }
+      if(p.get('sort')) sortEl.value=p.get('sort'); }
 
 
-
-    // Init
 
     (async function init(){
 
       restoreFromURL();
 
-      try{
+      try{ RAW = await getRequestsFromSheet(); }
 
-        RAW = await getRequestsFromSheet();
-
-      }catch(err){
-
-        console.error(err);
-
-        loadingEl.innerHTML = 'Could not load from Google Sheets. Check sharing settings and IDs.';
-
-      }
+      catch(err){ console.error(err); loadingEl.innerHTML = 'Could not load from Google Sheets. Check sharing settings and IDs.'; }
 
       applyFilters();
 
