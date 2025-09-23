@@ -20,9 +20,11 @@
 
     <div class="brand">Help<span class="brand__a">Around</span><span class="brand__y">You</span></div>
 
-    <nav class="nav">
+    <nav class="nav" id="topNav">
 
-      <button class="btn btn-primary" data-open="postModal">Post a Request</button>
+      <!-- هذه الأزرار ستختفي على الموبايل -->
+
+      <button class="btn btn-primary" id="openTopBtn">Post a Request</button>
 
       <a href="#feed" class="btn btn-ghost">See Requests</a>
 
@@ -46,7 +48,7 @@
 
       <div class="hero__cta">
 
-        <button class="btn btn-primary btn-xl" data-open="postModal">Post a Request</button>
+        <button class="btn btn-primary btn-xl" id="openHeroBtn">Post a Request</button>
 
         <a href="#feed" class="btn btn-ghost btn-xl">See Requests</a>
 
@@ -82,11 +84,7 @@
 
     <div class="section-tab"><span class="tab-dot"></span><strong>Neighbor Requests</strong></div>
 
-    <div class="head-actions">
-
-      <a class="btn btn-ghost btn-sm" href="#feed">All Requests</a>
-
-    </div>
+    <div class="head-actions"><a class="btn btn-ghost btn-sm" href="#feed">All Requests</a></div>
 
   </div>
 
@@ -148,13 +146,13 @@
 
 
 
-<!-- Post modal (كما هو) -->
+<!-- Modal (يبقى كما أحببته) -->
 
 <div class="modal" id="postModal" aria-hidden="true">
 
   <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="postTitle">
 
-    <button class="modal__close" data-close aria-label="Close">×</button>
+    <button class="modal__close" id="closeModal" aria-label="Close">×</button>
 
     <h3 id="postTitle">Post a request</h3>
 
@@ -168,23 +166,11 @@
 
           <option value="">Select…</option>
 
-          <option>Pickup with Truck</option>
+          <option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option>
 
-          <option>Moving help</option>
+          <option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option>
 
-          <option>Lawn Care</option>
-
-          <option>Leaf / Branch removal</option>
-
-          <option>Cleaning</option>
-
-          <option>Small fix / Handy</option>
-
-          <option>Pool Cleaning</option>
-
-          <option>Power Washing (stone/exterior)</option>
-
-          <option>Driveway / Concrete Cleaning</option>
+          <option>Pool Cleaning</option><option>Power Washing (stone/exterior)</option><option>Driveway / Concrete Cleaning</option>
 
           <option>Other</option>
 
