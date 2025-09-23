@@ -1,8 +1,8 @@
-// ---- Supabase config ----
+// ===== Supabase config =====
 
 const SUPABASE_URL = "https://afqjgrcoiwitfftbjltp.supabase.co";
 
-const SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmcWpncmNvaXdpdGZmdGJqbHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwNTQ0MzksImV4cCI6MjA3MzYzMDQzOX0.SFC1V2Ig-rAjHS4RRFHOJ1b9QY-_zo_bBTPCvHYsOio
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmcWpncmNvaXdpdGZmdGJqbHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwNTQ0MzksImV4cCI6MjA3MzYzMDQzOX0.SFC1V2Ig-rAjHS4RRFHOJ1b9QY-_zo_bBTPCvHYsOio"; // بدّلها بمفتاح anon
 
 const BUCKET = "uploads";
 
@@ -10,134 +10,172 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 
-// ---- Modal open/close (يعتمد على data-open/data-close) ----
+// ===== DOM ready to avoid timing issues =====
 
-document.querySelectorAll("[data-open]").forEach(b=>{
-
-  b.addEventListener("click",()=>document.getElementById(b.dataset.open)?.classList.add("show"));
-
-});
-
-document.querySelectorAll("[data-close]").forEach(b=>{
-
-  b.addEventListener("click",()=>b.closest(".modal")?.classList.remove("show"));
-
-});
-
-document.getElementById("postModal").addEventListener("click",(e)=>{ if(e.target.id==="postModal") e.currentTarget.classList.remove("show"); });
+document.addEventListener("DOMContentLoaded",()=>{
 
 
 
-// ---- Helpers ----
+  // ----- Modal open/close (IDs صريحة) -----
 
-const $ = (s)=>document.querySelector(s);
+  const postModal = document.getElementById("postModal");
 
-const listEl = $("#list"), msgEl = $("#formMsg"), submitBtn = $("#submitBtn");
+  const openTopBtn = document.getElementById("openTopBtn");
 
-let page=0; const PAGE_SIZE=10;
+  const openHeroBtn = document.getElementById("openHeroBtn");
+
+  const closeModal = document.getElementById("closeModal");
 
 
 
-// ---- Submit form ----
+  function openModal(){ postModal.classList.add("show"); }
 
-$("#requestForm").addEventListener("submit",async(e)=>{
+  function closeModalFn(){ postModal.classList.remove("show"); }
 
-  e.preventDefault(); msgEl.className="msg"; msgEl.textContent="Uploading…"; submitBtn.disabled=true;
 
-  const title=$("#title").value.trim(), category=$("#category").value.trim(), zip=$("#zip").value.trim();
 
-  const task_date=$("#date").value||null, description=$("#description").value.trim(), contact=$("#contact").value.trim()||null;
+  if(openTopBtn) openTopBtn.addEventListener("click",openModal);
 
-  if(!title||!category||!zip){ msgEl.className="msg err"; msgEl.textContent="Please fill required fields."; submitBtn.disabled=false; return; }
+  if(openHeroBtn) openHeroBtn.addEventListener("click",openModal);
 
-  const files=Array.from($("#files").files||[]).slice(0,5), urls=[];
+  if(closeModal) closeModal.addEventListener("click",closeModalFn);
 
-  for(const f of files){
+  postModal.addEventListener("click",(e)=>{ if(e.target.id==="postModal") closeModalFn(); });
 
-    if(f.size>10*1024*1024){ msgEl.className="msg err"; msgEl.textContent="File too large (>10MB)."; submitBtn.disabled=false; return; }
 
-    const ext=(f.name.split(".").pop()||"bin").toLowerCase();
 
-    const path=`req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  // ----- Helpers -----
 
-    const { error:upErr } = await sb.storage.from(BUCKET).upload(path,f,{upsert:false});
+  const $ = (s)=>document.querySelector(s);
 
-    if(upErr){ console.error(upErr); msgEl.className="msg err"; msgEl.textContent="Upload failed. Check bucket/policies."; submitBtn.disabled=false; return; }
+  const listEl = $("#list"), msgEl = $("#formMsg"), submitBtn = $("#submitBtn");
 
-    const { data } = sb.storage.from(BUCKET).getPublicUrl(path); urls.push(data.publicUrl);
+  let page=0; const PAGE_SIZE=10;
+
+
+
+  // ----- Submit form -----
+
+  $("#requestForm").addEventListener("submit",async(e)=>{
+
+    e.preventDefault(); msgEl.className="msg"; msgEl.textContent="Uploading…"; submitBtn.disabled=true;
+
+
+
+    const title=$("#title").value.trim(), category=$("#category").value.trim(), zip=$("#zip").value.trim();
+
+    const task_date=$("#date").value||null, description=$("#description").value.trim(), contact=$("#contact").value.trim()||null;
+
+    if(!title||!category||!zip){ msgEl.className="msg err"; msgEl.textContent="Please fill required fields."; submitBtn.disabled=false; return; }
+
+
+
+    // Upload files (max 5)
+
+    const files=Array.from($("#files").files||[]).slice(0,5), urls=[];
+
+    for(const f of files){
+
+      if(f.size>10*1024*1024){ msgEl.className="msg err"; msgEl.textContent="File too large (>10MB)."; submitBtn.disabled=false; return; }
+
+      const ext=(f.name.split(".").pop()||"bin").toLowerCase();
+
+      const path=`req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+
+      const { error:upErr } = await sb.storage.from(BUCKET).upload(path,f,{upsert:false});
+
+      if(upErr){ console.error(upErr); msgEl.className="msg err"; msgEl.textContent="Upload failed. Check bucket/policies."; submitBtn.disabled=false; return; }
+
+      const { data } = sb.storage.from(BUCKET).getPublicUrl(path); urls.push(data.publicUrl);
+
+    }
+
+
+
+    // Insert row
+
+    const { error:insErr } = await sb.from("requests").insert({ title, category, zip, task_date, description, contact, media_urls: urls });
+
+    if(insErr){ console.error(insErr); msgEl.className="msg err"; msgEl.textContent="Could not save your request."; }
+
+    else{ msgEl.className="msg ok"; msgEl.textContent="Posted! Your request is now live."; e.target.reset(); closeModalFn(); page=0; listEl.innerHTML=""; await load(true); location.hash="#feed"; }
+
+    submitBtn.disabled=false;
+
+  });
+
+
+
+  // ----- List & filters -----
+
+  async function load(reset=false){
+
+    const q=$("#q").value.trim(), cat=$("#cat").value.trim(), zipf=$("#zipf").value.trim();
+
+    let qb=sb.from("requests").select("*").order("created_at",{ascending:false});
+
+    if(q) qb=qb.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
+
+    if(cat) qb=qb.eq("category",cat);
+
+    if(zipf) qb=qb.ilike("zip",`%${zipf}%`);
+
+    const from=page*PAGE_SIZE,to=from+PAGE_SIZE-1;
+
+    const { data,error }=await qb.range(from,to);
+
+    if(error){ console.error(error); return; }
+
+    if(reset) listEl.innerHTML="";
+
+    render(data||[]);
+
+    $("#loadMore").classList.toggle("hidden",!(data&&data.length===PAGE_SIZE));
 
   }
 
-  const { error:insErr } = await sb.from("requests").insert({ title, category, zip, task_date, description, contact, media_urls: urls });
-
-  if(insErr){ console.error(insErr); msgEl.className="msg err"; msgEl.textContent="Could not save your request."; }
-
-  else{ msgEl.className="msg ok"; msgEl.textContent="Posted! Your request is now live."; e.target.reset(); document.getElementById("postModal").classList.remove("show"); page=0; listEl.innerHTML=""; await load(true); location.hash="#feed"; }
-
-  submitBtn.disabled=false;
-
-});
 
 
+  function render(rows){
 
-// ---- List & filters ----
+    for(const r of rows){
 
-async function load(reset=false){
+      const d=new Date(r.task_date||r.created_at), nice=d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
 
-  const q=$("#q").value.trim(), cat=$("#cat").value.trim(), zipf=$("#zipf").value.trim();
+      const img=(r.media_urls&&r.media_urls[0])?`<a class="btn btn-ghost btn-sm" href="${r.media_urls[0]}" target="_blank">View file</a>`:"";
 
-  let qb=sb.from("requests").select("*").order("created_at",{ascending:false});
+      const snippet=(r.description||"").slice(0,140);
 
-  if(q) qb=qb.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
+      const el=document.createElement("div");
 
-  if(cat) qb=qb.eq("category",cat);
+      el.className="item";
 
-  if(zipf) qb=qb.ilike("zip",`%${zipf}%`);
+      el.innerHTML=`<h3 style="margin:0">${esc(r.title)}</h3>
 
-  const from=page*PAGE_SIZE,to=from+PAGE_SIZE-1;
+        <div class="tags"><span class="tag">${esc(r.category||"Other")}</span>${r.zip?`<span class="tag">${esc(r.zip)}</span>`:""}<span class="tag">${nice}</span></div>
 
-  const { data,error }=await qb.range(from,to);
+        <p style="margin:6px 0">${esc(snippet)}${r.description&&r.description.length>140?"…":""}</p>
 
-  if(error){ console.error(error); return; }
+        <div class="actions"><button class="btn btn-primary btn-sm" onclick="alert('Coordinate directly via email/text. Stay safe!')">Offer to help</button>${img}</div>`;
 
-  if(reset) listEl.innerHTML="";
+      listEl.appendChild(el);
 
-  render(data||[]);
-
-  $("#loadMore").classList.toggle("hidden",!(data&&data.length===PAGE_SIZE));
-
-}
-
-function render(rows){
-
-  for(const r of rows){
-
-    const d=new Date(r.task_date||r.created_at), nice=d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
-
-    const img=(r.media_urls&&r.media_urls[0])?`<a class="btn btn-ghost btn-sm" href="${r.media_urls[0]}" target="_blank">View file</a>`:"";
-
-    const snippet=(r.description||"").slice(0,140);
-
-    const el=document.createElement("div");
-
-    el.className="item";
-
-    el.innerHTML=`<h3 style="margin:0">${esc(r.title)}</h3>
-
-    <div class="tags"><span class="tag">${esc(r.category||"Other")}</span>${r.zip?`<span class="tag">${esc(r.zip)}</span>`:""}<span class="tag">${nice}</span></div>
-
-    <p style="margin:6px 0">${esc(snippet)}${r.description&&r.description.length>140?"…":""}</p>
-
-    <div class="actions"><button class="btn btn-primary btn-sm" onclick="alert('Coordinate directly via email/text. Stay safe!')">Offer to help</button>${img}</div>`;
-
-    listEl.appendChild(el);
+    }
 
   }
 
-}
+  const esc=(s)=>s?.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))??"";
 
-const esc=(s)=>s?.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))??"";
 
-document.getElementById("apply").addEventListener("click",()=>{page=0;load(true)});document.getElementById("clear").addEventListener("click",()=>{$("#q").value="";$("#cat").value="";$("#zipf").value="";page=0;load(true)});document.getElementById("loadMore").addEventListener("click",()=>{page++;load()});
 
-load(true);
+  document.getElementById("apply").addEventListener("click",()=>{page=0;load(true)});
+
+  document.getElementById("clear").addEventListener("click",()=>{$("#q").value="";$("#cat").value="";$("#zipf").value="";page=0;load(true)});
+
+  document.getElementById("loadMore").addEventListener("click",()=>{page++;load()});
+
+
+
+  load(true);
+
+});
