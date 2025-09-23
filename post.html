@@ -12,49 +12,59 @@
 
 
 
-  <!-- Main site styles (same file used by index.html) -->
+  <!-- ربط ملف CSS الأساسي -->
 
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css?v=2"/>
 
 
 
-  <!-- Page-specific polish (kept minimal) -->
+  <!-- ستايل داخلي لضمان أن الحقول فاتحة -->
 
   <style>
 
-    /* Layout */
+    .page-wrap {
 
-    .page-wrap{max-width:1100px;margin:0 auto;padding:24px}
+      max-width: 1100px;
 
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+      margin: 0 auto;
 
-    .brand{font-weight:800;font-size:20px;letter-spacing:.2px}
-
-    .brand .a{color:#42a5f5} .brand .y{color:#7b2ff7}
-
-
-
-    /* Card */
-
-    .form-card{
-
-      max-width:640px;margin:0 auto;
-
-      padding:20px;border-radius:14px;
-
-      background:#ffffff10; /* translucent matches dark theme */
-
-      box-shadow:0 8px 28px rgba(0,0,0,.25);
-
-      backdrop-filter:saturate(120%) blur(4px);
+      padding: 24px 5%;
 
     }
 
 
 
-    /* Form controls */
+    .form-card {
 
-    form label{display:block;margin:12px 0 6px;font-weight:600}
+      max-width: 640px;
+
+      margin: 0 auto;
+
+      padding: 20px;
+
+      border-radius: 14px;
+
+      background: #fff;
+
+      box-shadow: 0 8px 28px rgba(0,0,0,.08);
+
+    }
+
+
+
+    form label {
+
+      display: block;
+
+      margin: 12px 0 6px;
+
+      font-weight: 600;
+
+      color: #222;
+
+    }
+
+
 
     form input[type="text"],
 
@@ -66,51 +76,141 @@
 
     form select,
 
-    form textarea{
+    form textarea {
 
-      width:100%;padding:12px 14px;border-radius:10px;
+      width: 100%;
 
-      border:1px solid #80808055;background:#0b0b0f; color:#fff;
+      padding: 12px 14px;
 
-      font-size:16px; outline:none;
+      border-radius: 10px;
 
-    }
+      border: 1px solid #d9d9e3;
 
-    form textarea{min-height:120px;resize:vertical}
+      background: #f9f9f9;     /* فاتح */
 
-    .help{font-size:13px;opacity:.75;margin-top:4px}
+      color: #222;             /* نص غامق */
 
+      font-size: 16px;
 
+      outline: none;
 
-    /* Actions */
-
-    .actions{display:flex;gap:12px;align-items:center;margin-top:14px}
-
-    .btn{
-
-      appearance:none;border:none;border-radius:999px; padding:12px 18px;
-
-      font-weight:700;cursor:pointer;transition:.2s;
-
-      background:#7b2ff7;color:#fff;
+      transition: border-color .2s, box-shadow .2s, background .2s;
 
     }
 
-    .btn:hover{transform:translateY(-1px)}
-
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-
-    .link-cancel{color:#ddd;text-decoration:underline}
 
 
+    form textarea {
 
-    /* Mobile spacing */
+      min-height: 120px;
 
-    @media (max-width:600px){
+      resize: vertical;
 
-      .page-wrap{padding:16px}
+    }
 
-      .form-card{padding:16px}
+
+
+    form input::placeholder,
+
+    form textarea::placeholder {
+
+      color: #888;
+
+    }
+
+
+
+    form input:focus,
+
+    form select:focus,
+
+    form textarea:focus {
+
+      background: #fff; /* أبيض عند الكتابة */
+
+      border-color: #7b42f6;
+
+      box-shadow: 0 0 0 4px rgba(123, 66, 246, 0.15);
+
+    }
+
+
+
+    .help {
+
+      font-size: 13px;
+
+      color: #666;
+
+      margin-top: 4px;
+
+    }
+
+
+
+    .actions {
+
+      display: flex;
+
+      gap: 12px;
+
+      align-items: center;
+
+      margin-top: 14px;
+
+    }
+
+
+
+    .btn.submit {
+
+      background: #7b42f6;
+
+      color: #fff;
+
+      border: none;
+
+      padding: 0.8rem 1.4rem;
+
+      border-radius: 8px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: 0.2s;
+
+    }
+
+
+
+    .btn.submit:hover {
+
+      background: #5e2fc2;
+
+    }
+
+
+
+    .link-cancel {
+
+      color: #555;
+
+      text-decoration: underline;
+
+      font-size: 0.9rem;
+
+    }
+
+
+
+    @media (max-width: 768px) {
+
+      .form-card { padding: 16px; }
+
+      .actions { flex-direction: column; align-items: stretch; }
+
+      .actions .btn { width: 100%; }
 
     }
 
@@ -124,53 +224,25 @@
 
   <div class="page-wrap">
 
-    <!-- Mini header -->
-
-    <div class="topbar">
-
-      <a href="index.html" class="brand">Help<span class="a">Around</span><span class="y">You</span></a>
-
-      <div class="nav-actions" style="display:flex;gap:8px">
-
-        <a class="btn" href="list.html" style="text-decoration:none;display:inline-block">See Requests</a>
-
-        <a class="btn" aria-current="page" style="text-decoration:none;display:inline-block;background:#a45bff">Post a Request</a>
-
-      </div>
-
-    </div>
-
-
-
-    <h1 style="margin:10px 0 18px">Post a request</h1>
+    <h1 style="margin: 10px 0 18px;">Post a request</h1>
 
 
 
     <div class="form-card">
 
-      <!--
-
-        NOTE: Leave action="#" for now.
-
-        We’ll wire this to Airtable/Tally (no Google login) in the next step.
-
-      -->
-
       <form id="requestForm" action="#" method="POST" enctype="multipart/form-data" novalidate>
 
         <!-- Email -->
 
-        <label for="email">Email <span aria-hidden="true">*</span></label>
+        <label for="email">Email *</label>
 
-        <input id="email" name="email" type="email" placeholder="you@example.com" required
-
-               inputmode="email" autocomplete="email"/>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required/>
 
 
 
         <!-- Title -->
 
-        <label for="title">Request Title <span aria-hidden="true">*</span></label>
+        <label for="title">Request Title *</label>
 
         <input id="title" name="title" type="text" placeholder="e.g., Need help moving couch" maxlength="120" required/>
 
@@ -178,7 +250,7 @@
 
         <!-- Description -->
 
-        <label for="description">Description <span aria-hidden="true">*</span></label>
+        <label for="description">Description *</label>
 
         <textarea id="description" name="description" placeholder="Add details that help the neighbor understand the task…" required></textarea>
 
@@ -186,9 +258,9 @@
 
 
 
-        <!-- Category / Date / Location -->
+        <!-- Category -->
 
-        <label for="category">Category <span aria-hidden="true">*</span></label>
+        <label for="category">Category *</label>
 
         <select id="category" name="category" required>
 
@@ -210,19 +282,23 @@
 
 
 
-        <label for="location">Location (zip or area) <span aria-hidden="true">*</span></label>
+        <!-- Location -->
+
+        <label for="location">Location (zip or area) *</label>
 
         <input id="location" name="location" type="text" placeholder="e.g., 40218 or Highlands" required/>
 
 
 
-        <label for="date">Date needed <span aria-hidden="true">*</span></label>
+        <!-- Date -->
+
+        <label for="date">Date needed *</label>
 
         <input id="date" name="date" type="date" required/>
 
 
 
-        <!-- Optional contact preference -->
+        <!-- Contact (optional) -->
 
         <label for="contact">Contact Info (optional)</label>
 
@@ -244,7 +320,7 @@
 
         <div class="actions">
 
-          <button id="submitBtn" class="btn" type="submit">Submit Request</button>
+          <button id="submitBtn" class="btn submit" type="submit">Submit Request</button>
 
           <a class="link-cancel" href="index.html">Cancel</a>
 
@@ -260,8 +336,6 @@
 
 
 
-        <!-- Success / error messages -->
-
         <p id="formMsg" role="status" style="margin-top:12px;font-weight:600"></p>
 
       </form>
@@ -272,9 +346,9 @@
 
 
 
-  <!-- Small, safe JS: one primary button, size check, “Submitting…” state -->
-
   <script>
+
+    // منع الملفات الكبيرة + منع الضغط مرتين
 
     (function(){
 
@@ -290,8 +364,6 @@
 
       form.addEventListener('submit', function(e){
 
-        // basic client validation
-
         if (file && file.files.length){
 
           const f = file.files[0];
@@ -304,7 +376,7 @@
 
             msg.textContent = 'File is too large (max ~10MB). Please choose a smaller file.';
 
-            msg.style.color = '#ffb74d';
+            msg.style.color = '#ff9800';
 
             return;
 
@@ -312,19 +384,15 @@
 
         }
 
-        // prevent double submits
-
         btn.disabled = true;
 
         btn.textContent = 'Submitting…';
 
         msg.textContent = 'Submitting…';
 
-        msg.style.color = '#aaa';
+        msg.style.color = '#888';
 
 
-
-        // If no backend yet, stop actual navigation and show a friendly success.
 
         if (form.getAttribute('action') === '#'){
 
@@ -334,7 +402,7 @@
 
             msg.textContent = 'Request saved locally (demo). We will connect this form to Airtable/Tally next.';
 
-            msg.style.color = '#8de1a1';
+            msg.style.color = '#4caf50';
 
             btn.disabled = false;
 
