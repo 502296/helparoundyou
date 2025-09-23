@@ -10,7 +10,7 @@
 
   <title>Requests — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="style.css?v=4"/>
+  <link rel="stylesheet" href="style.css?v=5"/>
 
 
 
@@ -112,9 +112,31 @@
 
 <body>
 
+  <!-- Header الموحد -->
+
+  <header class="hay-header">
+
+    <a href="index.html" class="logo">
+
+      <span class="logo-main">Help</span><span class="logo-around">Around</span><span class="logo-you">You</span>
+
+    </a>
+
+    <nav class="hay-actions">
+
+      <a href="list.html" class="btn secondary active">See Requests</a>
+
+      <a href="post.html" class="btn primary">Post a Request</a>
+
+    </nav>
+
+  </header>
+
+
+
   <div class="page-wrap">
 
-    <h1 style="margin:6px 0 14px;">Neighbor Requests</h1>
+    <h1 style="margin:12px 0 14px;">Neighbor Requests</h1>
 
 
 
@@ -192,21 +214,31 @@
 
 
 
+  <!-- Footer الموحد -->
+
+  <footer class="hay-footer">
+
+    © 2025 HelpAroundYou — Free to use. Built with care for our community ♥
+
+  </footer>
+
+
+
   <script>
 
     // =======================
 
-    // CONFIG — ضع القيم هنا
+    // CONFIG (Google Sheets)
 
     // =======================
 
-    const SHEET_ID = 'PUT_YOUR_SHEET_ID_HERE'; // 👈 استبدلها بـ Sheet ID
+    const SHEET_ID = '1OAw6rFiPPyKXSk7Je4hU_dZdzWwLT3x23i8TRBnoj04';
 
-    const SHEET_GID = ''; // اختياري: اتركه فاضي للورقة الأولى، أو ضع رقم gid للتبويب المطلوب
+    const SHEET_GID = '407846975'; // Form Responses 1
 
 
 
-    // أسماء الأعمدة كما تظهر في الصف الأول (Header) بالجدول:
+    // أسماء الأعمدة كما تظهر في الصف الأول بالجدول (Header)
 
     const COLS = {
 
@@ -216,11 +248,15 @@
 
       category: 'Category',
 
-      area: 'Location (zip or area)',
+      area: 'Location',           // عندك العمود اسمه "Location"
 
-      date: 'Date needed'
+      date: 'Date Needed',
 
-      // لو عندك أسماء مختلفة، غيّرها هنا فقط.
+      email: 'Email Address',
+
+      contact: 'Contact Info',
+
+      file: 'Photo / File'
 
     };
 
@@ -234,39 +270,17 @@
 
     const $ = (s, p=document)=>p.querySelector(s);
 
-    const resultsEl = $('#results');
+    const resultsEl = $('#results'), emptyEl = $('#empty'), loadingEl = $('#loading');
 
-    const emptyEl = $('#empty');
-
-    const loadingEl = $('#loading');
+    const qEl=$('#q'), catEl=$('#cat'), areaEl=$('#area'), dateEl=$('#date'), sortEl=$('#sort');
 
 
 
-    function esc(s){return (s||'').toString().replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+    const esc = s => (s??'').toString().replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
-    function fmtDateIso(s){
+    const fmtIso = s => { const d=new Date(s); return isNaN(d)? (s||'') : d.toISOString().slice(0,10); };
 
-      if(!s) return '';
-
-      const d = new Date(s);
-
-      if (isNaN(d)) return s;
-
-      return d.toISOString().slice(0,10);
-
-    }
-
-    function fmtDateNice(s){
-
-      if(!s) return '';
-
-      const d = new Date(s);
-
-      if (isNaN(d)) return s;
-
-      return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
-
-    }
+    const fmtNice = s => { const d=new Date(s); return isNaN(d)? (s||'') : d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); };
 
 
 
@@ -277,8 +291,6 @@
     // =======================
 
     async function getRequestsFromSheet(){
-
-      // gviz endpoint
 
       let url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
@@ -292,41 +304,37 @@
 
 
 
-      // gviz ترجع نص فيه JSON محاط بكلام، نقصّه:
-
-      // يبدأ بعد 47 حرفًا وينتهي بآخر حرفين );
+      // قص JSON من gviz
 
       const json = JSON.parse(text.substr(47).slice(0,-2));
 
-
-
-      // نحدد فهارس الأعمدة من صف العناوين:
-
       const headers = json.table.cols.map(c => (c && c.label) ? c.label.trim() : '');
 
-      function idx(name){
-
-        const i = headers.findIndex(h => h.toLowerCase() === name.toLowerCase());
-
-        if (i === -1) console.warn('Column not found:', name, 'in', headers);
-
-        return i;
-
-      }
-
-      const iTitle = idx(COLS.title);
-
-      const iDesc  = idx(COLS.description);
-
-      const iCat   = idx(COLS.category);
-
-      const iArea  = idx(COLS.area);
-
-      const iDate  = idx(COLS.date);
 
 
+      const idx = name => headers.findIndex(h => h.toLowerCase() === (name||'').toLowerCase());
 
-      // نحول الصفوف إلى كائنات موحّدة
+      const I = {
+
+        title: idx(COLS.title),
+
+        description: idx(COLS.description),
+
+        category: idx(COLS.category),
+
+        area: idx(COLS.area),
+
+        date: idx(COLS.date),
+
+        email: idx(COLS.email),
+
+        contact: idx(COLS.contact),
+
+        file: idx(COLS.file)
+
+      };
+
+
 
       const rows = json.table.rows || [];
 
@@ -334,19 +342,25 @@
 
         const c = r.c || [];
 
-        const get = (i)=> (i>=0 && c[i] && (c[i].v ?? c[i].f)) || '';
+        const get = i => (i>=0 && c[i] && (c[i].v ?? c[i].f)) || '';
 
         return {
 
-          title: get(iTitle),
+          title: get(I.title),
 
-          blurb: get(iDesc),
+          blurb: get(I.description),
 
-          category: get(iCat),
+          category: get(I.category),
 
-          area: get(iArea),
+          area: get(I.area),
 
-          date: fmtDateIso(get(iDate))
+          date: fmtIso(get(I.date)),
+
+          email: get(I.email),
+
+          contact: get(I.contact),
+
+          file: get(I.file)
 
         };
 
@@ -354,7 +368,7 @@
 
 
 
-      // تجاهل صفوف فارغة/عناوين مكررة
+      // تجاهل صفوف فارغة (لو بالخطأ)
 
       return items.filter(x => x.title || x.blurb);
 
@@ -376,23 +390,21 @@
 
       if(!list.length){
 
-        loadingEl.style.display = 'none';
+        loadingEl.style.display='none'; emptyEl.style.display='block';
 
-        emptyEl.style.display = 'block';
-
-        resultsEl.setAttribute('aria-busy','false');
-
-        return;
+        resultsEl.setAttribute('aria-busy','false'); return;
 
       }
 
-      emptyEl.style.display = 'none';
-
-      loadingEl.style.display = 'none';
+      emptyEl.style.display='none'; loadingEl.style.display='none';
 
 
 
-      for(const r of list){
+      for (const r of list){
+
+        const hasFile = !!r.file;
+
+        const fileBtn = hasFile ? `<a class="btn secondary" href="${esc(r.file)}" target="_blank" rel="noopener">View file</a>` : '';
 
         const card = document.createElement('div');
 
@@ -408,7 +420,7 @@
 
             <span class="badge blue">${esc(r.area)}</span>
 
-            <span class="muted" title="Date needed">📅 ${esc(fmtDateNice(r.date))}</span>
+            <span class="muted" title="Date needed">📅 ${esc(fmtNice(r.date))}</span>
 
           </div>
 
@@ -418,7 +430,7 @@
 
             <a class="btn primary" href="post.html">Offer to help</a>
 
-            <a class="btn secondary" href="post.html">Ask for details</a>
+            ${fileBtn}
 
           </div>
 
@@ -440,21 +452,7 @@
 
     // =======================
 
-    const qEl   = $('#q');
-
-    const catEl = $('#cat');
-
-    const areaEl= $('#area');
-
-    const dateEl= $('#date');
-
-    const sortEl= $('#sort');
-
-
-
     let RAW = [];
-
-
 
     function applyFilters(){
 
@@ -494,9 +492,7 @@
 
       list.sort((a,b)=>{
 
-        const da = (a.date||'');
-
-        const db = (b.date||'');
+        const da = (a.date||''), db = (b.date||'');
 
         return sortEl.value==='new' ? (db>da?1:-1) : (da>db?1:-1);
 
@@ -510,17 +506,13 @@
 
     }
 
-
-
     function clearFilters(){
 
-      qEl.value = ''; catEl.value=''; areaEl.value=''; dateEl.value=''; sortEl.value='new';
+      qEl.value=''; catEl.value=''; areaEl.value=''; dateEl.value=''; sortEl.value='new';
 
       applyFilters();
 
     }
-
-
 
     document.getElementById('applyBtn').addEventListener('click', applyFilters);
 
@@ -582,7 +574,7 @@
 
         console.error(err);
 
-        loadingEl.innerHTML = 'Could not load from Google Sheets. Please check sharing settings and SHEET_ID.';
+        loadingEl.innerHTML = 'Could not load from Google Sheets. Check sharing settings and IDs.';
 
       }
 
