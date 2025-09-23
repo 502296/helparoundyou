@@ -14,45 +14,83 @@
 
 <body>
 
-<header class="site-header wrap">
+<header class="header">
 
-  <div class="brand">Help<span class="a">Around</span><span class="y">You</span></div>
+  <div class="wrap header__inner">
 
-  <nav class="nav">
+    <div class="brand">Help<span class="brand__a">Around</span><span class="brand__y">You</span></div>
 
-    <a href="#post" class="btn primary">Post a Request</a>
+    <nav class="nav">
 
-    <a href="#feed" class="btn ghost">See Requests</a>
+      <button class="btn btn-primary" id="openModalTop">Post a Request</button>
 
-  </nav>
+      <a href="#feed" class="btn btn-ghost">See Requests</a>
+
+    </nav>
+
+  </div>
 
 </header>
 
 
 
-<section class="hero wrap">
+<section class="hero">
 
-  <h1>Get things done — clear, safe, on your schedule.</h1>
+  <div class="wrap hero__inner">
 
-  <p>No middlemen and no commissions — just neighbors helping neighbors.</p>
+    <div class="hero__text">
+
+      <h1>Get things done — clear, safe, on your schedule.</h1>
+
+      <p>No middlemen and no commissions — just neighbors helping neighbors.</p>
+
+      <div class="hero__cta">
+
+        <button class="btn btn-primary btn-xl" id="openModal">Post a Request</button>
+
+        <a href="#feed" class="btn btn-ghost btn-xl">See Requests</a>
+
+      </div>
+
+      <ul class="steps">
+
+        <li>Describe the task (title, details, date, area, photos)</li>
+
+        <li>We list it instantly for nearby helpers</li>
+
+        <li>You coordinate directly and mark it done</li>
+
+      </ul>
+
+    </div>
+
+    <!-- اختياري: ضع صورة  (hero.png) داخل مجلدك واستبدل src -->
+
+    <div class="hero__img" aria-hidden="true">
+
+      <img src="hero.png" alt="" onerror="this.style.display='none'"/>
+
+    </div>
+
+  </div>
 
 </section>
 
 
 
-<section id="post" class="card wrap">
+<section id="feed" class="wrap card">
 
-  <h2>Post a request</h2>
+  <div class="card__head">
 
-  <form id="requestForm" class="grid">
+    <h2>Neighbor Requests</h2>
 
-    <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"/></label>
+    <div class="filters">
 
-    <label><span>Category *</span>
+      <input id="q" type="search" placeholder="Search title or description"/>
 
-      <select id="category" required>
+      <select id="cat">
 
-        <option value="">Select…</option>
+        <option value="">All categories</option>
 
         <option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option>
 
@@ -60,61 +98,79 @@
 
       </select>
 
-    </label>
+      <input id="zipf" type="text" placeholder="ZIP / Area"/>
 
-    <label><span>ZIP / Area *</span><input id="zip" required maxlength="10" placeholder="e.g., 40218"/></label>
+      <button id="apply" class="btn btn-primary btn-sm">Apply</button>
 
-    <label><span>Date</span><input id="date" type="date"/></label>
+      <button id="clear" class="btn btn-ghost btn-sm">Clear</button>
 
-    <label class="col-2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
-
-    <label class="col-2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"/></label>
-
-    <details class="col-2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"/></details>
-
-    <button id="submitBtn" class="btn primary col-2" type="submit">Submit</button>
-
-    <p id="formMsg" class="msg col-2"></p>
-
-  </form>
-
-</section>
-
-
-
-<section id="feed" class="card wrap">
-
-  <h2>Neighbor Requests</h2>
-
-  <div class="filters">
-
-    <input id="q" type="search" placeholder="Search title or description"/>
-
-    <select id="cat"><option value="">All categories</option>
-
-      <option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option>
-
-      <option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option>
-
-    </select>
-
-    <input id="zipf" type="text" placeholder="ZIP / Area"/>
-
-    <button id="apply" class="btn primary small">Apply</button>
-
-    <button id="clear" class="btn ghost small">Clear</button>
+    </div>
 
   </div>
 
   <div id="list" class="list"></div>
 
-  <button id="loadMore" class="btn ghost small hidden">Load more</button>
+  <button id="loadMore" class="btn btn-ghost btn-sm hidden">Load more</button>
 
 </section>
 
 
 
-<footer class="site-footer wrap"><small>Neighbors helping neighbors — no commissions.</small></footer>
+<footer class="footer">
+
+  <div class="wrap"><small>Neighbors helping neighbors — no commissions.</small></div>
+
+</footer>
+
+
+
+<!-- Modal -->
+
+<div class="modal" id="postModal" aria-hidden="true">
+
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="postTitle">
+
+    <button class="modal__close" id="closeModal" aria-label="Close">×</button>
+
+    <h3 id="postTitle">Post a request</h3>
+
+    <form id="requestForm" class="grid">
+
+      <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"/></label>
+
+      <label><span>Category *</span>
+
+        <select id="category" required>
+
+          <option value="">Select…</option>
+
+          <option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option>
+
+          <option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option>
+
+        </select>
+
+      </label>
+
+      <label><span>ZIP / Area *</span><input id="zip" required maxlength="10" placeholder="e.g., 40218"/></label>
+
+      <label><span>Date</span><input id="date" type="date"/></label>
+
+      <label class="col-2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
+
+      <label class="col-2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"/></label>
+
+      <details class="col-2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"/></details>
+
+      <button id="submitBtn" class="btn btn-primary col-2" type="submit">Submit</button>
+
+      <p id="formMsg" class="msg col-2"></p>
+
+    </form>
+
+  </div>
+
+</div>
 
 
 
