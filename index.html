@@ -22,9 +22,9 @@
 
     <nav class="nav">
 
-      <button class="btn btn-primary" id="openModalTop">Post a Request</button>
+      <button class="btn btn-primary" data-open="postModal">Post a Request</button>
 
-      <a href="#feed" class="btn btn-ghost js-scroll">See Requests</a>
+      <a href="#feed" class="btn btn-ghost">See Requests</a>
 
     </nav>
 
@@ -46,9 +46,9 @@
 
       <div class="hero__cta">
 
-        <button class="btn btn-primary btn-xl" id="openModal">Post a Request</button>
+        <button class="btn btn-primary btn-xl" data-open="postModal">Post a Request</button>
 
-        <a href="#feed" class="btn btn-ghost btn-xl js-scroll">See Requests</a>
+        <a href="#feed" class="btn btn-ghost btn-xl">See Requests</a>
 
       </div>
 
@@ -66,8 +66,6 @@
 
     <div class="hero__img" aria-hidden="true">
 
-      <!-- اختياري: ضع hero.png (خفيف ≤150KB). سيختفي تلقائيًا إن لم يوجد -->
-
       <img src="hero.png" alt="" onerror="this.style.display='none'"/>
 
     </div>
@@ -82,13 +80,11 @@
 
   <div class="card__head">
 
-    <h2>Neighbor Requests</h2>
+    <div class="section-tab"><span class="tab-dot"></span><strong>Neighbor Requests</strong></div>
 
     <div class="head-actions">
 
-      <a class="btn btn-ghost btn-sm js-scroll" href="#feed">All Requests</a>
-
-      <button class="btn btn-primary btn-sm" id="openModalHead">Post a Request</button>
+      <a class="btn btn-ghost btn-sm" href="#feed">All Requests</a>
 
     </div>
 
@@ -152,13 +148,13 @@
 
 
 
-<!-- Modal (Post a request) — لا نغيّره 👍 -->
+<!-- Post modal (كما هو) -->
 
 <div class="modal" id="postModal" aria-hidden="true">
 
   <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="postTitle">
 
-    <button class="modal__close" id="closeModal" aria-label="Close">×</button>
+    <button class="modal__close" data-close aria-label="Close">×</button>
 
     <h3 id="postTitle">Post a request</h3>
 
