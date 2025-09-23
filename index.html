@@ -1,115 +1,51 @@
-<!DOCTYPE html>
+<!doctype html><html lang="en"><head>
 
-<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 
-<head>
+<title>HelpAroundYou</title><link rel="stylesheet" href="style.css">
 
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+</head><body data-page="home">
 
-<title>HelpAroundYou — Neighbors helping neighbors</title>
+<header class="header"><div class="wrap header__in">
 
-<link rel="stylesheet" href="style.css"/>
+<a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
 
-</head>
+<nav class="nav"><a class="btn p" href="post.html">Post a Request</a><a class="btn g" href="requests.html">See Requests</a></nav>
 
-<body data-page="home">
-
-<header class="header">
-
-  <div class="wrap header__inner">
-
-    <a class="brand" href="index.html">Help<span class="brand__a">Around</span><span class="brand__y">You</span></a>
-
-    <nav class="nav">
-
-      <a class="btn btn-primary" href="post.html">Post a Request</a>
-
-      <a class="btn btn-ghost" href="requests.html">See Requests</a>
-
-    </nav>
-
-  </div>
-
-</header>
+</div></header>
 
 
 
-<section class="hero">
+<section class="hero"><div class="wrap hero__in">
 
-  <div class="wrap hero__inner">
+<div class="hero__txt">
 
-    <div class="hero__text">
+<h1>Get things done — clear, safe, on your schedule.</h1>
 
-      <h1>Get things done — clear, safe, on your schedule.</h1>
+<p class="muted">We’re a free community platform. We don’t provide services — we simply connect neighbors and local doers so they coordinate directly.</p>
 
-      <p class="muted">We’re a free community platform. We don’t provide services — we simply connect neighbors and local doers so they coordinate directly.</p>
+<div class="cta"><a class="btn p xl" href="post.html">Post a Request</a><a class="btn g xl" href="requests.html">See Requests</a></div>
 
-      <div class="hero__cta">
+<ul class="steps"><li>Describe the task (title, details, date, area, photos)</li><li>We list it instantly for nearby helpers</li><li>You coordinate directly and mark it done</li></ul>
 
-        <a class="btn btn-primary btn-xl" href="post.html">Post a Request</a>
+</div>
 
-        <a class="btn btn-ghost btn-xl" href="requests.html">See Requests</a>
-
-      </div>
-
-      <ul class="steps">
-
-        <li>Describe the task (title, details, date, area, photos)</li>
-
-        <li>We list it instantly for nearby helpers</li>
-
-        <li>You coordinate directly and mark it done</li>
-
-      </ul>
-
-    </div>
-
-    <div class="hero__img" aria-hidden="true">
-
-      <img src="hero.png" alt="" onerror="this.style.display='none'"/>
-
-    </div>
-
-  </div>
-
-</section>
+</div></section>
 
 
 
-<section class="wrap card">
+<section class="wrap card"><div class="card__head">
 
-  <div class="card__head">
+<div class="tab"><span class="dot"></span><strong>Neighbor Requests</strong></div>
 
-    <div class="section-tab"><span class="tab-dot"></span><strong>Neighbor Requests</strong></div>
+<div class="act"><a class="btn g s" href="requests.html">All Requests</a><a class="btn p s" href="post.html">Post a Request</a></div>
 
-    <div class="head-actions">
-
-      <a class="btn btn-ghost btn-sm" href="requests.html">All Requests</a>
-
-      <a class="btn btn-primary btn-sm" href="post.html">Post a Request</a>
-
-    </div>
-
-  </div>
+</div><p class="muted" style="margin:8px 0 0">Go to <a href="requests.html">See Requests</a> to browse posts.</p></section>
 
 
 
-  <p class="muted" style="margin:8px 0 0">Head to <a href="requests.html">See Requests</a> to browse live posts from your area.</p>
+<footer class="f"><div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div></footer>
 
-</section>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="app.js?v=1"></script>
 
-
-
-<footer class="footer">
-
-  <div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div>
-
-</footer>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-<script src="app.js?v=1"></script>
-
-</body>
-
-</html>
+</body></html>
