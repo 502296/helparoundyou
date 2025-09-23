@@ -1,194 +1,106 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-  <meta charset="utf-8"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Neighbor Requests — HelpAroundYou</title>
 
-  <title>Recent requests — HelpAroundYou</title>
-
-  <link rel="stylesheet" href="styles.css"/>
-
-  <script>
-
-    // عدّل حسبك:
-
-    const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";  // يجب أن يدعم ?action=list
-
-    const SHEET_ID = "PASTE_YOUR_SHEET_ID_HERE";        // fallback
-
-    const SHEET_GID = "0"; // غيّرها لو كانت التبويبة ليست الأولى
-
-  </script>
+<link rel="stylesheet" href="style.css"/>
 
 </head>
 
-<body>
+<body data-page="requests">
 
-<header class="site-header">
+<header class="header">
 
-  <a class="brand" href="/">
+  <div class="wrap header__inner">
 
-    <svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" aria-hidden="true">
+    <a class="brand" href="index.html">Help<span class="brand__a">Around</span><span class="brand__y">You</span></a>
 
-      <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs>
+    <nav class="nav">
 
-      <circle cx="32" cy="32" r="28" fill="url(#g3)"/><circle cx="22" cy="42" r="7" fill="#fff" opacity=".95"/><path d="M46 26c0 6-12 2-12 2s6-8 12-8v6z" fill="#fff" opacity=".95"/>
+      <a class="btn btn-primary" href="post.html">Post a Request</a>
 
-    </svg>
+    </nav>
 
-    <span class="brand-name"><strong>Help</strong><strong>Around</strong><strong>You</strong></span>
-
-  </a>
-
-  <nav class="top-actions">
-
-    <a class="btn primary" href="post.html">Post a request</a>
-
-  </nav>
+  </div>
 
 </header>
 
 
 
-<main class="page-wide">
+<section class="wrap card">
 
-  <h1>Recent Requests</h1>
+  <div class="card__head">
 
-  <div id="list" class="cards"></div>
+    <div class="section-tab"><span class="tab-dot"></span><strong>Neighbor Requests</strong></div>
 
-  <p id="fallback" class="muted" style="display:none">
+    <div class="head-actions"><a class="btn btn-ghost btn-sm" href="requests.html">All Requests</a></div>
 
-    Could not load requests.
+  </div>
 
-  </p>
 
-</main>
 
+  <div class="filters">
 
+    <input id="q" type="search" placeholder="Search title or description"/>
 
-<footer class="site-footer">© 2025 HelpAroundYou</footer>
+    <select id="cat">
 
+      <option value="">All categories</option>
 
+      <option>Pickup with Truck</option>
 
-<script>
+      <option>Moving help</option>
 
-async function loadFromWebApp() {
+      <option>Lawn Care</option>
 
-  const url = `${WEB_APP_URL}?action=list&limit=25`;
+      <option>Leaf / Branch removal</option>
 
-  const res = await fetch(url);
+      <option>Cleaning</option>
 
-  if (!res.ok) throw new Error('webapp list failed');
+      <option>Small fix / Handy</option>
 
-  return res.json();
+      <option>Pool Cleaning</option>
 
-}
+      <option>Power Washing (stone/exterior)</option>
 
+      <option>Driveway / Concrete Cleaning</option>
 
+      <option>Other</option>
 
-async function loadFromSheetCSV() {
+    </select>
 
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${SHEET_GID}`;
+    <input id="zipf" type="text" placeholder="ZIP / Area"/>
 
-  const res = await fetch(url);
+    <button id="apply" class="btn btn-primary btn-sm">Apply</button>
 
-  if (!res.ok) throw new Error('sheet csv failed');
+    <button id="clear" class="btn btn-ghost btn-sm">Clear</button>
 
-  const csv = await res.text();
+  </div>
 
-  // بسيط: نفصل أول 25 صف بعد العناوين
 
-  const rows = csv.split(/\r?\n/).map(r => r.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/));
 
-  const header = rows.shift();
+  <div id="list" class="list"></div>
 
-  const items = rows.slice(0,25).filter(r=>r.length>3).map(r => ({
+  <button id="loadMore" class="btn btn-ghost btn-sm hidden">Load more</button>
 
-    timestamp: r[0], email: r[1], title: r[2], description: r[3],
+</section>
 
-    category: r[4], location: r[5], date: r[6], contact: r[7] || ''
 
-  }));
 
-  return items;
+<footer class="footer">
 
-}
+  <div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div>
 
+</footer>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-function render(items) {
-
-  const wrap = document.getElementById('list');
-
-  if (!items || !items.length) {
-
-    document.getElementById('fallback').style.display = 'block';
-
-    return;
-
-  }
-
-  wrap.innerHTML = items.map(item => `
-
-    <article class="card request">
-
-      <div class="req-head">
-
-        <h3>${escapeHtml(item.title || '')}</h3>
-
-        <span class="pill">${escapeHtml(item.category || '')}</span>
-
-      </div>
-
-      <p class="muted">${escapeHtml(item.location || '')} · ${escapeHtml(item.date || '')}</p>
-
-      <p>${escapeHtml(item.description || '')}</p>
-
-    </article>
-
-  `).join('');
-
-}
-
-
-
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));}
-
-
-
-(async () => {
-
-  try {
-
-    let items;
-
-    try {
-
-      items = await loadFromWebApp(); // يتوقع {title, description, category, location, date}
-
-    } catch(_) {
-
-      items = await loadFromSheetCSV();
-
-    }
-
-    render(items);
-
-  } catch (err) {
-
-    console.error(err);
-
-    document.getElementById('fallback').style.display = 'block';
-
-  }
-
-})();
-
-</script>
+<script src="app.js?v=1"></script>
 
 </body>
 
