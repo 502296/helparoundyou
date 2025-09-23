@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Offer to Help — HelpAroundYou</title>
+
+  <link rel="stylesheet" href="style.css?v=6"/>
+
+  <style>
+
+    .page-wrap{max-width:1100px;margin:0 auto;padding:24px 5%}
+
+    .summary{
+
+      background:#fff;border:1px solid #eee;border-radius:14px;padding:16px;
+
+      box-shadow:0 8px 28px rgba(0,0,0,.06); margin-bottom:14px;
+
+    }
+
+    .summary h2{margin:0 0 6px}
+
+    .summary .row{display:flex;flex-wrap:wrap;gap:10px;color:#555}
+
+    .summary .badge{display:inline-block;padding:.25rem .55rem;border-radius:999px;font-size:.78rem;font-weight:700;background:#efe7ff;color:#4b2bb9}
+
+    .gform-wrap{
+
+      background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;
+
+      box-shadow:0 8px 28px rgba(0,0,0,.06);
+
+    }
+
+    .gform{
+
+      width:100%; border:0; min-height:80vh; /* يملأ الشاشة تقريبا */
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Header الموحد -->
+
+  <header class="hay-header">
+
+    <a href="index.html" class="logo">
+
+      <span class="logo-main">Help</span><span class="logo-around">Around</span><span class="logo-you">You</span>
+
+    </a>
+
+    <nav class="hay-actions">
+
+      <a href="list.html" class="btn secondary active">See Requests</a>
+
+      <a href="post.html" class="btn primary">Post a Request</a>
+
+    </nav>
+
+  </header>
+
+
+
+  <div class="page-wrap">
+
+    <h1 style="margin:12px 0 14px;">Offer to help</h1>
+
+
+
+    <!-- ملخص الطلب القادم من list.html -->
+
+    <div class="summary" id="summary">
+
+      <h2 id="s-title">Loading…</h2>
+
+      <div class="row">
+
+        <span class="badge" id="s-cat"></span>
+
+        <span class="badge" id="s-area" style="background:#e6f3ff;color:#196399"></span>
+
+        <span id="s-date" style="color:#777"></span>
+
+      </div>
+
+      <p style="margin-top:8px;color:#666">Fill the form below to reach the requester. Your message will be emailed to them.</p>
+
+    </div>
+
+
+
+    <!-- Google Form المدمج -->
+
+    <div class="gform-wrap">
+
+      <iframe id="gform" class="gform"
+
+        src=""
+
+        allow="clipboard-write; encrypted-media; fullscreen; geolocation; microphone; camera"
+
+        loading="lazy">
+
+      </iframe>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Footer الموحد -->
+
+  <footer class="hay-footer">
+
+    © 2025 HelpAroundYou — Free to use. Built with care for our community ♥
+
+  </footer>
+
+
+
+  <script>
+
+    // 1) ضع هنا رابط الـEmbed من Google Forms (Send → <> → src)
+
+    // مثال شكل الرابط:
+
+    // https://docs.google.com/forms/d/e/1FAIpQLSeXxxxxxx/viewform?embedded=true
+
+    const FORM_EMBED_URL = 'PUT_YOUR_GOOGLE_FORM_EMBED_URL_HERE';
+
+
+
+    // 2) (اختياري) لو تبي prefill تلقائي، ضع مفاتيح entry.xxxxx لحقولك
+
+    // لإيجادها: في Google Forms → ⋮ (النقاط الثلاث) → Get pre-filled link → عبّي قيمة تجريبية واحفظ الرابط،
+
+    // ستجد فيه باراميترات مثل entry.123456789=VALUE
+
+    const PREFILL_MAP = {
+
+      // مثال:
+
+      // requestTitle: 'entry.1111111111',
+
+      // category:     'entry.2222222222',
+
+      // area:         'entry.3333333333',
+
+      // date:         'entry.4444444444',
+
+      // name:         'entry.5555555555',   // اسم الشخص اللي يساعد (يعبّيه بنفسه)
+
+      // email:        'entry.6666666666',
+
+      // message:      'entry.7777777777'
+
+    };
+
+
+
+    // --- لا تغير تحت هنا ---
+
+    const qp = new URLSearchParams(location.search);
+
+    const data = {
+
+      title: qp.get('title') || '',
+
+      cat: qp.get('cat') || '',
+
+      area: qp.get('area') || '',
+
+      date: qp.get('date') || ''
+
+    };
+
+
+
+    // عرض الملخص
+
+    const esc = s => (s??'').toString().replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+    const fmtNice = s => { const d = new Date(s); return isNaN(d)? (s||'') : d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); };
+
+
+
+    document.getElementById('s-title').innerHTML = esc(data.title || 'Offer to help');
+
+    document.getElementById('s-cat').textContent  = data.cat || 'General';
+
+    document.getElementById('s-area').textContent = data.area || 'Area';
+
+    document.getElementById('s-date').textContent = data.date ? ('📅 ' + fmtNice(data.date)) : '';
+
+
+
+    // إعداد رابط الفورم
+
+    let url = FORM_EMBED_URL || '';
+
+    if (!url) {
+
+      document.getElementById('gform').replaceWith('Please set FORM_EMBED_URL in help.html');
+
+    } else {
+
+      // إن وُجدت خريطة prefill نحاول نضيف القيم
+
+      try{
+
+        const u = new URL(url, location.origin);
+
+        // تأكد من وجود embedded=true
+
+        if (!u.searchParams.has('embedded')) u.searchParams.set('embedded','true');
+
+
+
+        const m = PREFILL_MAP;
+
+        if (Object.keys(m).length){
+
+          if (m.requestTitle && data.title) u.searchParams.set(m.requestTitle, data.title);
+
+          if (m.category     && data.cat)   u.searchParams.set(m.category, data.cat);
+
+          if (m.area         && data.area)  u.searchParams.set(m.area, data.area);
+
+          if (m.date         && data.date)  u.searchParams.set(m.date, data.date);
+
+        }
+
+        document.getElementById('gform').src = u.toString();
+
+      }catch(e){
+
+        document.getElementById('gform').src = FORM_EMBED_URL; // fallback
+
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>
