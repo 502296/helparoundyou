@@ -1,111 +1,147 @@
-// ربط Supabase
+// ===== Supabase config (ضع الـ ANON KEY هنا) =====
 
-const SUPABASE_URL = "https://afqjgrcoiwitfftbjltp.supabase.co";  // URL الصحيح من لوحة Supabase
+const SUPABASE_URL = "https://afqjgrcoiwitfftbjltp.supabase.co";  // ثابت من مشروعك
 
-const SUPABASE_ANON_KEY = "ضع هنا الـ anon key اللي نسخته";
+const SUPABASE_ANON_KEY = "PUT_YOUR_ANON_KEY_HERE";               // <-- بدّلها بمفتاح anon
 
-const BUCKET = "uploads"; // اسم الباكيت
-
-
+const BUCKET = "uploads";
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 
-// التعامل مع النموذج
+// ===== Helpers =====
 
-const form = document.getElementById("requestForm");
+const $ = (s) => document.querySelector(s);
 
+const listEl = $("#list"), msgEl = $("#formMsg"), submitBtn = $("#submitBtn");
 
-
-form.addEventListener("submit", async (e) => {
-
-  e.preventDefault();
+let page = 0; const PAGE_SIZE = 10;
 
 
 
-  // اجمع البيانات
+// ===== Submit form =====
 
-  const title = document.getElementById("title").value;
+$("#requestForm").addEventListener("submit", async (e) => {
 
-  const category = document.getElementById("category").value;
+  e.preventDefault(); msgEl.className = "msg"; msgEl.textContent = "Uploading…"; submitBtn.disabled = true;
 
-  const zip = document.getElementById("zip").value;
+  const title = $("#title").value.trim(), category = $("#category").value.trim(), zip = $("#zip").value.trim();
 
-  const date = document.getElementById("date").value;
+  const task_date = $("#date").value || null, description = $("#description").value.trim(), contact = $("#contact").value.trim() || null;
 
-  const description = document.getElementById("description").value;
-
-  const file = document.getElementById("file").files[0];
+  if (!title || !category || !zip) { msgEl.className = "msg err"; msgEl.textContent = "Please fill required fields."; submitBtn.disabled = false; return; }
 
 
 
-  // ارفع الصورة لو موجودة
+  // Upload files (up to 5)
 
-  let fileUrl = null;
+  const files = Array.from($("#files").files || []).slice(0, 5), urls = [];
 
-  if (file) {
+  for (const f of files) {
 
-    const filePath = `req_${Date.now()}_${file.name}`;
+    // رفض مبكر لملفات ضخمة جدًا (10MB) — تحكّم واجهة فقط
 
-    const { error: uploadError } = await sb.storage.from(BUCKET).upload(filePath, file);
+    if (f.size > 10 * 1024 * 1024) { msgEl.className = "msg err"; msgEl.textContent = "File too large (>10MB). Try smaller."; submitBtn.disabled = false; return; }
 
+    const ext = f.name.split(".").pop(); const path = `req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
 
+    const { error: upErr } = await sb.storage.from(BUCKET).upload(path, f, { upsert: false });
 
-    if (uploadError) {
+    if (upErr) { console.error(upErr); msgEl.className = "msg err"; msgEl.textContent = "Upload failed. Check bucket name/policies."; submitBtn.disabled = false; return; }
 
-      alert("خطأ في رفع الملف: " + uploadError.message);
-
-      return;
-
-    }
-
-
-
-    // اجلب رابط عام
-
-    const { data: publicUrl } = sb.storage.from(BUCKET).getPublicUrl(filePath);
-
-    fileUrl = publicUrl.publicUrl;
+    const { data } = sb.storage.from(BUCKET).getPublicUrl(path); urls.push(data.publicUrl);
 
   }
 
 
 
-  // أضف الطلب في جدول requests
+  // Insert row
 
-  const { error } = await sb.from("requests").insert([
+  const { error: insErr } = await sb.from("requests").insert({ title, category, zip, task_date, description, contact, media_urls: urls });
 
-    {
+  if (insErr) { console.error(insErr); msgEl.className = "msg err"; msgEl.textContent = "Could not save your request."; }
 
-      title,
+  else { msgEl.className = "msg ok"; msgEl.textContent = "Posted! Your request is now live."; e.target.reset(); page = 0; listEl.innerHTML = ""; await load(true); location.hash = "#feed"; }
 
-      category,
-
-      zip,
-
-      task_date: date,
-
-      description,
-
-      media_urls: fileUrl ? [fileUrl] : [],
-
-    },
-
-  ]);
-
-
-
-  if (error) {
-
-    alert("خطأ في حفظ الطلب: " + error.message);
-
-  } else {
-
-    alert("تم نشر طلبك بنجاح 🎉");
-
-    form.reset();
-
-  }
+  submitBtn.disabled = false;
 
 });
+
+
+
+// ===== List + filters =====
+
+async function load(reset=false){
+
+  const q = $("#q").value.trim(), cat = $("#cat").value.trim(), zipf = $("#zipf").value.trim();
+
+  let qb = sb.from("requests").select("*").order("created_at", { ascending: false });
+
+  if (q) qb = qb.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
+
+  if (cat) qb = qb.eq("category", cat);
+
+  if (zipf) qb = qb.ilike("zip", `%${zipf}%`);
+
+  const from = page * PAGE_SIZE, to = from + PAGE_SIZE - 1;
+
+  const { data, error } = await qb.range(from, to);
+
+  if (error) { console.error(error); return; }
+
+  if (reset) listEl.innerHTML = "";
+
+  render(data || []);
+
+  $("#loadMore").classList.toggle("hidden", !(data && data.length === PAGE_SIZE));
+
+}
+
+
+
+function render(rows){
+
+  for (const r of rows){
+
+    const d = new Date(r.task_date || r.created_at);
+
+    const nice = d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+
+    const img = (r.media_urls && r.media_urls[0]) ? `<a class="btn small" href="${r.media_urls[0]}" target="_blank">View file</a>` : "";
+
+    const snippet = (r.description || "").slice(0, 140);
+
+    const el = document.createElement("div");
+
+    el.className = "item";
+
+    el.innerHTML = `<h3 style="margin:0">${esc(r.title)}</h3>
+
+      <div class="tags"><span class="tag">${esc(r.category || "Other")}</span>${r.zip ? `<span class="tag">${esc(r.zip)}</span>` : ""}<span class="tag">${nice}</span></div>
+
+      <p style="margin:6px 0">${esc(snippet)}${r.description && r.description.length > 140 ? "…" : ""}</p>
+
+      <div class="actions"><button class="btn small" onclick="alert('Coordinate directly via email/text. Stay safe!')">Offer to help</button>${img}</div>`;
+
+    listEl.appendChild(el);
+
+  }
+
+}
+
+
+
+const esc = (s) => s?.replace(/[&<>"']/g, (m) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])) ?? "";
+
+
+
+$("#apply").addEventListener("click", ()=>{ page=0; load(true); });
+
+$("#clear").addEventListener("click", ()=>{ $("#q").value=""; $("#cat").value=""; $("#zipf").value=""; page=0; load(true); });
+
+$("#loadMore").addEventListener("click", ()=>{ page++; load(); });
+
+
+
+load(true);
