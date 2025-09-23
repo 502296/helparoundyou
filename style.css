@@ -1,97 +1,181 @@
-:root{--bg:#f7fbff;--text:#0d1b2a;--muted:#5b7083;--primary:#1ea7ff;--primary-600:#1184cc;--ring:rgba(30,167,255,.25);--card:#ffffff;--line:#e6eef6;--ok:#1bbf72;--err:#f24d4d;--r:16px}
+// ===== Supabase config =====
 
-*{box-sizing:border-box}html,body{margin:0;padding:0}
+const SUPABASE_URL = "https://afqjgrcoiwitfftbjltp.supabase.co";
 
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+const SUPABASE_ANON_KEY = "PUT_YOUR_ANON_KEY_HERE"; // بدّلها بمفتاح anon
 
-.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+const BUCKET = "uploads";
 
-.header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--line);z-index:20}
-
-.header__inner{display:flex;justify-content:space-between;align-items:center;height:64px}
-
-.brand{font-weight:800;font-size:20px}.brand__a{color:#10a5ff}.brand__y{color:#27c5a7}
-
-.nav{display:flex;gap:10px}
-
-.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:12px;padding:12px 16px;cursor:pointer;transition:.15s;font-weight:600}
-
-.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-600)}
-
-.btn-ghost{background:#eef5fb;color:#0d1b2a;border-color:#d9e8f4}.btn-ghost:hover{background:#e6f2fb}
-
-.btn-xl{padding:14px 18px;font-size:18px}.btn-sm{padding:8px 10px;font-size:14px}
-
-.hero{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 60%);border-bottom:1px solid var(--line)}
-
-.hero__inner{display:grid;gap:24px;grid-template-columns:1.1fr .9fr;align-items:center;padding:36px 0}
-
-.hero__text h1{margin:0 0 8px;font-size:clamp(26px,5vw,44px)}.hero__text p{margin:0 0 14px;color:var(--muted)}
-
-.hero__cta{display:flex;gap:10px;flex-wrap:wrap}
-
-.steps{margin:14px 0 0;padding-left:18px;color:#2e4057}
-
-.hero__img img{width:100%;max-height:340px;object-fit:contain}
-
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 6px 24px rgba(18,52,86,.06);padding:16px;margin:18px 0;scroll-margin-top:86px}
-
-.card__head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
-
-.section-tab{display:flex;align-items:center;gap:10px;background:#eef5fb;border:1px solid #d9e8f4;border-radius:999px;padding:8px 12px}
-
-.tab-dot{width:8px;height:8px;border-radius:50%;background:#1ea7ff}
-
-.head-actions{display:flex;gap:8px}
-
-.grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}.col-2{grid-column:1/-1}
-
-label span{display:block;margin:0 0 6px;color:#193c56;font-size:13px}
-
-input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #cfe2f1;background:#fff;color:var(--text);outline:0}
-
-input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3px var(--ring)}
-
-.msg{min-height:18px;color:var(--muted)}.ok{color:var(--ok)}.err{color:var(--err)}
-
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}.filters>*{flex:1 1 180px}
-
-.list{display:grid;gap:12px;margin-top:12px}
-
-.item{border:1px solid #dfeaf4;background:#fff;border-radius:14px;padding:14px}
-
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
-
-.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eef7ff;color:#163f5a;border:1px solid #cfe2f1}
-
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-
-.hidden{display:none}
-
-.footer{border-top:1px solid var(--line);padding:24px 0;text-align:center;color:#5b7083;background:#fbfdff}
-
-.modal{position:fixed;inset:0;background:rgba(3,15,28,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
-
-.modal.show{display:flex}
-
-.modal__dialog{position:relative;width:min(720px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:16px;border:1px solid var(--line);box-shadow:0 16px 44px rgba(20,40,70,.18);padding:16px}
-
-.modal__dialog h3{margin:0 0 10px}
-
-.modal__close{position:absolute;right:22px;top:18px;border:0;background:#eef5fb;color:#0d1b2a;border-radius:10px;padding:6px 10px;cursor:pointer}
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 
-/* موبايل: أخفي أزرار الهيدر، كبر المسافات، وثبّت الأزرار الوسطية فقط */
+// ===== DOM ready to avoid timing issues =====
 
-@media (max-width:880px){
+document.addEventListener("DOMContentLoaded",()=>{
 
-  #topNav{display:none}
 
-  .hero__inner{grid-template-columns:1fr;padding:22px 0}
 
-  .hero__text h1{font-size:28px}
+  // ----- Modal open/close (IDs صريحة) -----
 
-  .hero__cta{gap:12px}
+  const postModal = document.getElementById("postModal");
 
-}
+  const openTopBtn = document.getElementById("openTopBtn");
+
+  const openHeroBtn = document.getElementById("openHeroBtn");
+
+  const closeModal = document.getElementById("closeModal");
+
+
+
+  function openModal(){ postModal.classList.add("show"); }
+
+  function closeModalFn(){ postModal.classList.remove("show"); }
+
+
+
+  if(openTopBtn) openTopBtn.addEventListener("click",openModal);
+
+  if(openHeroBtn) openHeroBtn.addEventListener("click",openModal);
+
+  if(closeModal) closeModal.addEventListener("click",closeModalFn);
+
+  postModal.addEventListener("click",(e)=>{ if(e.target.id==="postModal") closeModalFn(); });
+
+
+
+  // ----- Helpers -----
+
+  const $ = (s)=>document.querySelector(s);
+
+  const listEl = $("#list"), msgEl = $("#formMsg"), submitBtn = $("#submitBtn");
+
+  let page=0; const PAGE_SIZE=10;
+
+
+
+  // ----- Submit form -----
+
+  $("#requestForm").addEventListener("submit",async(e)=>{
+
+    e.preventDefault(); msgEl.className="msg"; msgEl.textContent="Uploading…"; submitBtn.disabled=true;
+
+
+
+    const title=$("#title").value.trim(), category=$("#category").value.trim(), zip=$("#zip").value.trim();
+
+    const task_date=$("#date").value||null, description=$("#description").value.trim(), contact=$("#contact").value.trim()||null;
+
+    if(!title||!category||!zip){ msgEl.className="msg err"; msgEl.textContent="Please fill required fields."; submitBtn.disabled=false; return; }
+
+
+
+    // Upload files (max 5)
+
+    const files=Array.from($("#files").files||[]).slice(0,5), urls=[];
+
+    for(const f of files){
+
+      if(f.size>10*1024*1024){ msgEl.className="msg err"; msgEl.textContent="File too large (>10MB)."; submitBtn.disabled=false; return; }
+
+      const ext=(f.name.split(".").pop()||"bin").toLowerCase();
+
+      const path=`req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+
+      const { error:upErr } = await sb.storage.from(BUCKET).upload(path,f,{upsert:false});
+
+      if(upErr){ console.error(upErr); msgEl.className="msg err"; msgEl.textContent="Upload failed. Check bucket/policies."; submitBtn.disabled=false; return; }
+
+      const { data } = sb.storage.from(BUCKET).getPublicUrl(path); urls.push(data.publicUrl);
+
+    }
+
+
+
+    // Insert row
+
+    const { error:insErr } = await sb.from("requests").insert({ title, category, zip, task_date, description, contact, media_urls: urls });
+
+    if(insErr){ console.error(insErr); msgEl.className="msg err"; msgEl.textContent="Could not save your request."; }
+
+    else{ msgEl.className="msg ok"; msgEl.textContent="Posted! Your request is now live."; e.target.reset(); closeModalFn(); page=0; listEl.innerHTML=""; await load(true); location.hash="#feed"; }
+
+    submitBtn.disabled=false;
+
+  });
+
+
+
+  // ----- List & filters -----
+
+  async function load(reset=false){
+
+    const q=$("#q").value.trim(), cat=$("#cat").value.trim(), zipf=$("#zipf").value.trim();
+
+    let qb=sb.from("requests").select("*").order("created_at",{ascending:false});
+
+    if(q) qb=qb.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
+
+    if(cat) qb=qb.eq("category",cat);
+
+    if(zipf) qb=qb.ilike("zip",`%${zipf}%`);
+
+    const from=page*PAGE_SIZE,to=from+PAGE_SIZE-1;
+
+    const { data,error }=await qb.range(from,to);
+
+    if(error){ console.error(error); return; }
+
+    if(reset) listEl.innerHTML="";
+
+    render(data||[]);
+
+    $("#loadMore").classList.toggle("hidden",!(data&&data.length===PAGE_SIZE));
+
+  }
+
+
+
+  function render(rows){
+
+    for(const r of rows){
+
+      const d=new Date(r.task_date||r.created_at), nice=d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+
+      const img=(r.media_urls&&r.media_urls[0])?`<a class="btn btn-ghost btn-sm" href="${r.media_urls[0]}" target="_blank">View file</a>`:"";
+
+      const snippet=(r.description||"").slice(0,140);
+
+      const el=document.createElement("div");
+
+      el.className="item";
+
+      el.innerHTML=`<h3 style="margin:0">${esc(r.title)}</h3>
+
+        <div class="tags"><span class="tag">${esc(r.category||"Other")}</span>${r.zip?`<span class="tag">${esc(r.zip)}</span>`:""}<span class="tag">${nice}</span></div>
+
+        <p style="margin:6px 0">${esc(snippet)}${r.description&&r.description.length>140?"…":""}</p>
+
+        <div class="actions"><button class="btn btn-primary btn-sm" onclick="alert('Coordinate directly via email/text. Stay safe!')">Offer to help</button>${img}</div>`;
+
+      listEl.appendChild(el);
+
+    }
+
+  }
+
+  const esc=(s)=>s?.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))??"";
+
+
+
+  document.getElementById("apply").addEventListener("click",()=>{page=0;load(true)});
+
+  document.getElementById("clear").addEventListener("click",()=>{$("#q").value="";$("#cat").value="";$("#zipf").value="";page=0;load(true)});
+
+  document.getElementById("loadMore").addEventListener("click",()=>{page++;load()});
+
+
+
+  load(true);
+
+});
