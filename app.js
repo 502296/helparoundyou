@@ -1,301 +1,111 @@
-// === Replace with your project keys ===
+// ربط Supabase
 
-const SUPABASE_URL = "https://YOUR-PROJECT-REF.supabase.co";
+const SUPABASE_URL = "https://afqjgrcoiwitfftbjltp.supabase.co";  // URL الصحيح من لوحة Supabase
 
-const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+const SUPABASE_ANON_KEY = "ضع هنا الـ anon key اللي نسخته";
 
-const BUCKET = "uploads";
-
-
-
-const supabase = supabasejs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const BUCKET = "uploads"; // اسم الباكيت
 
 
 
-// ---------- Helpers ----------
-
-const el = (sel) => document.querySelector(sel);
-
-const listEl = el("#list");
-
-const msgEl = el("#formMsg");
-
-const submitBtn = el("#submitBtn");
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 
-let page = 0;
+// التعامل مع النموذج
 
-const PAGE_SIZE = 10;
+const form = document.getElementById("requestForm");
 
 
 
-// ---------- Submit form ----------
-
-el("#requestForm").addEventListener("submit", async (e) => {
+form.addEventListener("submit", async (e) => {
 
   e.preventDefault();
 
-  msgEl.className = "msg";
-
-  msgEl.textContent = "Uploading… please wait";
-
-  submitBtn.disabled = true;
 
 
+  // اجمع البيانات
 
-  const form = new FormData(e.target);
+  const title = document.getElementById("title").value;
 
-  const title = form.get("title")?.toString().trim();
+  const category = document.getElementById("category").value;
 
-  const category = form.get("category")?.toString().trim();
+  const zip = document.getElementById("zip").value;
 
-  const zip = form.get("zip")?.toString().trim();
+  const date = document.getElementById("date").value;
 
-  const task_date = form.get("task_date") || null;
+  const description = document.getElementById("description").value;
 
-  const description = form.get("description")?.toString().trim() || "";
-
-  const contact = form.get("contact")?.toString().trim() || null;
+  const file = document.getElementById("file").files[0];
 
 
 
-  if(!title || !category || !zip){
+  // ارفع الصورة لو موجودة
 
-    msgEl.className = "msg err";
+  let fileUrl = null;
 
-    msgEl.textContent = "Please fill required fields.";
+  if (file) {
 
-    submitBtn.disabled = false;
+    const filePath = `req_${Date.now()}_${file.name}`;
 
-    return;
-
-  }
+    const { error: uploadError } = await sb.storage.from(BUCKET).upload(filePath, file);
 
 
 
-  // Upload files (max 5)
+    if (uploadError) {
 
-  const filesInput = document.getElementById("files");
-
-  const files = Array.from(filesInput.files || []).slice(0, 5);
-
-
-
-  const urls = [];
-
-  for (const file of files) {
-
-    const ext = file.name.split(".").pop();
-
-    const path = `req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-
-    const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { upsert: false });
-
-    if (upErr) {
-
-      console.error(upErr);
-
-      msgEl.className = "msg err";
-
-      msgEl.textContent = "Upload failed. Try smaller files or another format.";
-
-      submitBtn.disabled = false;
+      alert("خطأ في رفع الملف: " + uploadError.message);
 
       return;
 
     }
 
-    // Get public URL
 
-    const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
 
-    urls.push(data.publicUrl);
+    // اجلب رابط عام
+
+    const { data: publicUrl } = sb.storage.from(BUCKET).getPublicUrl(filePath);
+
+    fileUrl = publicUrl.publicUrl;
 
   }
 
 
 
-  // Insert row
+  // أضف الطلب في جدول requests
 
-  const { error: insErr } = await supabase
+  const { error } = await sb.from("requests").insert([
 
-    .from("requests")
+    {
 
-    .insert({
+      title,
 
-      title, category, zip, task_date: task_date || null,
+      category,
 
-      description, contact, media_urls: urls
+      zip,
 
-    });
+      task_date: date,
+
+      description,
+
+      media_urls: fileUrl ? [fileUrl] : [],
+
+    },
+
+  ]);
 
 
 
-  if (insErr) {
+  if (error) {
 
-    console.error(insErr);
-
-    msgEl.className = "msg err";
-
-    msgEl.textContent = "Could not save your request. Please try again.";
+    alert("خطأ في حفظ الطلب: " + error.message);
 
   } else {
 
-    msgEl.className = "msg ok";
+    alert("تم نشر طلبك بنجاح 🎉");
 
-    msgEl.textContent = "Posted! Your request is now live.";
-
-    e.target.reset();
-
-    // refresh feed
-
-    page = 0; listEl.innerHTML = "";
-
-    await loadRequests(true);
-
-    location.hash = "#feed";
+    form.reset();
 
   }
-
-  submitBtn.disabled = false;
 
 });
-
-
-
-// ---------- List / Filters ----------
-
-async function loadRequests(reset=false){
-
-  const q = el("#q").value.trim();
-
-  const cat = el("#cat").value.trim();
-
-  const zip = el("#zip").value.trim();
-
-
-
-  let query = supabase.from("requests").select("*").order("created_at", { ascending: false });
-
-
-
-  if (q){
-
-    // Full text: filter title/description contains
-
-    query = query.ilike("title", `%${q}%`).or(`description.ilike.%${q}%`);
-
-  }
-
-  if (cat){ query = query.eq("category", cat); }
-
-  if (zip){ query = query.ilike("zip", `%${zip}%`); }
-
-
-
-  // pagination
-
-  const from = page * PAGE_SIZE;
-
-  const to = from + PAGE_SIZE - 1;
-
-
-
-  const { data, error } = await query.range(from, to);
-
-  if (error){ console.error(error); return; }
-
-
-
-  if (reset) listEl.innerHTML = "";
-
-  renderList(data || []);
-
-  el("#loadMore").classList.toggle("hidden", !data || data.length < PAGE_SIZE);
-
-}
-
-
-
-function renderList(rows){
-
-  for (const r of rows){
-
-    const d = new Date(r.task_date || r.created_at);
-
-    const niceDate = d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
-
-    const firstImg = (r.media_urls && r.media_urls[0]) ? `<a class="btn" href="${r.media_urls[0]}" target="_blank"><i class="fa-regular fa-image"></i> View file</a>` : "";
-
-
-
-    const snippet = (r.description || "").slice(0, 120);
-
-    const item = document.createElement("div");
-
-    item.className = "item";
-
-    item.innerHTML = `
-
-      <h3>${escapeHtml(r.title)}</h3>
-
-      <div class="tags">
-
-        <span class="tag">${escapeHtml(r.category || "Other")}</span>
-
-        ${r.zip ? `<span class="tag">${escapeHtml(r.zip)}</span>` : ""}
-
-        <span class="tag">${niceDate}</span>
-
-      </div>
-
-      <p>${escapeHtml(snippet)}${r.description && r.description.length>120 ? "…" : ""}</p>
-
-      <div class="actions">
-
-        <a class="btn primary" href="mailto:" onclick="alert('Coordinate directly via replies. Keep it safe!'); return false;"><i class="fa-regular fa-handshake"></i> Offer to help</a>
-
-        ${firstImg}
-
-      </div>
-
-    `;
-
-    listEl.appendChild(item);
-
-  }
-
-}
-
-
-
-// basic escaping
-
-function escapeHtml(s){
-
-  return s?.replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])) ?? "";
-
-}
-
-
-
-// Events
-
-document.getElementById("apply").addEventListener("click", ()=>{ page=0; loadRequests(true); });
-
-document.getElementById("clear").addEventListener("click", ()=>{
-
-  el("#q").value = ""; el("#cat").value = ""; el("#zip").value = "";
-
-  page=0; loadRequests(true);
-
-});
-
-document.getElementById("loadMore").addEventListener("click", ()=>{ page++; loadRequests(); });
-
-
-
-// Initial
-
-loadRequests(true);
