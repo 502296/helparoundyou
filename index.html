@@ -4,31 +4,41 @@
 
 <head>
 
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>HelpAroundYou</title>
+  <title>HelpAroundYou — Neighbors helping neighbors</title>
 
-  <link rel="stylesheet" href="style.css?v=8"/>
+  <meta name="description" content="Post a help request with photos. Local neighbors offer help. You coordinate directly. No commissions.">
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 
 <body>
 
-  <header class="hay-header">
 
-    <a href="index.html" class="logo">
 
-      <span class="logo-main">Help</span><span class="logo-around">Around</span><span class="logo-you">You</span>
+  <!-- Header -->
 
-    </a>
+  <header class="site-header">
 
-    <nav class="hay-actions">
+    <div class="brand">
 
-      <a href="list.html" class="btn secondary">See Requests</a>
+      <span>Help</span><span class="accent-1">Around</span><span class="accent-2">You</span>
 
-      <a href="post.html" class="btn primary">Post a Request</a>
+    </div>
+
+    <nav class="nav">
+
+      <a href="#post" class="btn primary"><i class="fa-regular fa-square-plus"></i> Post a Request</a>
+
+      <a href="#feed" class="btn ghost"><i class="fa-regular fa-eye"></i> See Requests</a>
 
     </nav>
 
@@ -36,51 +46,211 @@
 
 
 
+  <!-- Hero -->
+
   <section class="hero">
 
     <h1>Get things done — clear, safe, on your schedule.</h1>
 
     <p>From quick pickups to small fixes, we connect you with trusted local doers. No middlemen and no commissions — just neighbors helping neighbors.</p>
 
-    <div style="margin-top:10px">
+    <div class="cta-row">
 
-      <a class="btn primary" href="post.html">Post a Request</a>
+      <a href="#post" class="btn xl primary">Post a Request</a>
 
-      <a class="btn secondary" href="list.html" style="margin-left:8px">See Requests</a>
+      <a href="#feed" class="btn xl ghost">See Requests</a>
 
     </div>
+
+    <ul class="how">
+
+      <li>1) Describe the task (title, details, date, area, photos)</li>
+
+      <li>2) We list it instantly for nearby helpers</li>
+
+      <li>3) You coordinate directly and mark it done</li>
+
+    </ul>
 
   </section>
 
 
 
-  <div class="page-wrap">
+  <!-- Post form -->
 
-    <div class="card">
+  <section id="post" class="card form-card">
 
-      <h2 style="color:#7b42f6;margin-bottom:8px">How it works</h2>
+    <h2>Post a request</h2>
 
-      <ol style="padding-left:18px">
 
-        <li>Describe the task (title, details, date, area).</li>
 
-        <li>We route it to nearby helpers instantly.</li>
+    <form id="requestForm">
 
-        <li>You coordinate directly and mark it done.</li>
+      <div class="grid">
 
-      </ol>
+        <label>
+
+          <span>Title *</span>
+
+          <input type="text" name="title" required placeholder="Pickup small sofa, 5 miles"/>
+
+        </label>
+
+
+
+        <label>
+
+          <span>Category *</span>
+
+          <select name="category" required>
+
+            <option value="">Select…</option>
+
+            <option>Pickup with Truck</option>
+
+            <option>Moving help</option>
+
+            <option>Lawn Care</option>
+
+            <option>Leaf / Branch removal</option>
+
+            <option>Cleaning</option>
+
+            <option>Small fix / Handy</option>
+
+            <option>Other</option>
+
+          </select>
+
+        </label>
+
+
+
+        <label>
+
+          <span>ZIP / Area *</span>
+
+          <input type="text" name="zip" required maxlength="10" placeholder="e.g., 40218"/>
+
+        </label>
+
+
+
+        <label>
+
+          <span>Date</span>
+
+          <input type="date" name="task_date"/>
+
+        </label>
+
+
+
+        <label class="col-span-2">
+
+          <span>Description</span>
+
+          <textarea name="description" rows="4" placeholder="Short details, size/weight, timing, any notes…"></textarea>
+
+        </label>
+
+
+
+        <label class="col-span-2">
+
+          <span>Photos / Files (up to 5)</span>
+
+          <input type="file" id="files" multiple accept="image/*,application/pdf"/>
+
+        </label>
+
+
+
+        <details class="col-span-2">
+
+          <summary>Optional contact (shared only in your messages)</summary>
+
+          <input type="text" name="contact" placeholder="Phone / Email (optional)"/>
+
+        </details>
+
+      </div>
+
+
+
+      <button type="submit" class="btn primary wfull" id="submitBtn">
+
+        <i class="fa-regular fa-circle-check"></i> Submit
+
+      </button>
+
+      <p id="formMsg" class="msg"></p>
+
+    </form>
+
+  </section>
+
+
+
+  <!-- Feed / Filters -->
+
+  <section id="feed" class="card">
+
+    <h2>Neighbor Requests</h2>
+
+    <div class="filters">
+
+      <input id="q" type="search" placeholder="Search title or description"/>
+
+      <select id="cat">
+
+        <option value="">All categories</option>
+
+        <option>Pickup with Truck</option>
+
+        <option>Moving help</option>
+
+        <option>Lawn Care</option>
+
+        <option>Leaf / Branch removal</option>
+
+        <option>Cleaning</option>
+
+        <option>Small fix / Handy</option>
+
+        <option>Other</option>
+
+      </select>
+
+      <input id="zip" type="text" placeholder="ZIP / Area"/>
+
+      <button id="apply" class="btn primary">Apply</button>
+
+      <button id="clear" class="btn ghost">Clear</button>
 
     </div>
 
-  </div>
+
+
+    <div id="list" class="list"></div>
+
+    <button id="loadMore" class="btn ghost hidden">Load more</button>
+
+  </section>
 
 
 
-  <footer class="hay-footer">
+  <footer class="site-footer">
 
-    © 2025 HelpAroundYou — Free to use. Built with care for our community ♥
+    <small>Neighbors helping neighbors — no commissions.</small>
 
   </footer>
+
+
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+  <script src="app.js"></script>
 
 </body>
 
