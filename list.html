@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Requests — HelpAroundYou</title>
+
+  <link rel="stylesheet" href="style.css?v=4"/>
+
+
+
+  <style>
+
+    .page-wrap{max-width:1100px;margin:0 auto;padding:24px 5%}
+
+
+
+    /* Filters bar */
+
+    .filters{
+
+      background:#fff;border:1px solid #eee;border-radius:14px;
+
+      box-shadow:0 8px 28px rgba(0,0,0,.06);
+
+      padding:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+
+      position:sticky; top:10px; z-index:5;
+
+    }
+
+    .filters .group{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+
+    .filters input,.filters select{
+
+      padding:10px 12px;border-radius:10px;border:1px solid #d9d9e3;background:#f9f9f9;
+
+      outline:none;transition:.2s;font-size:15px;
+
+    }
+
+    .filters input:focus,.filters select:focus{
+
+      background:#fff;border-color:#7b42f6;box-shadow:0 0 0 4px rgba(123,66,246,.15);
+
+    }
+
+    .filters .btn{padding:.65rem 1rem;border-radius:10px;font-weight:600}
+
+    .filters .btn.clear{background:#f0f0f0}
+
+
+
+    /* Cards grid */
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+
+
+
+    .req-card{
+
+      background:#fff;border-radius:14px;border:1px solid #eee;
+
+      box-shadow:0 8px 28px rgba(0,0,0,.06); padding:16px; display:flex; flex-direction:column; gap:10px;
+
+    }
+
+    .req-title{font-size:1.05rem;font-weight:800;color:#222;line-height:1.35}
+
+    .req-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.9rem;color:#555}
+
+    .badge{display:inline-block;padding:.25rem .55rem;border-radius:999px;font-size:.78rem;font-weight:700}
+
+    .badge.violet{background:#efe7ff;color:#4b2bb9}
+
+    .badge.blue{background:#e6f3ff;color:#196399}
+
+    .desc{color:#444; font-size:.95rem}
+
+    .actions{display:flex;gap:8px;margin-top:6px}
+
+    .actions .btn{font-weight:700}
+
+    .muted{color:#777;font-size:.9rem}
+
+
+
+    /* Empty / loading */
+
+    .empty{
+
+      text-align:center;background:#fff;border:1px dashed #d9d9e3;border-radius:14px;padding:28px;color:#666;
+
+    }
+
+    .spinner{display:inline-block;width:18px;height:18px;border:3px solid #ddd;border-top-color:#7b42f6;border-radius:50%;animation:spin 1s linear infinite;vertical-align:-3px}
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="page-wrap">
+
+    <h1 style="margin:6px 0 14px;">Neighbor Requests</h1>
+
+
+
+    <!-- Filters -->
+
+    <div class="filters">
+
+      <div class="group">
+
+        <input id="q" type="search" placeholder="Search title or description"/>
+
+        <select id="cat">
+
+          <option value="">All categories</option>
+
+          <option>Moving help</option>
+
+          <option>Pickup with truck</option>
+
+          <option>Yard cleanup (leaves/branches)</option>
+
+          <option>Cleaning</option>
+
+          <option>Small fix / handyman</option>
+
+          <option>Other</option>
+
+        </select>
+
+        <input id="area" type="text" inputmode="text" placeholder="ZIP / Area (e.g., 40218 or Highlands)"/>
+
+        <input id="date" type="date" />
+
+      </div>
+
+
+
+      <div class="group">
+
+        <select id="sort">
+
+          <option value="new">Newest first</option>
+
+          <option value="old">Oldest first</option>
+
+        </select>
+
+        <button class="btn primary" id="applyBtn">Apply</button>
+
+        <button class="btn clear" id="clearBtn" type="button">Clear</button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Results -->
+
+    <div id="results" class="grid" aria-live="polite" aria-busy="true"></div>
+
+    <div id="empty" class="empty" style="display:none">No results. Try different filters.</div>
+
+    <div id="loading" class="empty"><span class="spinner"></span> Loading requests…</div>
+
+
+
+    <p class="muted" style="margin-top:14px">
+
+      Privacy-first: requests only show what’s needed. Contact happens directly between neighbors.
+
+    </p>
+
+  </div>
+
+
+
+  <script>
+
+    // =======================
+
+    // CONFIG — ضع القيم هنا
+
+    // =======================
+
+    const SHEET_ID = 'PUT_YOUR_SHEET_ID_HERE'; // 👈 استبدلها بـ Sheet ID
+
+    const SHEET_GID = ''; // اختياري: اتركه فاضي للورقة الأولى، أو ضع رقم gid للتبويب المطلوب
+
+
+
+    // أسماء الأعمدة كما تظهر في الصف الأول (Header) بالجدول:
+
+    const COLS = {
+
+      title: 'Request Title',
+
+      description: 'Description',
+
+      category: 'Category',
+
+      area: 'Location (zip or area)',
+
+      date: 'Date needed'
+
+      // لو عندك أسماء مختلفة، غيّرها هنا فقط.
+
+    };
+
+
+
+    // =======================
+
+    // Helpers
+
+    // =======================
+
+    const $ = (s, p=document)=>p.querySelector(s);
+
+    const resultsEl = $('#results');
+
+    const emptyEl = $('#empty');
+
+    const loadingEl = $('#loading');
+
+
+
+    function esc(s){return (s||'').toString().replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+    function fmtDateIso(s){
+
+      if(!s) return '';
+
+      const d = new Date(s);
+
+      if (isNaN(d)) return s;
+
+      return d.toISOString().slice(0,10);
+
+    }
+
+    function fmtDateNice(s){
+
+      if(!s) return '';
+
+      const d = new Date(s);
+
+      if (isNaN(d)) return s;
+
+      return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
+
+    }
+
+
+
+    // =======================
+
+    // Fetch from Google Sheets (gviz)
+
+    // =======================
+
+    async function getRequestsFromSheet(){
+
+      // gviz endpoint
+
+      let url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+      if (SHEET_GID) url += `&gid=${encodeURIComponent(SHEET_GID)}`;
+
+
+
+      const res = await fetch(url, {cache:'no-store'});
+
+      const text = await res.text();
+
+
+
+      // gviz ترجع نص فيه JSON محاط بكلام، نقصّه:
+
+      // يبدأ بعد 47 حرفًا وينتهي بآخر حرفين );
+
+      const json = JSON.parse(text.substr(47).slice(0,-2));
+
+
+
+      // نحدد فهارس الأعمدة من صف العناوين:
+
+      const headers = json.table.cols.map(c => (c && c.label) ? c.label.trim() : '');
+
+      function idx(name){
+
+        const i = headers.findIndex(h => h.toLowerCase() === name.toLowerCase());
+
+        if (i === -1) console.warn('Column not found:', name, 'in', headers);
+
+        return i;
+
+      }
+
+      const iTitle = idx(COLS.title);
+
+      const iDesc  = idx(COLS.description);
+
+      const iCat   = idx(COLS.category);
+
+      const iArea  = idx(COLS.area);
+
+      const iDate  = idx(COLS.date);
+
+
+
+      // نحول الصفوف إلى كائنات موحّدة
+
+      const rows = json.table.rows || [];
+
+      const items = rows.map(r => {
+
+        const c = r.c || [];
+
+        const get = (i)=> (i>=0 && c[i] && (c[i].v ?? c[i].f)) || '';
+
+        return {
+
+          title: get(iTitle),
+
+          blurb: get(iDesc),
+
+          category: get(iCat),
+
+          area: get(iArea),
+
+          date: fmtDateIso(get(iDate))
+
+        };
+
+      });
+
+
+
+      // تجاهل صفوف فارغة/عناوين مكررة
+
+      return items.filter(x => x.title || x.blurb);
+
+    }
+
+
+
+    // =======================
+
+    // Render
+
+    // =======================
+
+    function render(list){
+
+      resultsEl.setAttribute('aria-busy','true');
+
+      resultsEl.innerHTML = '';
+
+      if(!list.length){
+
+        loadingEl.style.display = 'none';
+
+        emptyEl.style.display = 'block';
+
+        resultsEl.setAttribute('aria-busy','false');
+
+        return;
+
+      }
+
+      emptyEl.style.display = 'none';
+
+      loadingEl.style.display = 'none';
+
+
+
+      for(const r of list){
+
+        const card = document.createElement('div');
+
+        card.className = 'req-card';
+
+        card.innerHTML = `
+
+          <div class="req-title">${esc(r.title)}</div>
+
+          <div class="req-meta">
+
+            <span class="badge violet">${esc(r.category)}</span>
+
+            <span class="badge blue">${esc(r.area)}</span>
+
+            <span class="muted" title="Date needed">📅 ${esc(fmtDateNice(r.date))}</span>
+
+          </div>
+
+          <div class="desc">${esc(r.blurb)}</div>
+
+          <div class="actions">
+
+            <a class="btn primary" href="post.html">Offer to help</a>
+
+            <a class="btn secondary" href="post.html">Ask for details</a>
+
+          </div>
+
+        `;
+
+        resultsEl.appendChild(card);
+
+      }
+
+      resultsEl.setAttribute('aria-busy','false');
+
+    }
+
+
+
+    // =======================
+
+    // Filters
+
+    // =======================
+
+    const qEl   = $('#q');
+
+    const catEl = $('#cat');
+
+    const areaEl= $('#area');
+
+    const dateEl= $('#date');
+
+    const sortEl= $('#sort');
+
+
+
+    let RAW = [];
+
+
+
+    function applyFilters(){
+
+      const q    = (qEl.value||'').trim().toLowerCase();
+
+      const cat  = catEl.value;
+
+      const area = (areaEl.value||'').trim().toLowerCase();
+
+      const date = dateEl.value;
+
+
+
+      let list = [...RAW];
+
+
+
+      if(q){
+
+        list = list.filter(r =>
+
+          (r.title||'').toLowerCase().includes(q) ||
+
+          (r.blurb||'').toLowerCase().includes(q)
+
+        );
+
+      }
+
+      if(cat){ list = list.filter(r => (r.category||'') === cat); }
+
+      if(area){ list = list.filter(r => (r.area||'').toLowerCase().includes(area)); }
+
+      if(date){ list = list.filter(r => (r.date||'') >= date); }
+
+
+
+      list.sort((a,b)=>{
+
+        const da = (a.date||'');
+
+        const db = (b.date||'');
+
+        return sortEl.value==='new' ? (db>da?1:-1) : (da>db?1:-1);
+
+      });
+
+
+
+      render(list);
+
+      saveQueryToURL();
+
+    }
+
+
+
+    function clearFilters(){
+
+      qEl.value = ''; catEl.value=''; areaEl.value=''; dateEl.value=''; sortEl.value='new';
+
+      applyFilters();
+
+    }
+
+
+
+    document.getElementById('applyBtn').addEventListener('click', applyFilters);
+
+    document.getElementById('clearBtn').addEventListener('click', clearFilters);
+
+    qEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); } });
+
+
+
+    // URL sync
+
+    function saveQueryToURL(){
+
+      const p = new URLSearchParams();
+
+      if(qEl.value)   p.set('q', qEl.value);
+
+      if(catEl.value) p.set('cat', catEl.value);
+
+      if(areaEl.value)p.set('area', areaEl.value);
+
+      if(dateEl.value)p.set('date', dateEl.value);
+
+      if(sortEl.value!=='new') p.set('sort', sortEl.value);
+
+      history.replaceState(null,'',location.pathname+(p.toString()?('?'+p.toString()):''));
+
+    }
+
+    function restoreFromURL(){
+
+      const p = new URLSearchParams(location.search);
+
+      if(p.get('q'))    qEl.value   = p.get('q');
+
+      if(p.get('cat'))  catEl.value = p.get('cat');
+
+      if(p.get('area')) areaEl.value= p.get('area');
+
+      if(p.get('date')) dateEl.value= p.get('date');
+
+      if(p.get('sort')) sortEl.value= p.get('sort');
+
+    }
+
+
+
+    // Init
+
+    (async function init(){
+
+      restoreFromURL();
+
+      try{
+
+        RAW = await getRequestsFromSheet();
+
+      }catch(err){
+
+        console.error(err);
+
+        loadingEl.innerHTML = 'Could not load from Google Sheets. Please check sharing settings and SHEET_ID.';
+
+      }
+
+      applyFilters();
+
+    })();
+
+  </script>
+
+</body>
+
+</html>
