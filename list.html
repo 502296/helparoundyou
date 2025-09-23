@@ -10,59 +10,13 @@
 
   <title>Requests — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="style.css?v=7"/>
+  <link rel="stylesheet" href="style.css?v=8"/>
 
 </head>
 
-  <script>
-
-async function loadRequests() {
-
-  const response = await fetch("YOUR_SCRIPT_URL_HERE"); // ضع رابط Web App هنا
-
-  const data = await response.json();
-
-
-
-  const container = document.getElementById("requests");
-
-  container.innerHTML = "";
-
-
-
-  data.forEach(item => {
-
-    const div = document.createElement("div");
-
-    div.className = "request-card";
-
-    div.innerHTML = `
-
-      <h3>${item["Request Title"] || "No Title"}</h3>
-
-      <p><strong>Description:</strong> ${item["Description"] || ""}</p>
-
-      <p><strong>Category:</strong> ${item["Category"] || ""}</p>
-
-      <p><strong>Location:</strong> ${item["Location (zip or area)"] || ""}</p>
-
-      <p><strong>Date Needed:</strong> ${item["Date Needed"] || ""}</p>
-
-    `;
-
-    container.appendChild(div);
-
-  });
-
-}
-
-
-
-window.onload = loadRequests;
-
-</script>
-
 <body>
+
+  <!-- Header -->
 
   <header class="hay-header">
 
@@ -162,6 +116,8 @@ window.onload = loadRequests;
 
 
 
+  <!-- Footer -->
+
   <footer class="hay-footer">
 
     © 2025 HelpAroundYou — Free to use. Built with care for our community ♥
@@ -172,13 +128,13 @@ window.onload = loadRequests;
 
   <script>
 
-    // Google Sheets config
+    // ========= CONFIG =========
 
-    const SHEET_ID = '1OAw6rFiPPyKXSk7Je4hU_dZdzWwLT3x23i8TRBnoj04';
-
-    const SHEET_GID = '407846975'; // Form Responses 1
+    const API_URL = "https://script.google.com/macros/s/AKfycbx8dNlRSFGLMMpKjBukmKv-4flcKqxzdWp-c3YEiNKE6ENSxiMIeMj_85kHnFcOlfml8g/exec";
 
 
+
+    // أسماء الأعمدة كما تظهر بالصف الأول من الشيت (Header)
 
     const COLS = {
 
@@ -188,7 +144,7 @@ window.onload = loadRequests;
 
       category: 'Category',
 
-      area: 'Location',
+      area: 'Location',         // اسم العمود عندك "Location"
 
       date: 'Date Needed',
 
@@ -202,13 +158,13 @@ window.onload = loadRequests;
 
 
 
+    // ========= Helpers =========
+
     const $ = (s, p=document)=>p.querySelector(s);
 
     const resultsEl = $('#results'), emptyEl = $('#empty'), loadingEl = $('#loading');
 
     const qEl=$('#q'), catEl=$('#cat'), areaEl=$('#area'), dateEl=$('#date'), sortEl=$('#sort');
-
-
 
     const esc = s => (s??'').toString().replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
@@ -218,69 +174,49 @@ window.onload = loadRequests;
 
 
 
-    async function getRequestsFromSheet(){
+    // ========= Fetch from Apps Script =========
 
-      let url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+    async function fetchFromApi(){
 
-      if (SHEET_GID) url += `&gid=${encodeURIComponent(SHEET_GID)}`;
+      const res = await fetch(API_URL, {cache:'no-store'});
 
-      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error('API error: ' + res.status);
 
-      const text = await res.text();
-
-      const json = JSON.parse(text.substr(47).slice(0,-2));
-
-
-
-      const headers = json.table.cols.map(c => (c && c.label) ? c.label.trim() : '');
-
-      const idx = name => headers.findIndex(h => h.toLowerCase() === (name||'').toLowerCase());
-
-      const I = {
-
-        title: idx(COLS.title), description: idx(COLS.description),
-
-        category: idx(COLS.category), area: idx(COLS.area), date: idx(COLS.date),
-
-        email: idx(COLS.email), contact: idx(COLS.contact), file: idx(COLS.file)
-
-      };
-
-
-
-      const rows = json.table.rows || [];
-
-      return rows.map(r => {
-
-        const c = r.c || [];
-
-        const get = i => (i>=0 && c[i] && (c[i].v ?? c[i].f)) || '';
-
-        return {
-
-          title: get(I.title),
-
-          blurb: get(I.description),
-
-          category: get(I.category),
-
-          area: get(I.area),
-
-          date: fmtIso(get(I.date)),
-
-          email: get(I.email),
-
-          contact: get(I.contact),
-
-          file: get(I.file)
-
-        };
-
-      }).filter(x => x.title || x.blurb);
+      return await res.json(); // مصفوفة من الصفوف (كائنات من أسماء الأعمدة)
 
     }
 
 
+
+    function normalize(rows){
+
+      // نحول أسماء الأعمدة لحقول موحدة
+
+      return (rows||[]).map(r => ({
+
+        title: r[COLS.title] || '',
+
+        blurb: r[COLS.description] || '',
+
+        category: r[COLS.category] || '',
+
+        area: r[COLS.area] || '',
+
+        date: fmtIso(r[COLS.date]),
+
+        email: r[COLS.email] || '',
+
+        contact: r[COLS.contact] || '',
+
+        file: r[COLS.file] || ''
+
+      })).filter(x => x.title || x.blurb);
+
+    }
+
+
+
+    // ========= Render =========
 
     function render(list){
 
@@ -346,6 +282,8 @@ window.onload = loadRequests;
 
 
 
+    // ========= Filters =========
+
     let RAW = [];
 
     function applyFilters(){
@@ -370,6 +308,8 @@ window.onload = loadRequests;
 
       if(date){ list = list.filter(r => (r.date||'') >= date); }
 
+
+
       list.sort((a,b)=> sortEl.value==='new' ? ((b.date||'')>(a.date||'')?1:-1) : ((a.date||'')>(b.date||'')?1:-1));
 
 
@@ -380,13 +320,15 @@ window.onload = loadRequests;
 
     function clearFilters(){ qEl.value=''; catEl.value=''; areaEl.value=''; dateEl.value=''; sortEl.value='new'; applyFilters(); }
 
-    document.getElementById('applyBtn').addEventListener('click', applyFilters);
+    $('#applyBtn').addEventListener('click', applyFilters);
 
-    document.getElementById('clearBtn').addEventListener('click', clearFilters);
+    $('#clearBtn').addEventListener('click', clearFilters);
 
     qEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); applyFilters(); } });
 
 
+
+    // URL sync
 
     function saveQueryToURL(){
 
@@ -404,8 +346,6 @@ window.onload = loadRequests;
 
       history.replaceState(null,'',location.pathname+(p.toString()?('?'+p.toString()):'')); }
 
-
-
     function restoreFromURL(){
 
       const p = new URLSearchParams(location.search);
@@ -422,13 +362,25 @@ window.onload = loadRequests;
 
 
 
+    // Init
+
     (async function init(){
 
       restoreFromURL();
 
-      try{ RAW = await getRequestsFromSheet(); }
+      try{
 
-      catch(err){ console.error(err); loadingEl.innerHTML = 'Could not load from Google Sheets. Check sharing settings and IDs.'; }
+        const rows = await fetchFromApi();
+
+        RAW = normalize(rows);
+
+      }catch(err){
+
+        console.error(err);
+
+        loadingEl.innerHTML = 'Could not load from API. Check the Apps Script deployment access (Anyone).';
+
+      }
 
       applyFilters();
 
