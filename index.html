@@ -12,21 +12,19 @@
 
 </head>
 
-<body>
+<body data-page="home">
 
 <header class="header">
 
   <div class="wrap header__inner">
 
-    <div class="brand">Help<span class="brand__a">Around</span><span class="brand__y">You</span></div>
+    <a class="brand" href="index.html">Help<span class="brand__a">Around</span><span class="brand__y">You</span></a>
 
-    <nav class="nav" id="topNav">
+    <nav class="nav">
 
-      <!-- هذه الأزرار ستختفي على الموبايل -->
+      <a class="btn btn-primary" href="post.html">Post a Request</a>
 
-      <button class="btn btn-primary" id="openTopBtn">Post a Request</button>
-
-      <a href="#feed" class="btn btn-ghost">See Requests</a>
+      <a class="btn btn-ghost" href="requests.html">See Requests</a>
 
     </nav>
 
@@ -48,9 +46,9 @@
 
       <div class="hero__cta">
 
-        <button class="btn btn-primary btn-xl" id="openHeroBtn">Post a Request</button>
+        <a class="btn btn-primary btn-xl" href="post.html">Post a Request</a>
 
-        <a href="#feed" class="btn btn-ghost btn-xl">See Requests</a>
+        <a class="btn btn-ghost btn-xl" href="requests.html">See Requests</a>
 
       </div>
 
@@ -78,61 +76,25 @@
 
 
 
-<section id="feed" class="wrap card">
+<section class="wrap card">
 
   <div class="card__head">
 
     <div class="section-tab"><span class="tab-dot"></span><strong>Neighbor Requests</strong></div>
 
-    <div class="head-actions"><a class="btn btn-ghost btn-sm" href="#feed">All Requests</a></div>
+    <div class="head-actions">
+
+      <a class="btn btn-ghost btn-sm" href="requests.html">All Requests</a>
+
+      <a class="btn btn-primary btn-sm" href="post.html">Post a Request</a>
+
+    </div>
 
   </div>
 
 
 
-  <div class="filters">
-
-    <input id="q" type="search" placeholder="Search title or description"/>
-
-    <select id="cat">
-
-      <option value="">All categories</option>
-
-      <option>Pickup with Truck</option>
-
-      <option>Moving help</option>
-
-      <option>Lawn Care</option>
-
-      <option>Leaf / Branch removal</option>
-
-      <option>Cleaning</option>
-
-      <option>Small fix / Handy</option>
-
-      <option>Pool Cleaning</option>
-
-      <option>Power Washing (stone/exterior)</option>
-
-      <option>Driveway / Concrete Cleaning</option>
-
-      <option>Other</option>
-
-    </select>
-
-    <input id="zipf" type="text" placeholder="ZIP / Area"/>
-
-    <button id="apply" class="btn btn-primary btn-sm">Apply</button>
-
-    <button id="clear" class="btn btn-ghost btn-sm">Clear</button>
-
-  </div>
-
-
-
-  <div id="list" class="list"></div>
-
-  <button id="loadMore" class="btn btn-ghost btn-sm hidden">Load more</button>
+  <p class="muted" style="margin:8px 0 0">Head to <a href="requests.html">See Requests</a> to browse live posts from your area.</p>
 
 </section>
 
@@ -144,65 +106,9 @@
 
 </footer>
 
-
-
-<!-- Modal (يبقى كما أحببته) -->
-
-<div class="modal" id="postModal" aria-hidden="true">
-
-  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="postTitle">
-
-    <button class="modal__close" id="closeModal" aria-label="Close">×</button>
-
-    <h3 id="postTitle">Post a request</h3>
-
-    <form id="requestForm" class="grid">
-
-      <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"/></label>
-
-      <label><span>Category *</span>
-
-        <select id="category" required>
-
-          <option value="">Select…</option>
-
-          <option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option>
-
-          <option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option>
-
-          <option>Pool Cleaning</option><option>Power Washing (stone/exterior)</option><option>Driveway / Concrete Cleaning</option>
-
-          <option>Other</option>
-
-        </select>
-
-      </label>
-
-      <label><span>ZIP / Area *</span><input id="zip" required maxlength="10" placeholder="e.g., 40218"/></label>
-
-      <label><span>Date</span><input id="date" type="date"/></label>
-
-      <label class="col-2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
-
-      <label class="col-2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"/></label>
-
-      <details class="col-2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"/></details>
-
-      <button id="submitBtn" class="btn btn-primary col-2" type="submit">Submit</button>
-
-      <p id="formMsg" class="msg col-2"></p>
-
-    </form>
-
-  </div>
-
-</div>
-
-
-
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-<script src="app.js"></script>
+<script src="app.js?v=1"></script>
 
 </body>
 
