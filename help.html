@@ -10,11 +10,9 @@
 
   <title>Offer to Help — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="style.css?v=6"/>
+  <link rel="stylesheet" href="style.css?v=7"/>
 
   <style>
-
-    .page-wrap{max-width:1100px;margin:0 auto;padding:24px 5%}
 
     .summary{
 
@@ -34,23 +32,21 @@
 
       background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;
 
-      box-shadow:0 8px 28px rgba(0,0,0,.06);
+      box-shadow:0 8px 28px rgba(0,0,0,.06); margin-bottom:12px;
 
     }
 
-    .gform{
+    .gform{width:100%;border:0;min-height:80vh}
 
-      width:100%; border:0; min-height:80vh; /* يملأ الشاشة تقريبا */
+    .btn.back{display:inline-block;padding:.75rem 1.2rem;border-radius:10px;font-weight:700;background:#f0f0f0}
 
-    }
+    .btn.back:hover{background:#ddd}
 
   </style>
 
 </head>
 
 <body>
-
-  <!-- Header الموحد -->
 
   <header class="hay-header">
 
@@ -78,11 +74,9 @@
 
 
 
-    <!-- ملخص الطلب القادم من list.html -->
-
     <div class="summary" id="summary">
 
-      <h2 id="s-title">Loading…</h2>
+      <h2 id="s-title">Request</h2>
 
       <div class="row">
 
@@ -94,33 +88,33 @@
 
       </div>
 
-      <p style="margin-top:8px;color:#666">Fill the form below to reach the requester. Your message will be emailed to them.</p>
+      <p style="margin-top:8px;color:#666">Fill the form below to reach the requester.</p>
 
     </div>
 
 
 
-    <!-- Google Form المدمج -->
-
     <div class="gform-wrap">
 
-      <iframe id="gform" class="gform"
+      <iframe
 
-        src=""
+        class="gform"
 
-        allow="clipboard-write; encrypted-media; fullscreen; geolocation; microphone; camera"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?embedded=true"
 
-        loading="lazy">
+        loading="lazy" allow="clipboard-write; encrypted-media; fullscreen; geolocation; microphone; camera">
 
       </iframe>
 
     </div>
 
+
+
+    <a class="btn back" href="list.html">← Back to requests</a>
+
   </div>
 
 
-
-  <!-- Footer الموحد -->
 
   <footer class="hay-footer">
 
@@ -132,63 +126,15 @@
 
   <script>
 
-    // 1) ضع هنا رابط الـEmbed من Google Forms (Send → <> → src)
-
-    // مثال شكل الرابط:
-
-    // https://docs.google.com/forms/d/e/1FAIpQLSeXxxxxxx/viewform?embedded=true
-
-    const FORM_EMBED_URL = 'PUT_YOUR_GOOGLE_FORM_EMBED_URL_HERE';
-
-
-
-    // 2) (اختياري) لو تبي prefill تلقائي، ضع مفاتيح entry.xxxxx لحقولك
-
-    // لإيجادها: في Google Forms → ⋮ (النقاط الثلاث) → Get pre-filled link → عبّي قيمة تجريبية واحفظ الرابط،
-
-    // ستجد فيه باراميترات مثل entry.123456789=VALUE
-
-    const PREFILL_MAP = {
-
-      // مثال:
-
-      // requestTitle: 'entry.1111111111',
-
-      // category:     'entry.2222222222',
-
-      // area:         'entry.3333333333',
-
-      // date:         'entry.4444444444',
-
-      // name:         'entry.5555555555',   // اسم الشخص اللي يساعد (يعبّيه بنفسه)
-
-      // email:        'entry.6666666666',
-
-      // message:      'entry.7777777777'
-
-    };
-
-
-
-    // --- لا تغير تحت هنا ---
-
     const qp = new URLSearchParams(location.search);
 
     const data = {
 
-      title: qp.get('title') || '',
+      title: qp.get('title') || '', cat: qp.get('cat') || '',
 
-      cat: qp.get('cat') || '',
-
-      area: qp.get('area') || '',
-
-      date: qp.get('date') || ''
+      area: qp.get('area') || '',  date: qp.get('date') || ''
 
     };
-
-
-
-    // عرض الملخص
 
     const esc = s => (s??'').toString().replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
@@ -196,61 +142,13 @@
 
 
 
-    document.getElementById('s-title').innerHTML = esc(data.title || 'Offer to help');
+    if (data.title) document.getElementById('s-title').innerHTML = esc(data.title);
 
-    document.getElementById('s-cat').textContent  = data.cat || 'General';
+    if (data.cat)   document.getElementById('s-cat').textContent  = data.cat;
 
-    document.getElementById('s-area').textContent = data.area || 'Area';
+    if (data.area)  document.getElementById('s-area').textContent = data.area;
 
-    document.getElementById('s-date').textContent = data.date ? ('📅 ' + fmtNice(data.date)) : '';
-
-
-
-    // إعداد رابط الفورم
-
-    let url = FORM_EMBED_URL || '';
-
-    if (!url) {
-
-      document.getElementById('gform').replaceWith('Please set FORM_EMBED_URL in help.html');
-
-    } else {
-
-      // إن وُجدت خريطة prefill نحاول نضيف القيم
-
-      try{
-
-        const u = new URL(url, location.origin);
-
-        // تأكد من وجود embedded=true
-
-        if (!u.searchParams.has('embedded')) u.searchParams.set('embedded','true');
-
-
-
-        const m = PREFILL_MAP;
-
-        if (Object.keys(m).length){
-
-          if (m.requestTitle && data.title) u.searchParams.set(m.requestTitle, data.title);
-
-          if (m.category     && data.cat)   u.searchParams.set(m.category, data.cat);
-
-          if (m.area         && data.area)  u.searchParams.set(m.area, data.area);
-
-          if (m.date         && data.date)  u.searchParams.set(m.date, data.date);
-
-        }
-
-        document.getElementById('gform').src = u.toString();
-
-      }catch(e){
-
-        document.getElementById('gform').src = FORM_EMBED_URL; // fallback
-
-      }
-
-    }
+    if (data.date)  document.getElementById('s-date').textContent = '📅 ' + fmtNice(data.date);
 
   </script>
 
