@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>HelpAroundYou — Neighbors helping neighbors</title><style>
 
-:root{--bg:#0b0f1a;--card:#12192a;--muted:#9fb0d0;--text:#f7f8ff;--primary:#7a42ff;--primary-2:#e1d8ff;--ring:#8d63ff;--ok:#29d17f;--err:#ff5f6d;--radius:16px}
+:root{--bg:#0b0f1a;--card:#12192a;--muted:#9fb0d0;--text:#f7f8ff;--primary:#7a42ff;--ring:#8d63ff;--ok:#29d17f;--err:#ff5f6d;--r:16px}
 
 *{box-sizing:border-box}html,body{margin:0;padding:0}body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(160deg,#0d1230 0%,#0b0f1a 60%);color:var(--text)}
 
@@ -10,23 +10,19 @@
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:12px;padding:12px 16px;background:#1b2440;color:#fff;cursor:pointer}
 
-.btn.primary{background:var(--primary)}.btn.ghost{background:#222a47}.btn.small{padding:10px 12px}.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--primary)}.btn.ghost{background:#222a47}.btn.small{padding:10px 12px}
 
 .wrap{max-width:1040px;margin:0 auto;padding:0 14px}
 
-.hero{padding:14px 0 6px;text-align:center}
+.hero{padding:18px 0 6px;text-align:center}.hero h1{margin:0 0 8px;font-size:clamp(26px,6vw,40px)}.hero p{margin:0 auto 14px;color:var(--muted);max-width:720px}
 
-.hero h1{margin:0 0 8px;font-size:clamp(26px,6vw,42px)}.hero p{margin:0 auto 14px;color:var(--muted);max-width:720px}
-
-.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:16px;margin:16px 0}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:16px;margin:16px 0}
 
 h2{margin:0 0 10px}
 
-.grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}.col-2{grid-column:1/-1}
 
-.col-2{grid-column:1/-1}
-
-label span{display:block;margin:0 0 6px;color:var(--primary-2);font-size:13px}
+label span{display:block;margin:0 0 6px;color:#e1d8ff;font-size:13px}
 
 input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #2a355d;background:#0f1530;color:var(--text);outline:0}
 
@@ -36,7 +32,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--ring);box-shadow:0 0 
 
 .list{display:grid;gap:12px}.item{background:#0f1530;border:1px solid #2a355d;border-radius:12px;padding:14px}
 
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.tag{font-size:12px;padding:6px 10px;border-radius:100px;background:#1a2040;color:#dfe6ff;border:1px solid #303a67}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#1a2040;color:#dfe6ff;border:1px solid #303a67}
 
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 
@@ -46,4 +42,152 @@ input:focus,select:focus,textarea:focus{border-color:var(--ring);box-shadow:0 0 
 
 </style></head><body>
 
-<header class="header wrap"><div class="logo">Help<span class="a">Around</span><span class="y">You</span></div><div style="display:flex;gap:8px"><a href="#post" class="btn small primary">Post a Request</a><a href="#feed" class="btn small ghost">See Requests</a></
+
+
+<header class="header wrap">
+
+  <div class="logo">Help<span class="a">Around</span><span class="y">You</span></div>
+
+  <div style="display:flex;gap:8px"><a href="#post" class="btn small primary">Post a Request</a><a href="#feed" class="btn small ghost">See Requests</a></div>
+
+</header>
+
+
+
+<section class="hero wrap">
+
+  <h1>Get things done — clear, safe, on your schedule.</h1>
+
+  <p>No middlemen and no commissions — just neighbors helping neighbors.</p>
+
+</section>
+
+
+
+<section id="post" class="wrap card">
+
+  <h2>Post a request</h2>
+
+  <form id="requestForm" class="grid">
+
+    <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa"/></label>
+
+    <label><span>Category *</span>
+
+      <select id="category" required>
+
+        <option value="">Select…</option><option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option><option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option>
+
+      </select>
+
+    </label>
+
+    <label><span>ZIP / Area *</span><input id="zip" required maxlength="10" placeholder="e.g., 40218"/></label>
+
+    <label><span>Date</span><input id="date" type="date"/></label>
+
+    <label class="col-2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
+
+    <label class="col-2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"/></label>
+
+    <details class="col-2"><summary style="cursor:pointer;color:#9fb0d0">Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"/></details>
+
+    <button class="btn col-2 primary" id="submitBtn" type="submit">Submit</button>
+
+    <p id="formMsg" class="msg col-2"></p>
+
+  </form>
+
+</section>
+
+
+
+<section id="feed" class="wrap card">
+
+  <h2>Neighbor Requests</h2>
+
+  <div class="filters">
+
+    <input id="q" type="search" placeholder="Search title or description"/>
+
+    <select id="cat"><option value="">All categories</option><option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option><option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option></select>
+
+    <input id="zipf" type="text" placeholder="ZIP / Area"/>
+
+    <button id="apply" class="btn small primary">Apply</button><button id="clear" class="btn small ghost">Clear</button>
+
+  </div>
+
+  <div id="list" class="list"></div>
+
+  <button id="loadMore" class="btn small ghost" style="display:none">Load more</button>
+
+</section>
+
+
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL="https://afqjgrcoiwitfftbjltp.supabase.co";          // URL الصحيح
+
+const SUPABASE_ANON_KEY="ضع_مفتاح_anon_الخاص_بك_هنا";                    // غيّره بمفتاحك
+
+const BUCKET="uploads";
+
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+const $=s=>document.querySelector(s),listEl=$("#list"),msgEl=$("#formMsg"),submitBtn=$("#submitBtn");let page=0;const PAGE_SIZE=10;
+
+
+
+$("#requestForm").addEventListener("submit",async(e)=>{e.preventDefault();msgEl.className="msg";msgEl.textContent="Uploading…";submitBtn.disabled=true;
+
+const title=$("#title").value.trim(),category=$("#category").value.trim(),zip=$("#zip").value.trim(),task_date=$("#date").value||null,description=$("#description").value.trim(),contact=$("#contact").value.trim()||null;
+
+if(!title||!category||!zip){msgEl.className="msg err";msgEl.textContent="Please fill required fields.";submitBtn.disabled=false;return;}
+
+const files=Array.from($("#files").files||[]).slice(0,5);const urls=[];
+
+for(const f of files){const ext=f.name.split(".").pop();const path=`req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+
+const{error:upErr}=await sb.storage.from(BUCKET).upload(path,f,{upsert:false});if(upErr){console.error(upErr);msgEl.className="msg err";msgEl.textContent="Upload failed. Try smaller files.";submitBtn.disabled=false;return;}
+
+const{data}=sb.storage.from(BUCKET).getPublicUrl(path);urls.push(data.publicUrl);}
+
+const{error:insErr}=await sb.from("requests").insert({title,category,zip,task_date,description,contact,media_urls:urls});
+
+if(insErr){console.error(insErr);msgEl.className="msg err";msgEl.textContent="Could not save your request.";}else{msgEl.className="msg ok";msgEl.textContent="Posted! Your request is now live.";e.target.reset();page=0;listEl.innerHTML="";await load(true);location.hash="#feed";}
+
+submitBtn.disabled=false;});
+
+
+
+async function load(reset=false){const q=$("#q").value.trim(),cat=$("#cat").value.trim(),zipf=$("#zipf").value.trim();
+
+let qb=sb.from("requests").select("*").order("created_at",{ascending:false});if(q)qb=qb.or(`title.ilike.%${q}%,description.ilike.%${q}%`);if(cat)qb=qb.eq("category",cat);if(zipf)qb=qb.ilike("zip",`%${zipf}%`);
+
+const from=page*PAGE_SIZE,to=from+PAGE_SIZE-1;const{data,error}=await qb.range(from,to);if(error){console.error(error);return;}
+
+if(reset)listEl.innerHTML="";render(data||[]);$("#loadMore").style.display=(data&&data.length===PAGE_SIZE)?"inline-block":"none";}
+
+function render(rows){for(const r of rows){const d=new Date(r.task_date||r.created_at);const nice=d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});const img=(r.media_urls&&r.media_urls[0])?`<a class="btn small" href="${r.media_urls[0]}" target="_blank">View file</a>`:"";
+
+const snippet=(r.description||"").slice(0,140);const it=document.createElement("div");it.className="item";it.innerHTML=`<h3 style="margin:0">${esc(r.title)}</h3>
+
+<div class="tags"><span class="tag">${esc(r.category||"Other")}</span>${r.zip?`<span class="tag">${esc(r.zip)}</span>`:""}<span class="tag">${nice}</span></div>
+
+<p style="margin:6px 0">${esc(snippet)}${r.description&&r.description.length>140?"…":""}</p>
+
+<div class="actions"><button class="btn small" onclick="alert('Coordinate directly via email/text. Stay safe!')">Offer to help</button>${img}</div>`;listEl.appendChild(it);}}
+
+const esc=s=>s?.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))??"";
+
+$("#apply").addEventListener("click",()=>{page=0;load(true)});$("#clear").addEventListener("click",()=>{$("#q").value="";$("#cat").value="";$("#zipf").value="";page=0;load(true)});$("#loadMore").addEventListener("click",()=>{page++;load()});
+
+load(true);
+
+</script>
+
+</body></html>
