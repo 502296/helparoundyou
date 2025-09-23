@@ -10,17 +10,41 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 
+// ---- Smooth scroll for "See Requests" buttons ----
+
+document.querySelectorAll(".js-scroll").forEach(a=>{
+
+  a.addEventListener("click",(e)=>{
+
+    const href=a.getAttribute("href");
+
+    if(href && href.startsWith("#")){
+
+      e.preventDefault();
+
+      const t=document.querySelector(href);
+
+      if(t) t.scrollIntoView({behavior:"smooth",block:"start"});
+
+    }
+
+  });
+
+});
+
+
+
 // ---- Modal open/close ----
 
 const postModal = document.getElementById("postModal");
 
-const openModalBtns = [document.getElementById("openModal"), document.getElementById("openModalTop")];
+["openModal","openModalTop","openModalHead"].forEach(id=>{
 
-const closeModalBtn = document.getElementById("closeModal");
+  const b=document.getElementById(id); if(b) b.addEventListener("click",()=>postModal.classList.add("show"));
 
-openModalBtns.forEach(b=>b&&b.addEventListener("click",()=>postModal.classList.add("show")));
+});
 
-closeModalBtn.addEventListener("click",()=>postModal.classList.remove("show"));
+document.getElementById("closeModal").addEventListener("click",()=>postModal.classList.remove("show"));
 
 postModal.addEventListener("click",(e)=>{ if(e.target===postModal) postModal.classList.remove("show"); });
 
@@ -60,7 +84,9 @@ $("#requestForm").addEventListener("submit", async (e)=>{
 
     if(f.size>10*1024*1024){ msgEl.className="msg err"; msgEl.textContent="File too large (>10MB)."; submitBtn.disabled=false; return; }
 
-    const ext=f.name.split(".").pop(); const path=`req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const ext=(f.name.split(".").pop()||"bin").toLowerCase();
+
+    const path=`req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
 
     const { error:upErr } = await sb.storage.from(BUCKET).upload(path,f,{upsert:false});
 
@@ -168,11 +194,11 @@ const esc=(s)=>s?.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':
 
 
 
-$("#apply").addEventListener("click", ()=>{ page=0; load(true); });
+document.getElementById("apply").addEventListener("click", ()=>{ page=0; load(true); });
 
-$("#clear").addEventListener("click", ()=>{ $("#q").value=""; $("#cat").value=""; $("#zipf").value=""; page=0; load(true); });
+document.getElementById("clear").addEventListener("click", ()=>{ $("#q").value=""; $("#cat").value=""; $("#zipf").value=""; page=0; load(true); });
 
-$("#loadMore").addEventListener("click", ()=>{ page++; load(); });
+document.getElementById("loadMore").addEventListener("click", ()=>{ page++; load(); });
 
 
 
