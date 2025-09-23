@@ -4,83 +4,101 @@
 
 <head>
 
-  <meta charset="UTF-8"/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Post a Request — HelpAroundYou</title>
 
-  <title>Post a Request — HelpAroundYou</title>
-
-  <link rel="stylesheet" href="style.css?v=8"/>
-
-  <style>
-
-    .gform-wrap{background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.06)}
-
-    .gform{width:100%;border:0;min-height:85vh}
-
-  </style>
+<link rel="stylesheet" href="style.css"/>
 
 </head>
 
-<body>
+<body data-page="post">
 
-  <header class="hay-header">
+<header class="header">
 
-    <a href="index.html" class="logo">
+  <div class="wrap header__inner">
 
-      <span class="logo-main">Help</span><span class="logo-around">Around</span><span class="logo-you">You</span>
+    <a class="brand" href="index.html">Help<span class="brand__a">Around</span><span class="brand__y">You</span></a>
 
-    </a>
+    <nav class="nav">
 
-    <nav class="hay-actions">
-
-      <a href="list.html" class="btn secondary">See Requests</a>
-
-      <a href="post.html" class="btn primary active">Post a Request</a>
+      <a class="btn btn-ghost" href="requests.html">See Requests</a>
 
     </nav>
 
-  </header>
-
-
-
-  <div class="page-wrap">
-
-    <h1 style="margin:12px 0 14px;">Post a request</h1>
-
-
-
-    <div class="gform-wrap">
-
-      <iframe
-
-        class="gform"
-
-        src="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?embedded=true"
-
-        loading="lazy" allow="clipboard-write; encrypted-media; fullscreen; geolocation; microphone; camera">
-
-      </iframe>
-
-    </div>
-
-
-
-    <p class="muted" style="margin-top:12px;color:#777">
-
-      No commissions. Free to use. Share only what’s needed. Donate any time to support the community ♥
-
-    </p>
-
   </div>
 
+</header>
 
 
-  <footer class="hay-footer">
 
-    © 2025 HelpAroundYou — Free to use. Built with care for our community ♥
+<section class="wrap card">
 
-  </footer>
+  <div class="card__head"><h2>Post a request</h2></div>
+
+  <form id="requestForm" class="grid">
+
+    <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"/></label>
+
+    <label><span>Category *</span>
+
+      <select id="category" required>
+
+        <option value="">Select…</option>
+
+        <option>Pickup with Truck</option>
+
+        <option>Moving help</option>
+
+        <option>Lawn Care</option>
+
+        <option>Leaf / Branch removal</option>
+
+        <option>Cleaning</option>
+
+        <option>Small fix / Handy</option>
+
+        <option>Pool Cleaning</option>
+
+        <option>Power Washing (stone/exterior)</option>
+
+        <option>Driveway / Concrete Cleaning</option>
+
+        <option>Other</option>
+
+      </select>
+
+    </label>
+
+    <label><span>ZIP / Area *</span><input id="zip" required maxlength="10" placeholder="e.g., 40218"/></label>
+
+    <label><span>Date</span><input id="date" type="date"/></label>
+
+    <label class="col-2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
+
+    <label class="col-2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"/></label>
+
+    <details class="col-2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"/></details>
+
+    <button id="submitBtn" class="btn btn-primary col-2" type="submit">Submit</button>
+
+    <p id="formMsg" class="msg col-2"></p>
+
+  </form>
+
+</section>
+
+
+
+<footer class="footer">
+
+  <div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div>
+
+</footer>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script src="app.js?v=1"></script>
 
 </body>
 
