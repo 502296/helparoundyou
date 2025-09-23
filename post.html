@@ -1,105 +1,51 @@
-<!DOCTYPE html>
+<!doctype html><html lang="en"><head>
 
-<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 
-<head>
+<title>Post a Request — HelpAroundYou</title><link rel="stylesheet" href="style.css">
 
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+</head><body data-page="post">
 
-<title>Post a Request — HelpAroundYou</title>
+<header class="header"><div class="wrap header__in">
 
-<link rel="stylesheet" href="style.css"/>
+<a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
 
-</head>
+<nav class="nav"><a class="btn g" href="requests.html">See Requests</a></nav>
 
-<body data-page="post">
-
-<header class="header">
-
-  <div class="wrap header__inner">
-
-    <a class="brand" href="index.html">Help<span class="brand__a">Around</span><span class="brand__y">You</span></a>
-
-    <nav class="nav">
-
-      <a class="btn btn-ghost" href="requests.html">See Requests</a>
-
-    </nav>
-
-  </div>
-
-</header>
+</div></header>
 
 
 
-<section class="wrap card">
+<section class="wrap card"><div class="card__head"><h2>Post a request</h2></div>
 
-  <div class="card__head"><h2>Post a request</h2></div>
+<form id="requestForm" class="grid">
 
-  <form id="requestForm" class="grid">
+<label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"></label>
 
-    <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"/></label>
+<label><span>Category *</span><select id="category" required>
 
-    <label><span>Category *</span>
+<option value="">Select…</option><option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option><option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Pool Cleaning</option><option>Power Washing (stone/exterior)</option><option>Driveway / Concrete Cleaning</option><option>Other</option></select></label>
 
-      <select id="category" required>
+<label><span>ZIP / Area *</span><input id="zip" maxlength="10" required placeholder="e.g., 40218"></label>
 
-        <option value="">Select…</option>
+<label><span>Date</span><input id="date" type="date"></label>
 
-        <option>Pickup with Truck</option>
+<label class="col2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
 
-        <option>Moving help</option>
+<label class="col2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"></label>
 
-        <option>Lawn Care</option>
+<details class="col2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"></details>
 
-        <option>Leaf / Branch removal</option>
+<button id="submitBtn" class="btn p col2" type="submit">Submit</button>
 
-        <option>Cleaning</option>
+<p id="formMsg" class="msg col2"></p>
 
-        <option>Small fix / Handy</option>
-
-        <option>Pool Cleaning</option>
-
-        <option>Power Washing (stone/exterior)</option>
-
-        <option>Driveway / Concrete Cleaning</option>
-
-        <option>Other</option>
-
-      </select>
-
-    </label>
-
-    <label><span>ZIP / Area *</span><input id="zip" required maxlength="10" placeholder="e.g., 40218"/></label>
-
-    <label><span>Date</span><input id="date" type="date"/></label>
-
-    <label class="col-2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
-
-    <label class="col-2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"/></label>
-
-    <details class="col-2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"/></details>
-
-    <button id="submitBtn" class="btn btn-primary col-2" type="submit">Submit</button>
-
-    <p id="formMsg" class="msg col-2"></p>
-
-  </form>
-
-</section>
+</form></section>
 
 
 
-<footer class="footer">
+<footer class="f"><div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div></footer>
 
-  <div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="app.js?v=1"></script>
 
-</footer>
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-<script src="app.js?v=1"></script>
-
-</body>
-
-</html>
+</body></html>
