@@ -1,68 +1,110 @@
-<!DOCTYPE html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>HelpAroundYou</title><style>
 
-<html lang="en">
+body{font-family:Inter,Arial,sans-serif;background:#0c0c1d;color:#fff;margin:0}
 
-<head>
+.header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px}
 
-<meta charset="UTF-8"/>
+.logo{font-weight:800;font-size:20px}.logo .a{color:#26b1ff}.logo .y{color:#6cff9b}
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+.btn{background:#6d49ff;color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
 
-<title>HelpAroundYou</title>
+.btn.ghost{background:#222943}.btn.small{padding:8px 10px;font-size:14px}
 
-<style>
+.hero{padding:20px 16px;text-align:center}.hero h1{margin:0 0 8px;font-size:28px}
 
-body{font-family:Arial,sans-serif;background:#0c0c1d;color:#fff;margin:0;padding:0;text-align:center}
+.wrap{max-width:980px;margin:0 auto;padding:0 12px}
 
-header{padding:20px;font-size:22px;font-weight:bold}
+.card{background:#141a2e;border:1px solid #253059;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.25);padding:14px;margin:14px 0}
 
-form{background:#1a1a2e;padding:15px;border-radius:8px;max-width:400px;margin:20px auto;display:flex;flex-direction:column;gap:10px}
+form.grid{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
 
-input,select,textarea,button{padding:10px;border:none;border-radius:4px;font-size:14px}
+form label span{display:block;font-size:12px;color:#cfd6ff;margin-bottom:4px}
 
-input,select,textarea{width:100%}
+input,select,textarea{width:100%;background:#0e1430;border:1px solid #2a3560;border-radius:10px;color:#fff;padding:10px;outline:0}
 
-button{background:#6a5acd;color:#fff;cursor:pointer}
+input:focus,select:focus,textarea:focus{border-color:#8d63ff;box-shadow:0 0 0 3px rgba(141,99,255,.25)}
 
-button:hover{background:#836fff}
+.col-2{grid-column:1/-1}.msg{min-height:18px;color:#9fb0d0}.ok{color:#29d17f}.err{color:#ff6a6a}
 
-</style>
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}.filters>*{flex:1 1 160px}
 
-</head>
+.list{display:grid;gap:12px}.item{background:#0f1530;border:1px solid #2a355d;border-radius:12px;padding:12px}
 
-<body>
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.tag{font-size:12px;padding:6px 10px;border-radius:100px;background:#1a2040;color:#dfe6ff;border:1px solid #303a67}
 
-<header>Help<span style="color:#00bfff">Around</span>You</header>
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 
-<h2>Post a Request</h2>
+@media(max-width:760px){form.grid{grid-template-columns:1fr}.hero h1{font-size:24px}}
 
-<form id="requestForm">
+</style></head><body>
 
-<input id="title" type="text" placeholder="Title *" required/>
+<div class="header wrap"><div class="logo">Help<span class="a">Around</span><span class="y">You</span></div>
 
-<select id="category">
+<div style="display:flex;gap:8px"><a href="#post" class="btn small">Post a Request</a><a href="#feed" class="btn small ghost">See Requests</a></div></div>
 
-<option value="Pickup with Truck">Pickup with Truck</option>
+<div class="hero wrap"><h1>Get things done — clear, safe, on your schedule.</h1><p style="color:#9fb0d0">No middlemen and no commissions — just neighbors helping neighbors.</p></div>
 
-<option value="Lawn Care">Lawn Care</option>
 
-<option value="Cleaning">Cleaning</option>
 
-<option value="Other">Other</option>
+<div id="post" class="wrap card">
 
-</select>
+  <h2 style="margin:0 0 10px">Post a request</h2>
 
-<input id="zip" type="text" placeholder="ZIP / Area *" required/>
+  <form id="requestForm" class="grid">
 
-<input id="date" type="date"/>
+    <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa"/></label>
 
-<textarea id="description" placeholder="Description"></textarea>
+    <label><span>Category *</span>
 
-<input id="file" type="file"/>
+      <select id="category" required>
 
-<button type="submit">Submit</button>
+        <option value="">Select…</option><option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option><option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option>
 
-</form>
+      </select>
+
+    </label>
+
+    <label><span>ZIP / Area *</span><input id="zip" required maxlength="10" placeholder="e.g., 40218"/></label>
+
+    <label><span>Date</span><input id="date" type="date"/></label>
+
+    <label class="col-2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
+
+    <label class="col-2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"/></label>
+
+    <details class="col-2"><summary style="cursor:pointer;color:#9fb0d0">Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"/></details>
+
+    <button class="btn col-2" id="submitBtn" type="submit">Submit</button>
+
+    <p id="formMsg" class="msg col-2"></p>
+
+  </form>
+
+</div>
+
+
+
+<div id="feed" class="wrap card">
+
+  <h2 style="margin:0 0 10px">Neighbor Requests</h2>
+
+  <div class="filters">
+
+    <input id="q" type="search" placeholder="Search title or description"/>
+
+    <select id="cat"><option value="">All categories</option><option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option><option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option></select>
+
+    <input id="zipf" type="text" placeholder="ZIP / Area"/>
+
+    <button id="apply" class="btn small">Apply</button><button id="clear" class="btn small ghost">Clear</button>
+
+  </div>
+
+  <div id="list" class="list"></div>
+
+  <button id="loadMore" class="btn small ghost" style="display:none">Load more</button>
+
+</div>
 
 
 
@@ -70,56 +112,74 @@ button:hover{background:#836fff}
 
 <script>
 
-const SUPABASE_URL="https://afqjgrcoiwitfftbjltp.supabase.co";
+const SUPABASE_URL="https://afqjgrcoiwitfftbjltp.supabase.co";          // ✅ URL الصحيح
 
-const SUPABASE_ANON_KEY="ضع_الـanon_key_هنا";
+const SUPABASE_ANON_KEY="PUT_YOUR_ANON_KEY_HERE";                        // ✅ حط الـ anon key هنا
 
-const BUCKET="uploads";
+const BUCKET="uploads";                                                  // ✅ اسم الباكِت
 
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-const form=document.getElementById("requestForm");
 
-form.addEventListener("submit",async(e)=>{
 
-e.preventDefault();
+// Helpers
 
-const title=document.getElementById("title").value;
+const $=s=>document.querySelector(s),listEl=$("#list"),msgEl=$("#formMsg"),submitBtn=$("#submitBtn");
 
-const category=document.getElementById("category").value;
+let page=0;const PAGE_SIZE=10;
 
-const zip=document.getElementById("zip").value;
 
-const date=document.getElementById("date").value;
 
-const description=document.getElementById("description").value;
+// Submit
 
-const file=document.getElementById("file").files[0];
+$("#requestForm").addEventListener("submit",async(e)=>{e.preventDefault();msgEl.className="msg";msgEl.textContent="Uploading…";submitBtn.disabled=true;
 
-let fileUrl=null;
+const title=$("#title").value.trim(),category=$("#category").value.trim(),zip=$("#zip").value.trim(),task_date=$("#date").value||null,description=$("#description").value.trim(),contact=$("#contact").value.trim()||null;
 
-if(file){
+if(!title||!category||!zip){msgEl.className="msg err";msgEl.textContent="Please fill required fields.";submitBtn.disabled=false;return;}
 
-const filePath=`req_${Date.now()}_${file.name}`;
+const files=Array.from($("#files").files||[]).slice(0,5);const urls=[];
 
-const{error:uploadError}=await sb.storage.from(BUCKET).upload(filePath,file);
+for(const f of files){const ext=f.name.split(".").pop();const path=`req_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
 
-if(uploadError){alert("Upload error: "+uploadError.message);return;}
+const{error:upErr}=await sb.storage.from(BUCKET).upload(path,f,{upsert:false});if(upErr){console.error(upErr);msgEl.className="msg err";msgEl.textContent="Upload failed. Try smaller files.";submitBtn.disabled=false;return;}
 
-const{data:publicUrl}=sb.storage.from(BUCKET).getPublicUrl(filePath);
+const{data}=sb.storage.from(BUCKET).getPublicUrl(path);urls.push(data.publicUrl);}
 
-fileUrl=publicUrl.publicUrl;
+const{error:insErr}=await sb.from("requests").insert({title,category,zip,task_date,description,contact,media_urls:urls});
 
-}
+if(insErr){console.error(insErr);msgEl.className="msg err";msgEl.textContent="Could not save your request.";}else{msgEl.className="msg ok";msgEl.textContent="Posted! Your request is now live.";e.target.reset();page=0;listEl.innerHTML="";await load(true);location.hash="#feed";}
 
-const{error}=await sb.from("requests").insert([{title,category,zip,task_date:date,description,media_urls:fileUrl?[fileUrl]:[]}]);
+submitBtn.disabled=false;});
 
-if(error){alert("DB error: "+error.message);}else{alert("تم نشر طلبك بنجاح 🎉");form.reset();}
 
-});
+
+// List + filters
+
+async function load(reset=false){const q=$("#q").value.trim(),cat=$("#cat").value.trim(),zipf=$("#zipf").value.trim();
+
+let qb=sb.from("requests").select("*").order("created_at",{ascending:false});if(q)qb=qb.or(`title.ilike.%${q}%,description.ilike.%${q}%`);if(cat)qb=qb.eq("category",cat);if(zipf)qb=qb.ilike("zip",`%${zipf}%`);
+
+const from=page*PAGE_SIZE,to=from+PAGE_SIZE-1;const{data, error}=await qb.range(from,to);if(error){console.error(error);return;}
+
+if(reset)listEl.innerHTML="";render(data||[]);$("#loadMore").style.display=(data&&data.length===PAGE_SIZE)?"inline-block":"none";}
+
+function render(rows){for(const r of rows){const d=new Date(r.task_date||r.created_at);const nice=d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});const img=(r.media_urls&&r.media_urls[0])?`<a class="btn small" href="${r.media_urls[0]}" target="_blank">View file</a>`:"";
+
+const snippet=(r.description||"").slice(0,140);const el=document.createElement("div");el.className="item";el.innerHTML=`<h3 style="margin:0">${esc(r.title)}</h3>
+
+<div class="tags"><span class="tag">${esc(r.category||"Other")}</span>${r.zip?`<span class="tag">${esc(r.zip)}</span>`:""}<span class="tag">${nice}</span></div>
+
+<p style="margin:6px 0">${esc(snippet)}${r.description&&r.description.length>140?"…":""}</p>
+
+<div class="actions"><button class="btn small" onclick="alert('Coordinate directly via email/text. Stay safe!')">Offer to help</button>${img}</div>`;listEl.appendChild(el);}}
+
+const esc=s=>s?.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))??"";
+
+$("#apply").addEventListener("click",()=>{page=0;load(true)});$("#clear").addEventListener("click",()=>{$("#q").value="";$("#cat").value="";$("#zipf").value="";page=0;load(true)});$("#loadMore").addEventListener("click",()=>{page++;load()});
+
+load(true);
 
 </script>
 
-</body>
-
-</html>
+</body></html>
