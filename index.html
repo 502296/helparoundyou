@@ -73,185 +73,83 @@
     </ul>
 
   </section>
-
-
-
-  <!-- Post form -->
-
-  <section id="post" class="card form-card">
-
+  <section 
+    id="post" class="card form-card">
     <h2>Post a request</h2>
-
-
-
     <form id="requestForm">
-
       <div class="grid">
-
         <label>
-
           <span>Title *</span>
-
           <input type="text" name="title" required placeholder="Pickup small sofa, 5 miles"/>
-
         </label>
-
-
-
         <label>
-
           <span>Category *</span>
-
           <select name="category" required>
-
             <option value="">Select…</option>
-
             <option>Pickup with Truck</option>
-
             <option>Moving help</option>
-
             <option>Lawn Care</option>
-
             <option>Leaf / Branch removal</option>
-
             <option>Cleaning</option>
-
             <option>Small fix / Handy</option>
-
             <option>Other</option>
-
           </select>
-
         </label>
-
-
-
         <label>
-
           <span>ZIP / Area *</span>
-
           <input type="text" name="zip" required maxlength="10" placeholder="e.g., 40218"/>
-
         </label>
-
-
-
         <label>
-
           <span>Date</span>
-
           <input type="date" name="task_date"/>
-
         </label>
-
-
-
         <label class="col-span-2">
-
           <span>Description</span>
-
           <textarea name="description" rows="4" placeholder="Short details, size/weight, timing, any notes…"></textarea>
-
         </label>
-
-
-
         <label class="col-span-2">
-
           <span>Photos / Files (up to 5)</span>
-
           <input type="file" id="files" multiple accept="image/*,application/pdf"/>
-
         </label>
-
-
-
         <details class="col-span-2">
-
           <summary>Optional contact (shared only in your messages)</summary>
-
           <input type="text" name="contact" placeholder="Phone / Email (optional)"/>
-
         </details>
-
       </div>
-
-
-
       <button type="submit" class="btn primary wfull" id="submitBtn">
-
         <i class="fa-regular fa-circle-check"></i> Submit
-
       </button>
-
       <p id="formMsg" class="msg"></p>
-
     </form>
-
   </section>
-
-
-
-  <!-- Feed / Filters -->
-
   <section id="feed" class="card">
-
     <h2>Neighbor Requests</h2>
-
     <div class="filters">
-
       <input id="q" type="search" placeholder="Search title or description"/>
-
       <select id="cat">
-
         <option value="">All categories</option>
-
         <option>Pickup with Truck</option>
-
         <option>Moving help</option>
-
         <option>Lawn Care</option>
-
         <option>Leaf / Branch removal</option>
-
         <option>Cleaning</option>
-
         <option>Small fix / Handy</option>
-
         <option>Other</option>
-
       </select>
-
       <input id="zip" type="text" placeholder="ZIP / Area"/>
-
       <button id="apply" class="btn primary">Apply</button>
-
       <button id="clear" class="btn ghost">Clear</button>
-
     </div>
-
-
-
     <div id="list" class="list"></div>
-
     <button id="loadMore" class="btn ghost hidden">Load more</button>
-
   </section>
-
-
-
   <footer class="site-footer">
-
     <small>Neighbors helping neighbors — no commissions.</small>
-
   </footer>
-
-
-
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
   <script src="app.js"></script>
-
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
 </body>
 
 </html>
