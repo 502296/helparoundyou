@@ -10,229 +10,57 @@
 
   <title>Post a Request — HelpAroundYou</title>
 
+  <link rel="stylesheet" href="style.css?v=3"/>
 
 
-  <!-- ربط ملف CSS الأساسي -->
-
-  <link rel="stylesheet" href="style.css?v=2"/>
-
-
-
-  <!-- ستايل داخلي لضمان أن الحقول فاتحة -->
 
   <style>
 
-    .page-wrap {
+    .page-wrap{max-width:1100px;margin:0 auto;padding:24px 5%}
 
-      max-width: 1100px;
+    .form-card{max-width:640px;margin:0 auto;padding:20px;border-radius:14px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.08)}
 
-      margin: 0 auto;
+    form label{display:block;margin:12px 0 6px;font-weight:600;color:#222}
 
-      padding: 24px 5%;
+    form input[type="text"],form input[type="email"],form input[type="date"],form input[type="tel"],form select,form textarea{
 
-    }
+      width:100%;padding:12px 14px;border-radius:10px;border:1px solid #d9d9e3;background:#f9f9f9;color:#222;font-size:16px;outline:none;transition:.2s}
 
+    form textarea{min-height:120px;resize:vertical}
 
+    form input::placeholder,form textarea::placeholder{color:#888}
 
-    .form-card {
+    form input:focus,form select:focus,form textarea:focus{background:#fff;border-color:#7b42f6;box-shadow:0 0 0 4px rgba(123,66,246,.15)}
 
-      max-width: 640px;
+    .help{font-size:13px;color:#666;margin-top:4px}
 
-      margin: 0 auto;
+    .actions{display:flex;gap:12px;align-items:center;margin-top:14px}
 
-      padding: 20px;
+    .btn.submit{background:#7b42f6;color:#fff;border:0;padding:.8rem 1.4rem;border-radius:8px;font-weight:bold;cursor:pointer;transition:.2s}
 
-      border-radius: 14px;
+    .btn.submit:hover{background:#5e2fc2}
 
-      background: #fff;
+    .link-cancel{color:#555;text-decoration:underline;font-size:.9rem}
 
-      box-shadow: 0 8px 28px rgba(0,0,0,.08);
-
-    }
-
-
-
-    form label {
-
-      display: block;
-
-      margin: 12px 0 6px;
-
-      font-weight: 600;
-
-      color: #222;
-
-    }
-
-
-
-    form input[type="text"],
-
-    form input[type="email"],
-
-    form input[type="date"],
-
-    form input[type="tel"],
-
-    form select,
-
-    form textarea {
-
-      width: 100%;
-
-      padding: 12px 14px;
-
-      border-radius: 10px;
-
-      border: 1px solid #d9d9e3;
-
-      background: #f9f9f9;     /* فاتح */
-
-      color: #222;             /* نص غامق */
-
-      font-size: 16px;
-
-      outline: none;
-
-      transition: border-color .2s, box-shadow .2s, background .2s;
-
-    }
-
-
-
-    form textarea {
-
-      min-height: 120px;
-
-      resize: vertical;
-
-    }
-
-
-
-    form input::placeholder,
-
-    form textarea::placeholder {
-
-      color: #888;
-
-    }
-
-
-
-    form input:focus,
-
-    form select:focus,
-
-    form textarea:focus {
-
-      background: #fff; /* أبيض عند الكتابة */
-
-      border-color: #7b42f6;
-
-      box-shadow: 0 0 0 4px rgba(123, 66, 246, 0.15);
-
-    }
-
-
-
-    .help {
-
-      font-size: 13px;
-
-      color: #666;
-
-      margin-top: 4px;
-
-    }
-
-
-
-    .actions {
-
-      display: flex;
-
-      gap: 12px;
-
-      align-items: center;
-
-      margin-top: 14px;
-
-    }
-
-
-
-    .btn.submit {
-
-      background: #7b42f6;
-
-      color: #fff;
-
-      border: none;
-
-      padding: 0.8rem 1.4rem;
-
-      border-radius: 8px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-      transition: 0.2s;
-
-    }
-
-
-
-    .btn.submit:hover {
-
-      background: #5e2fc2;
-
-    }
-
-
-
-    .link-cancel {
-
-      color: #555;
-
-      text-decoration: underline;
-
-      font-size: 0.9rem;
-
-    }
-
-
-
-    @media (max-width: 768px) {
-
-      .form-card { padding: 16px; }
-
-      .actions { flex-direction: column; align-items: stretch; }
-
-      .actions .btn { width: 100%; }
-
-    }
+    @media (max-width:768px){.form-card{padding:16px}.actions{flex-direction:column;align-items:stretch}.actions .btn{width:100%}}
 
   </style>
 
 </head>
 
-
-
 <body>
 
   <div class="page-wrap">
 
-    <h1 style="margin: 10px 0 18px;">Post a request</h1>
+    <h1 style="margin:10px 0 18px;">Post a request</h1>
 
 
 
     <div class="form-card">
 
-      <form id="requestForm" action="#" method="POST" enctype="multipart/form-data" novalidate>
+      <!-- لاحقًا سنضع action إلى Airtable/Tally. الآن سنعمل تحويل لصفحة الشكر. -->
 
-        <!-- Email -->
+      <form id="requestForm" action="#" method="POST" enctype="multipart/form-data" novalidate>
 
         <label for="email">Email *</label>
 
@@ -240,15 +68,11 @@
 
 
 
-        <!-- Title -->
-
         <label for="title">Request Title *</label>
 
         <input id="title" name="title" type="text" placeholder="e.g., Need help moving couch" maxlength="120" required/>
 
 
-
-        <!-- Description -->
 
         <label for="description">Description *</label>
 
@@ -257,8 +81,6 @@
         <div class="help">What, where, any tools needed, time window, stairs, heavy items, etc.</div>
 
 
-
-        <!-- Category -->
 
         <label for="category">Category *</label>
 
@@ -282,15 +104,11 @@
 
 
 
-        <!-- Location -->
-
         <label for="location">Location (zip or area) *</label>
 
         <input id="location" name="location" type="text" placeholder="e.g., 40218 or Highlands" required/>
 
 
-
-        <!-- Date -->
 
         <label for="date">Date needed *</label>
 
@@ -298,15 +116,11 @@
 
 
 
-        <!-- Contact (optional) -->
-
         <label for="contact">Contact Info (optional)</label>
 
         <input id="contact" name="contact" type="text" placeholder="Phone or preferred method (optional)"/>
 
 
-
-        <!-- File -->
 
         <label for="file">Photo / File (optional)</label>
 
@@ -315,8 +129,6 @@
         <div class="help">Helps the helper understand the task (max ~10MB).</div>
 
 
-
-        <!-- Actions -->
 
         <div class="actions">
 
@@ -328,13 +140,7 @@
 
 
 
-        <p class="help" style="margin-top:10px">
-
-          No commissions. Free to use. Share only what’s needed. Donate any time to support the community ♥
-
-        </p>
-
-
+        <!-- مكان رسالة الديمو السابقة: تم حذفه -->
 
         <p id="formMsg" role="status" style="margin-top:12px;font-weight:600"></p>
 
@@ -348,7 +154,7 @@
 
   <script>
 
-    // منع الملفات الكبيرة + منع الضغط مرتين
+    // Redirect to Thank You (بدون backend مؤقتًا) + تحقق حجم الملف ومنع الضغط المتكرر
 
     (function(){
 
@@ -363,6 +169,8 @@
 
 
       form.addEventListener('submit', function(e){
+
+        // حجم الملف (اختياري)
 
         if (file && file.files.length){
 
@@ -384,33 +192,35 @@
 
         }
 
-        btn.disabled = true;
-
-        btn.textContent = 'Submitting…';
-
-        msg.textContent = 'Submitting…';
-
-        msg.style.color = '#888';
 
 
+        // لو ما في backend حالياً، نسوي تحويل لصفحة الشكر
 
         if (form.getAttribute('action') === '#'){
 
           e.preventDefault();
 
-          setTimeout(()=>{
+          btn.disabled = true;
 
-            msg.textContent = 'Request saved locally (demo). We will connect this form to Airtable/Tally next.';
+          btn.textContent = 'Submitting…';
 
-            msg.style.color = '#4caf50';
+          // نقدر نمرر بعض القيم في الـquery لو تحب نعرض ملخص
 
-            btn.disabled = false;
+          const params = new URLSearchParams({
 
-            btn.textContent = 'Submit Request';
+            title: document.getElementById('title').value || '',
 
-          }, 600);
+          });
+
+          window.location.href = 'thank-you.html?'+params.toString();
+
+          return;
 
         }
+
+
+
+        // (عند ربط Airtable/Tally لاحقاً، احذف الشرط أعلاه)
 
       }, false);
 
