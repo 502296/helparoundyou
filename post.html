@@ -10,39 +10,19 @@
 
   <title>Post a Request — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="style.css?v=3"/>
-
-
+  <link rel="stylesheet" href="style.css?v=7"/>
 
   <style>
 
-    .page-wrap{max-width:1100px;margin:0 auto;padding:24px 5%}
+    .gform-wrap{
 
-    .form-card{max-width:640px;margin:0 auto;padding:20px;border-radius:14px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.08)}
+      background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;
 
-    form label{display:block;margin:12px 0 6px;font-weight:600;color:#222}
+      box-shadow:0 8px 28px rgba(0,0,0,.06);
 
-    form input[type="text"],form input[type="email"],form input[type="date"],form input[type="tel"],form select,form textarea{
+    }
 
-      width:100%;padding:12px 14px;border-radius:10px;border:1px solid #d9d9e3;background:#f9f9f9;color:#222;font-size:16px;outline:none;transition:.2s}
-
-    form textarea{min-height:120px;resize:vertical}
-
-    form input::placeholder,form textarea::placeholder{color:#888}
-
-    form input:focus,form select:focus,form textarea:focus{background:#fff;border-color:#7b42f6;box-shadow:0 0 0 4px rgba(123,66,246,.15)}
-
-    .help{font-size:13px;color:#666;margin-top:4px}
-
-    .actions{display:flex;gap:12px;align-items:center;margin-top:14px}
-
-    .btn.submit{background:#7b42f6;color:#fff;border:0;padding:.8rem 1.4rem;border-radius:8px;font-weight:bold;cursor:pointer;transition:.2s}
-
-    .btn.submit:hover{background:#5e2fc2}
-
-    .link-cancel{color:#555;text-decoration:underline;font-size:.9rem}
-
-    @media (max-width:768px){.form-card{padding:16px}.actions{flex-direction:column;align-items:stretch}.actions .btn{width:100%}}
+    .gform{width:100%;border:0;min-height:85vh}
 
   </style>
 
@@ -50,183 +30,63 @@
 
 <body>
 
+  <header class="hay-header">
+
+    <a href="index.html" class="logo">
+
+      <span class="logo-main">Help</span><span class="logo-around">Around</span><span class="logo-you">You</span>
+
+    </a>
+
+    <nav class="hay-actions">
+
+      <a href="list.html" class="btn secondary">See Requests</a>
+
+      <a href="post.html" class="btn primary active">Post a Request</a>
+
+    </nav>
+
+  </header>
+
+
+
   <div class="page-wrap">
 
-    <h1 style="margin:10px 0 18px;">Post a request</h1>
+    <h1 style="margin:12px 0 14px;">Post a request</h1>
 
 
 
-    <div class="form-card">
+    <div class="gform-wrap">
 
-      <!-- لاحقًا سنضع action إلى Airtable/Tally. الآن سنعمل تحويل لصفحة الشكر. -->
+      <iframe
 
-      <form id="requestForm" action="#" method="POST" enctype="multipart/form-data" novalidate>
+        class="gform"
 
-        <label for="email">Email *</label>
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfzYZUil4u4DkHXu_n7qnKXdW63-KQKfKXD2C4vGDvgSVUbRw/viewform?embedded=true"
 
-        <input id="email" name="email" type="email" placeholder="you@example.com" required/>
+        loading="lazy" allow="clipboard-write; encrypted-media; fullscreen; geolocation; microphone; camera">
 
-
-
-        <label for="title">Request Title *</label>
-
-        <input id="title" name="title" type="text" placeholder="e.g., Need help moving couch" maxlength="120" required/>
-
-
-
-        <label for="description">Description *</label>
-
-        <textarea id="description" name="description" placeholder="Add details that help the neighbor understand the task…" required></textarea>
-
-        <div class="help">What, where, any tools needed, time window, stairs, heavy items, etc.</div>
-
-
-
-        <label for="category">Category *</label>
-
-        <select id="category" name="category" required>
-
-          <option value="" disabled selected>Select…</option>
-
-          <option>Moving help</option>
-
-          <option>Pickup with truck</option>
-
-          <option>Yard cleanup (leaves/branches)</option>
-
-          <option>Cleaning</option>
-
-          <option>Small fix / handyman</option>
-
-          <option>Other</option>
-
-        </select>
-
-
-
-        <label for="location">Location (zip or area) *</label>
-
-        <input id="location" name="location" type="text" placeholder="e.g., 40218 or Highlands" required/>
-
-
-
-        <label for="date">Date needed *</label>
-
-        <input id="date" name="date" type="date" required/>
-
-
-
-        <label for="contact">Contact Info (optional)</label>
-
-        <input id="contact" name="contact" type="text" placeholder="Phone or preferred method (optional)"/>
-
-
-
-        <label for="file">Photo / File (optional)</label>
-
-        <input id="file" name="file" type="file" accept="image/*,application/pdf"/>
-
-        <div class="help">Helps the helper understand the task (max ~10MB).</div>
-
-
-
-        <div class="actions">
-
-          <button id="submitBtn" class="btn submit" type="submit">Submit Request</button>
-
-          <a class="link-cancel" href="index.html">Cancel</a>
-
-        </div>
-
-
-
-        <!-- مكان رسالة الديمو السابقة: تم حذفه -->
-
-        <p id="formMsg" role="status" style="margin-top:12px;font-weight:600"></p>
-
-      </form>
+      </iframe>
 
     </div>
+
+
+
+    <p class="muted" style="margin-top:12px;color:#777">
+
+      No commissions. Free to use. Share only what’s needed. Donate any time to support the community ♥
+
+    </p>
 
   </div>
 
 
 
-  <script>
+  <footer class="hay-footer">
 
-    // Redirect to Thank You (بدون backend مؤقتًا) + تحقق حجم الملف ومنع الضغط المتكرر
+    © 2025 HelpAroundYou — Free to use. Built with care for our community ♥
 
-    (function(){
-
-      const form = document.getElementById('requestForm');
-
-      const btn  = document.getElementById('submitBtn');
-
-      const msg  = document.getElementById('formMsg');
-
-      const file = document.getElementById('file');
-
-
-
-      form.addEventListener('submit', function(e){
-
-        // حجم الملف (اختياري)
-
-        if (file && file.files.length){
-
-          const f = file.files[0];
-
-          const max = 10 * 1024 * 1024; // 10MB
-
-          if (f.size > max){
-
-            e.preventDefault();
-
-            msg.textContent = 'File is too large (max ~10MB). Please choose a smaller file.';
-
-            msg.style.color = '#ff9800';
-
-            return;
-
-          }
-
-        }
-
-
-
-        // لو ما في backend حالياً، نسوي تحويل لصفحة الشكر
-
-        if (form.getAttribute('action') === '#'){
-
-          e.preventDefault();
-
-          btn.disabled = true;
-
-          btn.textContent = 'Submitting…';
-
-          // نقدر نمرر بعض القيم في الـquery لو تحب نعرض ملخص
-
-          const params = new URLSearchParams({
-
-            title: document.getElementById('title').value || '',
-
-          });
-
-          window.location.href = 'thank-you.html?'+params.toString();
-
-          return;
-
-        }
-
-
-
-        // (عند ربط Airtable/Tally لاحقاً، احذف الشرط أعلاه)
-
-      }, false);
-
-    })();
-
-  </script>
+  </footer>
 
 </body>
 
