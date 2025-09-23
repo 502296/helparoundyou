@@ -24,7 +24,7 @@
 
       <button class="btn btn-primary" id="openModalTop">Post a Request</button>
 
-      <a href="#feed" class="btn btn-ghost">See Requests</a>
+      <a href="#feed" class="btn btn-ghost js-scroll">See Requests</a>
 
     </nav>
 
@@ -42,13 +42,13 @@
 
       <h1>Get things done — clear, safe, on your schedule.</h1>
 
-      <p>No middlemen and no commissions — just neighbors helping neighbors.</p>
+      <p class="muted">We’re a free community platform. We don’t provide services — we simply connect neighbors and local doers so they coordinate directly.</p>
 
       <div class="hero__cta">
 
         <button class="btn btn-primary btn-xl" id="openModal">Post a Request</button>
 
-        <a href="#feed" class="btn btn-ghost btn-xl">See Requests</a>
+        <a href="#feed" class="btn btn-ghost btn-xl js-scroll">See Requests</a>
 
       </div>
 
@@ -64,9 +64,9 @@
 
     </div>
 
-    <!-- اختياري: ضع صورة  (hero.png) داخل مجلدك واستبدل src -->
-
     <div class="hero__img" aria-hidden="true">
+
+      <!-- اختياري: ضع hero.png (خفيف ≤150KB). سيختفي تلقائيًا إن لم يوجد -->
 
       <img src="hero.png" alt="" onerror="this.style.display='none'"/>
 
@@ -84,29 +84,57 @@
 
     <h2>Neighbor Requests</h2>
 
-    <div class="filters">
+    <div class="head-actions">
 
-      <input id="q" type="search" placeholder="Search title or description"/>
+      <a class="btn btn-ghost btn-sm js-scroll" href="#feed">All Requests</a>
 
-      <select id="cat">
-
-        <option value="">All categories</option>
-
-        <option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option>
-
-        <option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option>
-
-      </select>
-
-      <input id="zipf" type="text" placeholder="ZIP / Area"/>
-
-      <button id="apply" class="btn btn-primary btn-sm">Apply</button>
-
-      <button id="clear" class="btn btn-ghost btn-sm">Clear</button>
+      <button class="btn btn-primary btn-sm" id="openModalHead">Post a Request</button>
 
     </div>
 
   </div>
+
+
+
+  <div class="filters">
+
+    <input id="q" type="search" placeholder="Search title or description"/>
+
+    <select id="cat">
+
+      <option value="">All categories</option>
+
+      <option>Pickup with Truck</option>
+
+      <option>Moving help</option>
+
+      <option>Lawn Care</option>
+
+      <option>Leaf / Branch removal</option>
+
+      <option>Cleaning</option>
+
+      <option>Small fix / Handy</option>
+
+      <option>Pool Cleaning</option>
+
+      <option>Power Washing (stone/exterior)</option>
+
+      <option>Driveway / Concrete Cleaning</option>
+
+      <option>Other</option>
+
+    </select>
+
+    <input id="zipf" type="text" placeholder="ZIP / Area"/>
+
+    <button id="apply" class="btn btn-primary btn-sm">Apply</button>
+
+    <button id="clear" class="btn btn-ghost btn-sm">Clear</button>
+
+  </div>
+
+
 
   <div id="list" class="list"></div>
 
@@ -118,13 +146,13 @@
 
 <footer class="footer">
 
-  <div class="wrap"><small>Neighbors helping neighbors — no commissions.</small></div>
+  <div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div>
 
 </footer>
 
 
 
-<!-- Modal -->
+<!-- Modal (Post a request) — لا نغيّره 👍 -->
 
 <div class="modal" id="postModal" aria-hidden="true">
 
@@ -144,9 +172,25 @@
 
           <option value="">Select…</option>
 
-          <option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option>
+          <option>Pickup with Truck</option>
 
-          <option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Other</option>
+          <option>Moving help</option>
+
+          <option>Lawn Care</option>
+
+          <option>Leaf / Branch removal</option>
+
+          <option>Cleaning</option>
+
+          <option>Small fix / Handy</option>
+
+          <option>Pool Cleaning</option>
+
+          <option>Power Washing (stone/exterior)</option>
+
+          <option>Driveway / Concrete Cleaning</option>
+
+          <option>Other</option>
 
         </select>
 
