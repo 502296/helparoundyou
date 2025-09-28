@@ -38,113 +38,53 @@
 
 
 
-<section class="hero">
+<!-- HERO like the 3rd image -->
 
-  <div class="wrap hero__in">
+<section class="hero hero--scene">
 
-    <div class="hero__txt">
+  <div class="wrap hero__in hero__in--center">
 
-      <h1>Get things done — clear, safe, on your schedule.</h1>
+    <h1 class="hero__title">Neighbors ready to help — from lawn care to moving!</h1>
 
-      <p class="muted">
+    <a class="btn p xl hero__cta" href="post.html">Post a Request</a>
 
-        We’re a free community platform. We don’t provide services — we simply connect neighbors and local doers so they coordinate directly.
+    <p class="hero__sub">Safe, local, and flexible — you agree directly with helpers.</p>
 
-      </p>
 
-      <div class="cta">
 
-        <a class="btn p xl" href="post.html">Post a Request</a>
+    <div class="hero__circles">
 
-        <a class="btn g xl" href="requests.html">See Requests</a>
+      <a class="circle-card green" href="post.html?type=Lawn Care">
 
-      </div>
+        <div class="circle-ico"><svg><use href="#ic-lawn"></use></svg></div>
 
-      <ul class="steps">
+        <span>Lawn Mowing</span>
 
-        <li>Describe the task (title, details, date, area, photos)</li>
+      </a>
 
-        <li>We list it instantly for nearby helpers</li>
+      <a class="circle-card blue" href="post.html?type=Power Washing (stone/exterior)">
 
-        <li>You coordinate directly and mark it done</li>
+        <div class="circle-ico"><svg><use href="#ic-wash"></use></svg></div>
 
-      </ul>
+        <span>House Washing</span>
+
+      </a>
+
+      <a class="circle-card orange" href="post.html?type=Moving help">
+
+        <div class="circle-ico"><svg><use href="#ic-truck"></use></svg></div>
+
+        <span>Moving</span>
+
+      </a>
 
     </div>
 
   </div>
 
-</section>
+  <!-- خلفية الحي -->
 
-
-
-<!-- Categories / Neighborhood services -->
-
-<section class="categories wrap">
-
-  <h2 class="cat-title">Neighbors ready to help — pick a category</h2>
-
-  <div class="cat-grid">
-
-    <a class="cat" href="post.html?type=Lawn Care">
-
-      <div class="ic circle green"><svg><use href="#ic-lawn"></use></svg></div>
-
-      <span>Lawn Care</span>
-
-    </a>
-
-
-
-    <a class="cat" href="post.html?type=Power Washing (stone/exterior)">
-
-      <div class="ic circle blue"><svg><use href="#ic-wash"></use></svg></div>
-
-      <span>Power Washing</span>
-
-    </a>
-
-
-
-    <a class="cat" href="post.html?type=Pickup with Truck">
-
-      <div class="ic circle orange"><svg><use href="#ic-truck"></use></svg></div>
-
-      <span>Pickup with Truck</span>
-
-    </a>
-
-
-
-    <a class="cat" href="post.html?type=Leaf / Branch removal">
-
-      <div class="ic circle olive"><svg><use href="#ic-leaves"></use></svg></div>
-
-      <span>Leaf / Branch</span>
-
-    </a>
-
-
-
-    <a class="cat" href="post.html?type=Moving help">
-
-      <div class="ic circle teal"><svg><use href="#ic-moving"></use></svg></div>
-
-      <span>Moving Help</span>
-
-    </a>
-
-
-
-    <a class="cat" href="post.html?type=Cleaning">
-
-      <div class="ic circle purple"><svg><use href="#ic-clean"></use></svg></div>
-
-      <span>House Cleaning</span>
-
-    </a>
-
-  </div>
+  <div class="hero-bg"></div>
 
 </section>
 
@@ -184,7 +124,7 @@
 
 
 
-<!-- inline SVG icons (sprite) -->
+<!-- inline SVG icons -->
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
 
@@ -207,24 +147,6 @@
   <symbol id="ic-truck" viewBox="0 0 24 24">
 
     <path d="M2 14h10v-3h5l3 3v3h-1a2 2 0 1 1-4 0H9a2 2 0 1 1-4 0H2v-3z" fill="currentColor"/>
-
-  </symbol>
-
-  <symbol id="ic-leaves" viewBox="0 0 24 24">
-
-    <path d="M6 18c6-1 6-7 6-7s-6 0-7 6c0 0 0 1 1 1zM12 12c4-5 8-4 8-4s1 4-4 8c0 0-4 1-4-4z" fill="currentColor"/>
-
-  </symbol>
-
-  <symbol id="ic-moving" viewBox="0 0 24 24">
-
-    <path d="M3 15h10v3H3zM14 12h4l3 3v3h-7v-6z" fill="currentColor"/>
-
-  </symbol>
-
-  <symbol id="ic-clean" viewBox="0 0 24 24">
-
-    <path d="M5 17h10l1-5H6zM7 7h6l2 3H5z" fill="currentColor"/>
 
   </symbol>
 
