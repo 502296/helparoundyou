@@ -1,51 +1,241 @@
-<!doctype html><html lang="en"><head>
+<!doctype html>
 
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
 
-<title>HelpAroundYou</title><link rel="stylesheet" href="style.css">
+<head>
 
-</head><body data-page="home">
+  <meta charset="utf-8">
 
-<header class="header"><div class="wrap header__in">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
+  <title>HelpAroundYou</title>
 
-<nav class="nav"><a class="btn p" href="post.html">Post a Request</a><a class="btn g" href="requests.html">See Requests</a></nav>
+  <link rel="stylesheet" href="style.css">
 
-</div></header>
+</head>
 
-
-
-<section class="hero"><div class="wrap hero__in">
-
-<div class="hero__txt">
-
-<h1>Get things done — clear, safe, on your schedule.</h1>
-
-<p class="muted">We’re a free community platform. We don’t provide services — we simply connect neighbors and local doers so they coordinate directly.</p>
-
-<div class="cta"><a class="btn p xl" href="post.html">Post a Request</a><a class="btn g xl" href="requests.html">See Requests</a></div>
-
-<ul class="steps"><li>Describe the task (title, details, date, area, photos)</li><li>We list it instantly for nearby helpers</li><li>You coordinate directly and mark it done</li></ul>
-
-</div>
-
-</div></section>
+<body data-page="home">
 
 
 
-<section class="wrap card"><div class="card__head">
+<header class="header">
 
-<div class="tab"><span class="dot"></span><strong>Neighbor Requests</strong></div>
+  <div class="wrap header__in">
 
-<div class="act"><a class="btn g s" href="requests.html">All Requests</a><a class="btn p s" href="post.html">Post a Request</a></div>
+    <a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
 
-</div><p class="muted" style="margin:8px 0 0">Go to <a href="requests.html">See Requests</a> to browse posts.</p></section>
+    <nav class="nav">
+
+      <a class="btn p" href="post.html">Post a Request</a>
+
+      <a class="btn g" href="requests.html">See Requests</a>
+
+    </nav>
+
+  </div>
+
+</header>
 
 
 
-<footer class="f"><div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div></footer>
+<section class="hero">
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="app.js?v=1"></script>
+  <div class="wrap hero__in">
 
-</body></html>
+    <div class="hero__txt">
+
+      <h1>Get things done — clear, safe, on your schedule.</h1>
+
+      <p class="muted">
+
+        We’re a free community platform. We don’t provide services — we simply connect neighbors and local doers so they coordinate directly.
+
+      </p>
+
+      <div class="cta">
+
+        <a class="btn p xl" href="post.html">Post a Request</a>
+
+        <a class="btn g xl" href="requests.html">See Requests</a>
+
+      </div>
+
+      <ul class="steps">
+
+        <li>Describe the task (title, details, date, area, photos)</li>
+
+        <li>We list it instantly for nearby helpers</li>
+
+        <li>You coordinate directly and mark it done</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- Categories / Neighborhood services -->
+
+<section class="categories wrap">
+
+  <h2 class="cat-title">Neighbors ready to help — pick a category</h2>
+
+  <div class="cat-grid">
+
+    <a class="cat" href="post.html?type=Lawn Care">
+
+      <div class="ic circle green"><svg><use href="#ic-lawn"></use></svg></div>
+
+      <span>Lawn Care</span>
+
+    </a>
+
+
+
+    <a class="cat" href="post.html?type=Power Washing (stone/exterior)">
+
+      <div class="ic circle blue"><svg><use href="#ic-wash"></use></svg></div>
+
+      <span>Power Washing</span>
+
+    </a>
+
+
+
+    <a class="cat" href="post.html?type=Pickup with Truck">
+
+      <div class="ic circle orange"><svg><use href="#ic-truck"></use></svg></div>
+
+      <span>Pickup with Truck</span>
+
+    </a>
+
+
+
+    <a class="cat" href="post.html?type=Leaf / Branch removal">
+
+      <div class="ic circle olive"><svg><use href="#ic-leaves"></use></svg></div>
+
+      <span>Leaf / Branch</span>
+
+    </a>
+
+
+
+    <a class="cat" href="post.html?type=Moving help">
+
+      <div class="ic circle teal"><svg><use href="#ic-moving"></use></svg></div>
+
+      <span>Moving Help</span>
+
+    </a>
+
+
+
+    <a class="cat" href="post.html?type=Cleaning">
+
+      <div class="ic circle purple"><svg><use href="#ic-clean"></use></svg></div>
+
+      <span>House Cleaning</span>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+
+<section class="wrap card">
+
+  <div class="card__head">
+
+    <div class="tab"><span class="dot"></span><strong>Neighbor Requests</strong></div>
+
+    <div class="act">
+
+      <a class="btn g s" href="requests.html">All Requests</a>
+
+      <a class="btn p s" href="post.html">Post a Request</a>
+
+    </div>
+
+  </div>
+
+  <p class="muted" style="margin:8px 0 0">Go to <a href="requests.html">See Requests</a> to browse posts.</p>
+
+</section>
+
+
+
+<footer class="f">
+
+  <div class="wrap">
+
+    <small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small>
+
+  </div>
+
+</footer>
+
+
+
+<!-- inline SVG icons (sprite) -->
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <symbol id="ic-lawn" viewBox="0 0 24 24">
+
+    <path d="M5 18a2 2 0 1 0 4 0h6a2 2 0 1 0 2-2H10l-1.2-3H6v2h1.6l.8 2H5z" fill="currentColor"/>
+
+  </symbol>
+
+  <symbol id="ic-wash" viewBox="0 0 24 24">
+
+    <path d="M4 15h6l6-4 4 1-2 1-2-1-5 4H4v-1z" fill="currentColor"/>
+
+    <circle cx="9" cy="9" r="1.5" fill="currentColor"/>
+
+    <circle cx="12" cy="7" r="1" fill="currentColor"/>
+
+  </symbol>
+
+  <symbol id="ic-truck" viewBox="0 0 24 24">
+
+    <path d="M2 14h10v-3h5l3 3v3h-1a2 2 0 1 1-4 0H9a2 2 0 1 1-4 0H2v-3z" fill="currentColor"/>
+
+  </symbol>
+
+  <symbol id="ic-leaves" viewBox="0 0 24 24">
+
+    <path d="M6 18c6-1 6-7 6-7s-6 0-7 6c0 0 0 1 1 1zM12 12c4-5 8-4 8-4s1 4-4 8c0 0-4 1-4-4z" fill="currentColor"/>
+
+  </symbol>
+
+  <symbol id="ic-moving" viewBox="0 0 24 24">
+
+    <path d="M3 15h10v3H3zM14 12h4l3 3v3h-7v-6z" fill="currentColor"/>
+
+  </symbol>
+
+  <symbol id="ic-clean" viewBox="0 0 24 24">
+
+    <path d="M5 17h10l1-5H6zM7 7h6l2 3H5z" fill="currentColor"/>
+
+  </symbol>
+
+</svg>
+
+
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script src="app.js?v=1"></script>
+
+</body>
+
+</html>
