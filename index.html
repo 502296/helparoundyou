@@ -38,9 +38,9 @@
 
 
 
-<!-- HERO -->
+<!-- HERO: صورة فقط بدون أيقونات -->
 
-<section class="hero hero--scene">
+<section class="hero hero--photo">
 
   <div class="wrap hero__in hero__in--center">
 
@@ -50,59 +50,99 @@
 
     <p class="hero__sub">Safe, local, and flexible — you agree directly with helpers.</p>
 
+  </div>
 
+  <!-- الخلفية تُضبط من CSS عبر images/hero-street.jpg -->
 
-    <!-- 4 circular service icons -->
+  <div class="hero-photo"></div>
 
-    <div class="hero__circles">
-
-      <a class="circle-card green" href="post.html?type=Lawn Care">
-
-        <div class="circle-ico"><svg aria-hidden="true"><use href="#ic-lawnmower"/></svg></div>
-
-        <span>Lawn Mowing</span>
-
-      </a>
+</section>
 
 
 
-      <a class="circle-card olive" href="post.html?type=Tree Branch Cutting">
+<!-- How it works -->
 
-        <div class="circle-ico"><svg aria-hidden="true"><use href="#ic-branches"/></svg></div>
+<section class="wrap how">
 
-        <span>Tree Branch Cutting</span>
+  <h2>How it works</h2>
 
-      </a>
+  <div class="how__grid">
 
+    <div class="how__item">
 
+      <div class="how__icon">1</div>
 
-      <a class="circle-card blue" href="post.html?type=Driveway / Concrete Cleaning">
+      <h3>Post your request</h3>
 
-        <div class="circle-ico"><svg aria-hidden="true"><use href="#ic-driveway"/></svg></div>
+      <p>Title, details, date, area, and optional photos.</p>
 
-        <span>Driveway Washing</span>
+    </div>
 
-      </a>
+    <div class="how__item">
 
+      <div class="how__icon">2</div>
 
+      <h3>Neighbors see it</h3>
 
-      <a class="circle-card orange" href="post.html?type=Moving help">
+      <p>We list it instantly for nearby helpers.</p>
 
-        <div class="circle-ico"><svg aria-hidden="true"><use href="#ic-truck-sofa"/></svg></div>
+    </div>
 
-        <span>Moving (Truck + Sofa)</span>
+    <div class="how__item">
 
-      </a>
+      <div class="how__icon">3</div>
+
+      <h3>Coordinate & done</h3>
+
+      <p>You agree directly with helpers and mark it done.</p>
 
     </div>
 
   </div>
 
-  <div class="hero-bg"></div>
+</section>
+
+
+
+<!-- Testimonials -->
+
+<section class="wrap testi">
+
+  <h2>What neighbors say</h2>
+
+  <div class="testi__grid">
+
+    <blockquote class="card testi__card">
+
+      <p>“Found help to move a sofa the same day. Super easy.”</p>
+
+      <footer>— Sam R.</footer>
+
+    </blockquote>
+
+    <blockquote class="card testi__card">
+
+      <p>“A neighbor pressure-washed our driveway. Great experience!”</p>
+
+      <footer>— Dana K.</footer>
+
+    </blockquote>
+
+    <blockquote class="card testi__card">
+
+      <p>“Booked lawn mowing for the weekend. Fast and friendly.”</p>
+
+      <footer>— Miguel P.</footer>
+
+    </blockquote>
+
+  </div>
 
 </section>
 
 
+
+<!-- الدعوة للطلبات -->
 
 <section class="wrap card">
 
@@ -135,74 +175,6 @@
   </div>
 
 </footer>
-
-
-
-<!-- ===== Inline SVG sprite (4 أيقونات احترافية) ===== -->
-
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-
-  <!-- Lawnmower -->
-
-  <symbol id="ic-lawnmower" viewBox="0 0 64 64">
-
-    <path d="M10 44h30l-6-14H22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-
-    <circle cx="20" cy="48" r="5" fill="currentColor"/>
-
-    <circle cx="44" cy="48" r="5" fill="currentColor"/>
-
-    <path d="M12 28l10-10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-
-  </symbol>
-
-
-
-  <!-- Tree branches cutting (hand saw + branch) -->
-
-  <symbol id="ic-branches" viewBox="0 0 64 64">
-
-    <path d="M14 40c12-8 18-20 18-20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
-
-    <path d="M34 22l16 16-6 6-16-16 6-6z" fill="currentColor"/>
-
-    <path d="M46 12l6 6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-
-  </symbol>
-
-
-
-  <!-- Driveway washing (spray gun + pavement) -->
-
-  <symbol id="ic-driveway" viewBox="0 0 64 64">
-
-    <path d="M12 44h40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-
-    <path d="M22 40l10-10 8 8" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-
-    <circle cx="40" cy="22" r="2" fill="currentColor"/>
-
-    <circle cx="46" cy="20" r="1.6" fill="currentColor"/>
-
-    <circle cx="36" cy="18" r="1.6" fill="currentColor"/>
-
-  </symbol>
-
-
-
-  <!-- Pickup truck carrying sofa -->
-
-  <symbol id="ic-truck-sofa" viewBox="0 0 64 64">
-
-    <path d="M6 42h30v-8h12l8 8v6h-4a6 6 0 1 1-12 0H20a6 6 0 1 1-12 0H6v-6z" fill="currentColor"/>
-
-    <rect x="24" y="22" width="14" height="8" rx="2" fill="currentColor"/>
-
-    <rect x="38" y="22" width="10" height="6" rx="2" fill="currentColor"/>
-
-  </symbol>
-
-</svg>
 
 
 
