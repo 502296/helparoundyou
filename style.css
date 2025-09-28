@@ -44,7 +44,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 
 
-/* Card */
+/* Card / lists / forms (كما كانت) */
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 6px 24px rgba(18,52,86,.06);padding:16px;margin:18px 0;scroll-margin-top:86px}
 
@@ -53,6 +53,32 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 .tab{display:flex;align-items:center;gap:10px;background:#eef5fb;border:1px solid #d9e8f4;border-radius:999px;padding:8px 12px}
 
 .dot{width:8px;height:8px;border-radius:50%;background:#1ea7ff}
+
+.grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+
+.col2{grid-column:1/-1}
+
+label span{display:block;margin:0 0 6px;color:#193c56;font-size:13px}
+
+input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #cfe2f1;background:#fff;color:var(--text);outline:0}
+
+input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3px var(--ring)}
+
+.msg{min-height:18px;color:var(--muted)}.ok{color:var(--ok)}.err{color:var(--err)}
+
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}.filters>*{flex:1 1 180px}
+
+.list{display:grid;gap:12px;margin-top:12px}
+
+.item{border:1px solid #dfeaf4;background:#fff;border-radius:14px;padding:14px}
+
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+
+.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eef7ff;color:#163f5a;border:1px solid #cfe2f1}
+
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
+.hidden{display:none}
 
 
 
@@ -70,41 +96,65 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 
 
-/* ===== HERO (Responsive image) ===== */
+/* ===== HERO: صورة فقط + نص فوقها (بدون طبقة شفافة) ===== */
 
-.hero{position:relative;background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 75%)}
+.hero{
 
-.hero--photo{border-bottom:1px solid var(--line)}
+  position:relative;
 
-.hero__content{padding:34px 0 16px;text-align:center}
+  height: clamp(56vh, 60vw, 78vh); /* يضبط الارتفاع تلقائيًا عبر الأجهزة */
 
-.hero__content h1{margin:0 0 10px;font-size:clamp(22px,4.6vw,36px);line-height:1.2}
+  display:flex;
 
-.hero__actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  align-items:center;
 
-.hero__note{margin:6px 0 0;color:var(--muted)}
+  justify-content:center;
 
+  text-align:center;
 
+  color:#fff;
 
-/* الخلفية: تغطية ذكية للجوال والكمبيوتر */
+  background:url("images/hero-street.jpg") center 55% / cover no-repeat;
 
-.hero-photo{
-
-  position:relative; width:100%;
-
-  aspect-ratio: 16/6;              /* يجعلها قصيرة على الكمبيوتر */
-
-  background:url("images/hero-street.jpg") center 60% / cover no-repeat;
-
-  border-top:1px solid rgba(0,0,0,.04);
+  border-bottom:1px solid var(--line);
 
 }
 
-@media (max-width:900px){
+.hero__content{padding:0 16px;max-width:980px}
+
+.hero h1{
+
+  margin:0 0 12px;
+
+  font-size:clamp(26px,5.8vw,54px);
+
+  line-height:1.15;
+
+  text-shadow:0 2px 10px rgba(0,0,0,.55);
+
+}
+
+.hero p{
+
+  margin:0 auto 18px;
+
+  font-size:clamp(16px,2.6vw,22px);
+
+  line-height:1.5;
+
+  color:#f3f7fb;
+
+  text-shadow:0 2px 10px rgba(0,0,0,.55);
+
+}
+
+.hero .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+
+
+@media (max-width:880px){
 
   .nav{display:none}
-
-  .hero-photo{aspect-ratio: 16/10; background-position:center 50%;}
 
 }
 
@@ -112,22 +162,4 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
   .btn{width:100%;text-align:center}
 
-  .hero-photo{aspect-ratio: 4/3; background-position:center 45%;}
-
 }
-
-
-
-/* Modal */
-
-.modal{position:fixed;inset:0;background:rgba(2,6,23,.45);display:none;z-index:50;padding:16px}
-
-.modal[aria-hidden="false"]{display:block}
-
-.modal__sheet{max-width:560px;margin:10vh auto;background:#fff;border-radius:16px;border:1px solid #e6eef6;box-shadow:0 20px 60px rgba(2,6,23,.2);padding:18px}
-
-.modal__close{position:absolute;right:18px;top:14px;border:0;background:#eef5fb;border-radius:8px;padding:6px 10px;cursor:pointer}
-
-.howlist{margin:12px 0 0;padding-left:18px;color:#1f3348}
-
-.howlist li{margin:8px 0}
