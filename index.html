@@ -16,8 +16,6 @@
 
 <body data-page="home">
 
-
-
 <header class="header">
 
   <div class="wrap header__in">
@@ -38,111 +36,57 @@
 
 
 
-<!-- HERO: صورة فقط بدون أيقونات -->
+<!-- HERO: صورة فقط، محسّنة للجوال والكمبيوتر -->
 
 <section class="hero hero--photo">
 
-  <div class="wrap hero__in hero__in--center">
+  <div class="hero__content wrap">
 
-    <h1 class="hero__title">Neighbors ready to help — from lawn care to moving!</h1>
+    <h1>Neighbors ready to help — from lawn care to moving!</h1>
 
-    <a class="btn p xl hero__cta" href="post.html">Post a Request</a>
+    <div class="hero__actions">
 
-    <p class="hero__sub">Safe, local, and flexible — you agree directly with helpers.</p>
+      <a class="btn p xl" href="post.html">Post a Request</a>
+
+      <button class="btn g xl" id="howBtn">How it works</button>
+
+    </div>
+
+    <p class="muted hero__note">Safe, local, and flexible — you agree directly with helpers.</p>
 
   </div>
 
-  <!-- الخلفية تُضبط من CSS عبر images/hero-street.jpg -->
-
-  <div class="hero-photo"></div>
+  <div class="hero-photo" role="img" aria-label="Neighbors mowing, trimming, washing driveway, and a pickup moving a sofa"></div>
 
 </section>
 
 
 
-<!-- How it works -->
+<!-- Modal: How it works -->
 
-<section class="wrap how">
+<div id="howModal" class="modal" aria-hidden="true">
 
-  <h2>How it works</h2>
+  <div class="modal__sheet" role="dialog" aria-modal="true" aria-labelledby="howTitle">
 
-  <div class="how__grid">
+    <button class="modal__close" id="closeHow" aria-label="Close">×</button>
 
-    <div class="how__item">
+    <h2 id="howTitle">How it works</h2>
 
-      <div class="how__icon">1</div>
+    <ol class="howlist">
 
-      <h3>Post your request</h3>
+      <li><strong>Post</strong> your request — title, details, date, area, photos.</li>
 
-      <p>Title, details, date, area, and optional photos.</p>
+      <li><strong>Neighbors see</strong> it instantly nearby.</li>
 
-    </div>
+      <li><strong>Coordinate & done</strong> — you agree directly with helpers.</li>
 
-    <div class="how__item">
-
-      <div class="how__icon">2</div>
-
-      <h3>Neighbors see it</h3>
-
-      <p>We list it instantly for nearby helpers.</p>
-
-    </div>
-
-    <div class="how__item">
-
-      <div class="how__icon">3</div>
-
-      <h3>Coordinate & done</h3>
-
-      <p>You agree directly with helpers and mark it done.</p>
-
-    </div>
+    </ol>
 
   </div>
 
-</section>
+</div>
 
 
-
-<!-- Testimonials -->
-
-<section class="wrap testi">
-
-  <h2>What neighbors say</h2>
-
-  <div class="testi__grid">
-
-    <blockquote class="card testi__card">
-
-      <p>“Found help to move a sofa the same day. Super easy.”</p>
-
-      <footer>— Sam R.</footer>
-
-    </blockquote>
-
-    <blockquote class="card testi__card">
-
-      <p>“A neighbor pressure-washed our driveway. Great experience!”</p>
-
-      <footer>— Dana K.</footer>
-
-    </blockquote>
-
-    <blockquote class="card testi__card">
-
-      <p>“Booked lawn mowing for the weekend. Fast and friendly.”</p>
-
-      <footer>— Miguel P.</footer>
-
-    </blockquote>
-
-  </div>
-
-</section>
-
-
-
-<!-- الدعوة للطلبات -->
 
 <section class="wrap card">
 
@@ -168,9 +112,19 @@
 
 <footer class="f">
 
-  <div class="wrap">
+  <div class="wrap f__in">
 
-    <small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small>
+    <small>HelpAroundYou connects neighbors and local doers. You agree directly with each other.</small>
+
+    <nav class="foot">
+
+      <a href="services.html">Services</a>
+
+      <a href="terms.html">Terms</a>
+
+      <a href="privacy.html">Privacy</a>
+
+    </nav>
 
   </div>
 
@@ -180,7 +134,23 @@
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-<script src="app.js?v=1"></script>
+<script>
+
+  // Modal logic
+
+  const howBtn = document.getElementById('howBtn');
+
+  const modal = document.getElementById('howModal');
+
+  const closeHow = document.getElementById('closeHow');
+
+  howBtn?.addEventListener('click',()=>{ modal.setAttribute('aria-hidden','false'); });
+
+  closeHow?.addEventListener('click',()=>{ modal.setAttribute('aria-hidden','true'); });
+
+  modal?.addEventListener('click',e=>{ if(e.target===modal) modal.setAttribute('aria-hidden','true'); });
+
+</script>
 
 </body>
 
