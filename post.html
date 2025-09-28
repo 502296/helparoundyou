@@ -1,51 +1,129 @@
-<!doctype html><html lang="en"><head>
+<!doctype html>
 
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
 
-<title>Post a Request — HelpAroundYou</title><link rel="stylesheet" href="style.css">
+<head>
 
-</head><body data-page="post">
+  <meta charset="utf-8">
 
-<header class="header"><div class="wrap header__in">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
+  <title>Post a Request — HelpAroundYou</title>
 
-<nav class="nav"><a class="btn g" href="requests.html">See Requests</a></nav>
+  <link rel="stylesheet" href="style.css">
 
-</div></header>
+</head>
 
-
-
-<section class="wrap card"><div class="card__head"><h2>Post a request</h2></div>
-
-<form id="requestForm" class="grid">
-
-<label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"></label>
-
-<label><span>Category *</span><select id="category" required>
-
-<option value="">Select…</option><option>Pickup with Truck</option><option>Moving help</option><option>Lawn Care</option><option>Leaf / Branch removal</option><option>Cleaning</option><option>Small fix / Handy</option><option>Pool Cleaning</option><option>Power Washing (stone/exterior)</option><option>Driveway / Concrete Cleaning</option><option>Other</option></select></label>
-
-<label><span>ZIP / Area *</span><input id="zip" maxlength="10" required placeholder="e.g., 40218"></label>
-
-<label><span>Date</span><input id="date" type="date"></label>
-
-<label class="col2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
-
-<label class="col2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"></label>
-
-<details class="col2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"></details>
-
-<button id="submitBtn" class="btn p col2" type="submit">Submit</button>
-
-<p id="formMsg" class="msg col2"></p>
-
-</form></section>
+<body data-page="post">
 
 
 
-<footer class="f"><div class="wrap"><small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small></div></footer>
+<header class="header">
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script><script src="app.js?v=1"></script>
+  <div class="wrap header__in">
 
-</body></html>
+    <a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
+
+    <nav class="nav">
+
+      <a class="btn g" href="requests.html">See Requests</a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+<section class="wrap card">
+
+  <div class="card__head"><h2>Post a request</h2></div>
+
+
+
+  <form id="requestForm" class="grid">
+
+    <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"></label>
+
+
+
+    <label>
+
+      <span>Category *</span>
+
+      <select id="category" required>
+
+        <option value="">Select…</option>
+
+        <option>Pickup with Truck</option>
+
+        <option>Moving help</option>
+
+        <option>Lawn Care</option>
+
+        <option>Leaf / Branch removal</option>
+
+        <option>Cleaning</option>
+
+        <option>Small fix / Handy</option>
+
+        <option>Pool Cleaning</option>
+
+        <option>Power Washing (stone/exterior)</option>
+
+        <option>Driveway / Concrete Cleaning</option>
+
+        <option>Other</option>
+
+      </select>
+
+    </label>
+
+
+
+    <label><span>ZIP / Area *</span><input id="zip" maxlength="10" required placeholder="e.g., 40218"></label>
+
+    <label><span>Date</span><input id="date" type="date"></label>
+
+
+
+    <label class="col2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
+
+    <label class="col2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"></label>
+
+
+
+    <details class="col2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"></details>
+
+
+
+    <button id="submitBtn" class="btn p col2" type="submit">Submit</button>
+
+    <p id="formMsg" class="msg col2"></p>
+
+  </form>
+
+</section>
+
+
+
+<footer class="f">
+
+  <div class="wrap">
+
+    <small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small>
+
+  </div>
+
+</footer>
+
+
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script src="app.js?v=1"></script>
+
+</body>
+
+</html>
