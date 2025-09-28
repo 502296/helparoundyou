@@ -44,7 +44,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 
 
-/* Card + lists (من مشروعك) */
+/* Cards / lists / forms (من مشروعك) */
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 6px 24px rgba(18,52,86,.06);padding:16px;margin:18px 0;scroll-margin-top:86px}
 
@@ -54,19 +54,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 .dot{width:8px;height:8px;border-radius:50%;background:#1ea7ff}
 
-.list{display:grid;gap:12px;margin-top:12px}
 
-.item{border:1px solid #dfeaf4;background:#fff;border-radius:14px;padding:14px}
-
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
-
-.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eef7ff;color:#163f5a;border:1px solid #cfe2f1}
-
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-
-
-
-/* Forms */
 
 .grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
 
@@ -82,6 +70,16 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}.filters>*{flex:1 1 180px}
 
+.list{display:grid;gap:12px;margin-top:12px}
+
+.item{border:1px solid #dfeaf4;background:#fff;border-radius:14px;padding:14px}
+
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+
+.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eef7ff;color:#163f5a;border:1px solid #cfe2f1}
+
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
 .hidden{display:none}
 
 
@@ -92,13 +90,13 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
 
 
-/* ===== HERO (مشابه للصورة الثالثة) ===== */
+/* ===== HERO بصورة فقط ===== */
 
 .hero{position:relative;overflow:hidden}
 
-.hero--scene{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 68%)}
+.hero--photo{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 65%)}
 
-.hero__in{padding:34px 0}
+.hero__in{padding:40px 0 24px}
 
 .hero__in--center{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
 
@@ -110,39 +108,57 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
 
 
-/* circular icons */
+/* خلفية الصورة */
 
-.hero__circles{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:10px 0 6px}
+.hero-photo{
 
-.circle-card{display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:#0d1b2a}
+  position:absolute; inset:auto 0 0 0; height:260px;
 
-.circle-ico{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;border:1px solid #d9e8f4;background:#fff;box-shadow:0 6px 18px rgba(2,6,23,.06)}
+  background:url("images/hero-street.jpg") center bottom/cover no-repeat;
 
-.circle-ico svg{width:44px;height:44px;color:#1e3a8a}
+  filter:saturate(102%); opacity:.98;
 
-.circle-card.green  .circle-ico{background:rgba(46,125,50,.12)}
-
-.circle-card.blue   .circle-ico{background:rgba(25,118,210,.12)}
-
-.circle-card.orange .circle-ico{background:rgba(239,108,0,.12)}
-
-.circle-card.olive  .circle-ico{background:rgba(94,122,58,.14)}
-
-.circle-card span{font-weight:600}
-
-
-
-/* background strip – يمكنك لاحقًا استبدالها بصورة */
-
-.hero-bg{pointer-events:none;position:absolute;inset:auto 0 0 0;height:200px;background:
-
-  linear-gradient(0deg,#cfe8ff 0,#eaf6ff 60%,transparent 100%);
-
-  opacity:.55;
+  box-shadow:0 -10px 40px rgba(2,6,23,.06) inset;
 
 }
 
 
+
+/* How it works */
+
+.how{margin:18px 0 8px}
+
+.how h2{margin:0 0 10px;font-size:20px;color:#163f5a}
+
+.how__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+.how__item{background:#fff;border:1px solid #e6eef6;border-radius:14px;padding:14px}
+
+.how__item h3{margin:6px 0 6px;font-size:16px}
+
+.how__item p{margin:0;color:#556779}
+
+.how__icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#eaf6ff;color:#0f2547;font-weight:700}
+
+
+
+/* Testimonials */
+
+.testi{margin:10px 0 24px}
+
+.testi h2{margin:0 0 10px;font-size:20px;color:#163f5a}
+
+.testi__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+.testi__card{border-radius:14px}
+
+.testi__card p{margin:0 0 8px}
+
+.testi__card footer{color:#556779}
+
+
+
+/* Responsive */
 
 @media (max-width:880px){
 
@@ -150,7 +166,9 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
   .hero__title{font-size:26px}
 
-  .circle-ico{width:80px;height:80px}
+  .how__grid,.testi__grid{grid-template-columns:1fr}
+
+  .hero-photo{height:220px}
 
 }
 
@@ -158,6 +176,6 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
   .btn{width:100%;text-align:center}
 
-  .hero-bg{height:170px}
+  .hero-photo{height:190px}
 
 }
