@@ -44,7 +44,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 
 
-/* Cards / lists / forms (من مشروعك) */
+/* Card */
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 6px 24px rgba(18,52,86,.06);padding:16px;margin:18px 0;scroll-margin-top:86px}
 
@@ -56,119 +56,55 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 
 
-.grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
-
-.col2{grid-column:1/-1}
-
-label span{display:block;margin:0 0 6px;color:#193c56;font-size:13px}
-
-input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #cfe2f1;background:#fff;color:var(--text);outline:0}
-
-input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3px var(--ring)}
-
-.msg{min-height:18px;color:var(--muted)}.ok{color:var(--ok)}.err{color:var(--err)}
-
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}.filters>*{flex:1 1 180px}
-
-.list{display:grid;gap:12px;margin-top:12px}
-
-.item{border:1px solid #dfeaf4;background:#fff;border-radius:14px;padding:14px}
-
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
-
-.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eef7ff;color:#163f5a;border:1px solid #cfe2f1}
-
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-
-.hidden{display:none}
-
-
-
 /* Footer */
 
-.f{border-top:1px solid var(--line);padding:24px 0;text-align:center;color:#5b7083;background:#fbfdff}
+.f{border-top:1px solid var(--line);padding:18px 0;background:#fbfdff}
+
+.f__in{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+
+.foot{display:flex;gap:14px}
+
+.foot a{color:#0f2547;text-decoration:none}
+
+.foot a:hover{text-decoration:underline}
 
 
 
-/* ===== HERO بصورة فقط ===== */
+/* ===== HERO (Responsive image) ===== */
 
-.hero{position:relative;overflow:hidden}
+.hero{position:relative;background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 75%)}
 
-.hero--photo{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 65%)}
+.hero--photo{border-bottom:1px solid var(--line)}
 
-.hero__in{padding:40px 0 24px}
+.hero__content{padding:34px 0 16px;text-align:center}
 
-.hero__in--center{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.hero__content h1{margin:0 0 10px;font-size:clamp(22px,4.6vw,36px);line-height:1.2}
 
-.hero__title{margin:6px 0 0;font-size:clamp(24px,5vw,36px);line-height:1.2;color:#0f2547}
+.hero__actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 
-.hero__cta{margin-top:2px}
-
-.hero__sub{margin:4px 0 6px;color:#3b536a}
+.hero__note{margin:6px 0 0;color:var(--muted)}
 
 
 
-/* خلفية الصورة */
+/* الخلفية: تغطية ذكية للجوال والكمبيوتر */
 
 .hero-photo{
 
-  position:absolute; inset:auto 0 0 0; height:260px;
+  position:relative; width:100%;
 
-  background:url("images/hero-street.jpg") center bottom/cover no-repeat;
+  aspect-ratio: 16/6;              /* يجعلها قصيرة على الكمبيوتر */
 
-  filter:saturate(102%); opacity:.98;
+  background:url("images/hero-street.jpg") center 60% / cover no-repeat;
 
-  box-shadow:0 -10px 40px rgba(2,6,23,.06) inset;
+  border-top:1px solid rgba(0,0,0,.04);
 
 }
 
-
-
-/* How it works */
-
-.how{margin:18px 0 8px}
-
-.how h2{margin:0 0 10px;font-size:20px;color:#163f5a}
-
-.how__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-
-.how__item{background:#fff;border:1px solid #e6eef6;border-radius:14px;padding:14px}
-
-.how__item h3{margin:6px 0 6px;font-size:16px}
-
-.how__item p{margin:0;color:#556779}
-
-.how__icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#eaf6ff;color:#0f2547;font-weight:700}
-
-
-
-/* Testimonials */
-
-.testi{margin:10px 0 24px}
-
-.testi h2{margin:0 0 10px;font-size:20px;color:#163f5a}
-
-.testi__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-
-.testi__card{border-radius:14px}
-
-.testi__card p{margin:0 0 8px}
-
-.testi__card footer{color:#556779}
-
-
-
-/* Responsive */
-
-@media (max-width:880px){
+@media (max-width:900px){
 
   .nav{display:none}
 
-  .hero__title{font-size:26px}
-
-  .how__grid,.testi__grid{grid-template-columns:1fr}
-
-  .hero-photo{height:220px}
+  .hero-photo{aspect-ratio: 16/10; background-position:center 50%;}
 
 }
 
@@ -176,6 +112,22 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
   .btn{width:100%;text-align:center}
 
-  .hero-photo{height:190px}
+  .hero-photo{aspect-ratio: 4/3; background-position:center 45%;}
 
 }
+
+
+
+/* Modal */
+
+.modal{position:fixed;inset:0;background:rgba(2,6,23,.45);display:none;z-index:50;padding:16px}
+
+.modal[aria-hidden="false"]{display:block}
+
+.modal__sheet{max-width:560px;margin:10vh auto;background:#fff;border-radius:16px;border:1px solid #e6eef6;box-shadow:0 20px 60px rgba(2,6,23,.2);padding:18px}
+
+.modal__close{position:absolute;right:18px;top:14px;border:0;background:#eef5fb;border-radius:8px;padding:6px 10px;cursor:pointer}
+
+.howlist{margin:12px 0 0;padding-left:18px;color:#1f3348}
+
+.howlist li{margin:8px 0}
