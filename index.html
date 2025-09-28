@@ -1,102 +1,90 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-  <meta charset="utf-8">
+  <meta charset="UTF-8"/>
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>HelpAroundYou</title>
+  <title>HelpAroundYou — Neighbors helping neighbors</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 
 </head>
 
-<body data-page="home">
+<body>
 
 
 
-<header class="header">
+  <header class="topbar">
 
-  <div class="wrap header__in">
+    <div class="logo">Help<span>Around</span>You</div>
 
-    <a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
+    <nav>
 
-    <nav class="nav">
+      <a href="post.html">Post a Request</a>
 
-      <a class="btn p" href="post.html">Post a Request</a>
+      <a href="requests.html">See Requests</a>
 
-      <a class="btn g" href="requests.html">See Requests</a>
-
-      <a class="btn g" href="services.html">Services</a>
+      <a href="services.html">Services</a>
 
     </nav>
 
-  </div>
-
-</header>
+  </header>
 
 
 
-<!-- HERO: صورة فقط + نص قوي فوقها -->
+  <!-- Hero -->
 
-<section class="hero">
+  <section class="hero">
 
-  <div class="hero__content">
+    <div class="hero__content">
 
-    <h1>HelpAroundYou — Community Help Made Simple</h1>
+      <h1>HelpAroundYou — Community Help Made Simple</h1>
 
-    <p>From lawn care to moving, cleaning, repairs, and even a flat tire — post what you need and get help from neighbors and local specialists in your city.</p>
+      <p>
 
-    <div class="cta">
+        From lawn care to moving, cleaning, repairs, and even a flat tire —
 
-      <a class="btn p xl" href="post.html">Post a Request</a>
+        post what you need and get help from neighbors and local specialists in your city.
 
-      <a class="btn g xl" href="requests.html">See Requests</a>
+      </p>
 
-      <a class="btn g xl" href="services.html">Services</a>
+      <div class="cta">
 
-    </div>
+        <a class="btn p xl" href="post.html">Post a Request</a>
 
-  </div>
+        <a class="btn g xl" href="requests.html">See Requests</a>
 
-</section>
+        <a class="btn g xl" href="services.html">Services</a>
 
-
-
-<!-- دعوة للطلبات -->
-
-<section class="wrap card">
-
-  <div class="card__head">
-
-    <div class="tab"><span class="dot"></span><strong>Neighbor Requests</strong></div>
-
-    <div class="act">
-
-      <a class="btn g s" href="requests.html">All Requests</a>
-
-      <a class="btn p s" href="post.html">Post a Request</a>
+      </div>
 
     </div>
 
-  </div>
-
-  <p class="muted" style="margin:8px 0 0">Go to <a href="requests.html">See Requests</a> to browse posts.</p>
-
-</section>
+  </section>
 
 
 
-<footer class="f">
+  <!-- Neighbor Requests اختياري (ممكن تخليه أو تمسحه) -->
 
-  <div class="wrap f__in">
+  <section class="wrap card" style="display:none">
 
-    <small>HelpAroundYou connects neighbors and local doers. You agree directly with each other.</small>
+    <h3>Neighbor Requests</h3>
 
-    <nav class="foot">
+    <p>Go to <a href="requests.html">See Requests</a> to browse posts.</p>
+
+  </section>
+
+
+
+  <footer>
+
+    <p>HelpAroundYou connects neighbors and local doers. You agree directly with each other.</p>
+
+    <nav>
 
       <a href="services.html">Services</a>
 
@@ -106,15 +94,9 @@
 
     </nav>
 
-  </div>
-
-</footer>
+  </footer>
 
 
-
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
-<script src="app.js?v=1"></script>
 
 </body>
 
