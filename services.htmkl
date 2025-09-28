@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head>
+
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Services — HelpAroundYou</title><link rel="stylesheet" href="style.css">
+
+</head><body>
+
+<header class="header"><div class="wrap header__in">
+
+  <a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
+
+  <nav class="nav"><a class="btn g" href="requests.html">See Requests</a><a class="btn p" href="post.html">Post a Request</a></nav>
+
+</div></header>
+
+<section class="wrap card">
+
+  <h2>Popular Services</h2>
+
+  <ul>
+
+    <li>Lawn Care & Leaf / Branch Removal</li>
+
+    <li>Driveway / Concrete Cleaning (pressure wash)</li>
+
+    <li>Pickup with Truck & Moving Help</li>
+
+    <li>House Cleaning & Small handyman tasks</li>
+
+  </ul>
+
+</section>
+
+<footer class="f"><div class="wrap f__in"><small>© HelpAroundYou</small></div></footer>
+
+</body></html>
