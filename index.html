@@ -1,34 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
 
 <head>
 
-  <meta charset="UTF-8"/>
+  <meta charset="utf-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <title>HelpAroundYou — Neighbors helping neighbors</title>
+  <title>HelpAroundYou — Local Help on Demand</title>
 
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="From lawn care to moving, cleaning, and repairs — post what you need and neighbors will step in." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 
 </head>
 
 <body>
 
+  <!-- Header -->
 
+  <header class="site-header">
 
-  <header class="topbar">
+    <a class="brand" href="index.html">
 
-    <div class="logo">Help<span>Around</span>You</div>
+      Help<span class="brand-accent">Around</span>You
 
-    <nav>
+    </a>
 
-      <a href="post.html">Post a Request</a>
+    <nav class="site-nav">
 
-      <a href="requests.html">See Requests</a>
+      <a href="post.html" class="nav-link">Post</a>
 
-      <a href="services.html">Services</a>
+      <a href="#services" class="nav-link">Services</a>
 
     </nav>
 
@@ -36,29 +46,35 @@
 
 
 
-  <!-- HERO -->
+  <!-- Hero -->
 
-  <section class="hero">
+  <section class="hero" aria-label="Neighborhood help hero">
 
-    <div class="hero__content">
+    <!-- استبدل الصورة التالية بصورة الحي التي تحبها -->
+
+    <div class="hero-media" style="--hero:url('hero.jpg');"></div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
 
       <h1>Local Help on Demand</h1>
 
-      <p>
+      <p class="tagline">
 
-        Whatever you need — lawn care, moving, cleaning, repairs, or even a flat tire.
-
-        Post your request and neighbors will step in.
+        From lawn care to moving, cleaning, and repairs — post what you need and neighbors will step in.
 
       </p>
 
-      <div class="cta">
 
-        <a class="btn p xl" href="post.html">Post a Request</a>
 
-        <a class="btn g xl" href="requests.html">See Requests</a>
+      <div class="cta-stack">
 
-        <a class="btn g xl" href="services.html">Services</a>
+        <a class="btn btn-primary" href="post.html">Post a Request</a>
+
+        <a class="btn btn-ghost" href="requests.html">See Requests</a>
+
+        <a class="btn btn-ghost" href="#services">Services</a>
 
       </div>
 
@@ -68,27 +84,75 @@
 
 
 
-  <footer class="site-foot">
+  <!-- Services (مختصر وعملي) -->
 
-    <p class="foot-copy">
+  <section id="services" class="section">
 
-      HelpAroundYou connects neighbors and local doers. You agree directly with each other.
+    <div class="container narrow">
 
-    </p>
+      <h2 class="section-title">What you can post</h2>
 
-    <nav class="foot-nav">
+      <ul class="service-grid" aria-label="Common services">
 
-      <a href="services.html">Services</a>
+        <li><span>🏡</span> Lawn care & leaf/branch removal</li>
 
-      <a href="terms.html">Terms</a>
+        <li><span>🚚</span> Moving help & truck pickup</li>
 
-      <a href="privacy.html">Privacy</a>
+        <li><span>🧹</span> Cleaning & tidying</li>
 
-    </nav>
+        <li><span>🛠️</span> Small repairs & furniture assembly</li>
+
+        <li><span>🖼️</span> Hanging frames/TVs, light fixtures</li>
+
+        <li><span>➕</span> Custom tasks — write anything you need</li>
+
+      </ul>
+
+
+
+      <div class="note">
+
+        HelpAroundYou connects neighbors and local doers. You coordinate
+
+        time and payment directly with each other. We keep things simple.
+
+      </div>
+
+
+
+      <div class="center">
+
+        <a class="btn btn-primary" href="post.html">Post a Request</a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- Footer -->
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <p class="muted">HelpAroundYou connects neighbors and local doers. You agree directly with each other.</p>
+
+      <nav class="footer-nav">
+
+        <a href="#services">Services</a>
+
+        <a href="terms.html">Terms</a>
+
+        <a href="privacy.html">Privacy</a>
+
+      </nav>
+
+    </div>
 
   </footer>
-
-
 
 </body>
 
