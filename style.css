@@ -1,4 +1,12 @@
-:root{--bg:#f7fbff;--text:#0d1b2a;--muted:#5b7083;--p:#1ea7ff;--p6:#1184cc;--ring:rgba(30,167,255,.25);--card:#fff;--line:#e6eef6;--ok:#18b26a;--err:#f24d4d;--r:16px}
+:root{
+
+  --bg:#f7fbff; --text:#0d1b2a; --muted:#5b7083;
+
+  --p:#1ea7ff; --p6:#1184cc; --ring:rgba(30,167,255,.25);
+
+  --card:#fff; --line:#e6eef6; --ok:#18b26a; --err:#f24d4d; --r:16px;
+
+}
 
 *{box-sizing:border-box}
 
@@ -36,23 +44,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 
 
-/* Hero */
-
-.hero{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 60%);border-bottom:1px solid var(--line)}
-
-.hero__in{display:grid;gap:24px;grid-template-columns:1.1fr .9fr;align-items:center;padding:36px 0}
-
-.hero__txt h1{margin:0 0 8px;font-size:clamp(26px,5vw,44px)}
-
-.hero__txt .muted{margin:0 0 14px;color:var(--muted)}
-
-.cta{display:flex;gap:10px;flex-wrap:wrap}
-
-.steps{margin:14px 0 0;padding-left:18px;color:#2e4057}
-
-
-
-/* Card */
+/* Card, lists, forms (من نسختك) */
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 6px 24px rgba(18,52,86,.06);padding:16px;margin:18px 0;scroll-margin-top:86px}
 
@@ -61,10 +53,6 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 .tab{display:flex;align-items:center;gap:10px;background:#eef5fb;border:1px solid #d9e8f4;border-radius:999px;padding:8px 12px}
 
 .dot{width:8px;height:8px;border-radius:50%;background:#1ea7ff}
-
-
-
-/* Forms / lists */
 
 .grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
 
@@ -100,58 +88,68 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
 
 
-/* Categories (new) */
+/* ===== HERO like the 3rd image ===== */
 
-.categories{margin:10px 0 28px}
+.hero{position:relative;overflow:hidden}
 
-.cat-title{margin:0 0 10px;font-size:18px;color:#163f5a}
+.hero--scene{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 65%)}
 
-.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hero__in{padding:34px 0}
 
-.cat{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+.hero__in--center{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
 
-  border-radius:14px;padding:12px;text-decoration:none;color:var(--text);transition:box-shadow .15s,transform .05s}
+.hero__title{margin:6px 0 0;font-size:clamp(24px,5vw,36px);line-height:1.2;color:#0f2547}
 
-.cat:hover{box-shadow:0 8px 22px rgba(2,6,23,.08)}
+.hero__cta{margin-top:2px}
 
-.cat:active{transform:translateY(1px)}
-
-.ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
-
-.ic svg{width:26px;height:26px}
-
-.circle.green{background:rgba(46,125,50,.12)}
-
-.circle.blue{background:rgba(25,118,210,.12)}
-
-.circle.orange{background:rgba(239,108,0,.12)}
-
-.circle.olive{background:rgba(94,122,58,.14)}
-
-.circle.teal{background:rgba(0,121,107,.12)}
-
-.circle.purple{background:rgba(106,78,160,.12)}
+.hero__sub{margin:4px 0 6px;color:#3b536a}
 
 
+
+/* round icon cards */
+
+.hero__circles{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:10px 0 6px}
+
+.circle-card{display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:#0d1b2a}
+
+.circle-ico{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid #d9e8f4;box-shadow:0 6px 18px rgba(2,6,23,.06)}
+
+.circle-ico svg{width:40px;height:40px;color:#1e3a8a}
+
+.circle-card.green .circle-ico{background:rgba(46,125,50,.12)}
+
+.circle-card.blue .circle-ico{background:rgba(25,118,210,.12)}
+
+.circle-card.orange .circle-ico{background:rgba(239,108,0,.12)}
+
+.circle-card span{font-weight:600}
+
+
+
+/* background illustration area */
+
+.hero-bg{pointer-events:none;position:absolute;inset:auto 0 0 0;height:220px;background:
+
+  url("images/hero-neighborhood.png") center bottom/cover no-repeat;
+
+  opacity:.95;
+
+}
 
 @media (max-width:880px){
 
   .nav{display:none}
 
-  .hero__in{grid-template-columns:1fr;padding:22px 0}
+  .hero__title{font-size:26px}
 
-  .hero__txt h1{font-size:28px}
-
-  .cta{gap:12px}
-
-  .cat-grid{grid-template-columns:1fr 1fr}
+  .circle-ico{width:76px;height:76px}
 
 }
 
 @media (max-width:520px){
 
-  .cat-grid{grid-template-columns:1fr}
-
   .btn{width:100%;text-align:center}
+
+  .hero-bg{height:180px}
 
 }
