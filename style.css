@@ -44,7 +44,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 
 
 
-/* Card, lists, forms (من نسختك) */
+/* Card + lists (من مشروعك) */
 
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 6px 24px rgba(18,52,86,.06);padding:16px;margin:18px 0;scroll-margin-top:86px}
 
@@ -53,6 +53,20 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
 .tab{display:flex;align-items:center;gap:10px;background:#eef5fb;border:1px solid #d9e8f4;border-radius:999px;padding:8px 12px}
 
 .dot{width:8px;height:8px;border-radius:50%;background:#1ea7ff}
+
+.list{display:grid;gap:12px;margin-top:12px}
+
+.item{border:1px solid #dfeaf4;background:#fff;border-radius:14px;padding:14px}
+
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+
+.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eef7ff;color:#163f5a;border:1px solid #cfe2f1}
+
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
+
+
+/* Forms */
 
 .grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
 
@@ -68,16 +82,6 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}.filters>*{flex:1 1 180px}
 
-.list{display:grid;gap:12px;margin-top:12px}
-
-.item{border:1px solid #dfeaf4;background:#fff;border-radius:14px;padding:14px}
-
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
-
-.tag{font-size:12px;padding:6px 10px;border-radius:999px;background:#eef7ff;color:#163f5a;border:1px solid #cfe2f1}
-
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-
 .hidden{display:none}
 
 
@@ -88,11 +92,11 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
 
 
-/* ===== HERO like the 3rd image ===== */
+/* ===== HERO (مشابه للصورة الثالثة) ===== */
 
 .hero{position:relative;overflow:hidden}
 
-.hero--scene{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 65%)}
+.hero--scene{background:linear-gradient(180deg,#eaf6ff 0,#f7fbff 68%)}
 
 .hero__in{padding:34px 0}
 
@@ -106,35 +110,39 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
 
 
-/* round icon cards */
+/* circular icons */
 
 .hero__circles{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:10px 0 6px}
 
 .circle-card{display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:#0d1b2a}
 
-.circle-ico{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid #d9e8f4;box-shadow:0 6px 18px rgba(2,6,23,.06)}
+.circle-ico{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;border:1px solid #d9e8f4;background:#fff;box-shadow:0 6px 18px rgba(2,6,23,.06)}
 
-.circle-ico svg{width:40px;height:40px;color:#1e3a8a}
+.circle-ico svg{width:44px;height:44px;color:#1e3a8a}
 
-.circle-card.green .circle-ico{background:rgba(46,125,50,.12)}
+.circle-card.green  .circle-ico{background:rgba(46,125,50,.12)}
 
-.circle-card.blue .circle-ico{background:rgba(25,118,210,.12)}
+.circle-card.blue   .circle-ico{background:rgba(25,118,210,.12)}
 
 .circle-card.orange .circle-ico{background:rgba(239,108,0,.12)}
+
+.circle-card.olive  .circle-ico{background:rgba(94,122,58,.14)}
 
 .circle-card span{font-weight:600}
 
 
 
-/* background illustration area */
+/* background strip – يمكنك لاحقًا استبدالها بصورة */
 
-.hero-bg{pointer-events:none;position:absolute;inset:auto 0 0 0;height:220px;background:
+.hero-bg{pointer-events:none;position:absolute;inset:auto 0 0 0;height:200px;background:
 
-  url("images/hero-neighborhood.png") center bottom/cover no-repeat;
+  linear-gradient(0deg,#cfe8ff 0,#eaf6ff 60%,transparent 100%);
 
-  opacity:.95;
+  opacity:.55;
 
 }
+
+
 
 @media (max-width:880px){
 
@@ -142,7 +150,7 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
   .hero__title{font-size:26px}
 
-  .circle-ico{width:76px;height:76px}
+  .circle-ico{width:80px;height:80px}
 
 }
 
@@ -150,6 +158,6 @@ input:focus,select:focus,textarea:focus{border-color:#60c5ff;box-shadow:0 0 0 3p
 
   .btn{width:100%;text-align:center}
 
-  .hero-bg{height:180px}
+  .hero-bg{height:170px}
 
 }
