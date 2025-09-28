@@ -16,6 +16,8 @@
 
 <body data-page="home">
 
+
+
 <header class="header">
 
   <div class="wrap header__in">
@@ -28,6 +30,8 @@
 
       <a class="btn g" href="requests.html">See Requests</a>
 
+      <a class="btn g" href="services.html">Services</a>
+
     </nav>
 
   </div>
@@ -36,57 +40,33 @@
 
 
 
-<!-- HERO: صورة فقط، محسّنة للجوال والكمبيوتر -->
+<!-- HERO: صورة فقط + نص قوي فوقها -->
 
-<section class="hero hero--photo">
+<section class="hero">
 
-  <div class="hero__content wrap">
+  <div class="hero__content">
 
-    <h1>Neighbors ready to help — from lawn care to moving!</h1>
+    <h1>HelpAroundYou — Community Help Made Simple</h1>
 
-    <div class="hero__actions">
+    <p>From lawn care to moving, cleaning, repairs, and even a flat tire — post what you need and get help from neighbors and local specialists in your city.</p>
+
+    <div class="cta">
 
       <a class="btn p xl" href="post.html">Post a Request</a>
 
-      <button class="btn g xl" id="howBtn">How it works</button>
+      <a class="btn g xl" href="requests.html">See Requests</a>
+
+      <a class="btn g xl" href="services.html">Services</a>
 
     </div>
 
-    <p class="muted hero__note">Safe, local, and flexible — you agree directly with helpers.</p>
-
   </div>
-
-  <div class="hero-photo" role="img" aria-label="Neighbors mowing, trimming, washing driveway, and a pickup moving a sofa"></div>
 
 </section>
 
 
 
-<!-- Modal: How it works -->
-
-<div id="howModal" class="modal" aria-hidden="true">
-
-  <div class="modal__sheet" role="dialog" aria-modal="true" aria-labelledby="howTitle">
-
-    <button class="modal__close" id="closeHow" aria-label="Close">×</button>
-
-    <h2 id="howTitle">How it works</h2>
-
-    <ol class="howlist">
-
-      <li><strong>Post</strong> your request — title, details, date, area, photos.</li>
-
-      <li><strong>Neighbors see</strong> it instantly nearby.</li>
-
-      <li><strong>Coordinate & done</strong> — you agree directly with helpers.</li>
-
-    </ol>
-
-  </div>
-
-</div>
-
-
+<!-- دعوة للطلبات -->
 
 <section class="wrap card">
 
@@ -134,23 +114,7 @@
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
-<script>
-
-  // Modal logic
-
-  const howBtn = document.getElementById('howBtn');
-
-  const modal = document.getElementById('howModal');
-
-  const closeHow = document.getElementById('closeHow');
-
-  howBtn?.addEventListener('click',()=>{ modal.setAttribute('aria-hidden','false'); });
-
-  closeHow?.addEventListener('click',()=>{ modal.setAttribute('aria-hidden','true'); });
-
-  modal?.addEventListener('click',e=>{ if(e.target===modal) modal.setAttribute('aria-hidden','true'); });
-
-</script>
+<script src="app.js?v=1"></script>
 
 </body>
 
