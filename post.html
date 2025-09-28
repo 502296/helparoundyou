@@ -4,125 +4,219 @@
 
 <head>
 
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <title>Post a Request — HelpAroundYou</title>
+  <title>Post a request — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 
 </head>
 
-<body data-page="post">
+<body>
 
+  <header class="site-header compact">
 
+    <a class="brand" href="index.html">Help<span class="brand-accent">Around</span>You</a>
 
-<header class="header">
+    <nav class="site-nav">
 
-  <div class="wrap header__in">
-
-    <a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
-
-    <nav class="nav">
-
-      <a class="btn g" href="requests.html">See Requests</a>
+      <a class="nav-link" href="requests.html">See Requests</a>
 
     </nav>
 
-  </div>
-
-</header>
+  </header>
 
 
 
-<section class="wrap card">
+  <main class="section">
 
-  <div class="card__head"><h2>Post a request</h2></div>
+    <div class="container narrow">
 
-
-
-  <form id="requestForm" class="grid">
-
-    <label><span>Title *</span><input id="title" required placeholder="Pickup small sofa, 5 miles"></label>
+      <h1 class="section-title">Post a request</h1>
 
 
 
-    <label>
+      <form id="requestForm" class="card form-card" novalidate>
 
-      <span>Category *</span>
+        <div class="form-row">
 
-      <select id="category" required>
+          <label for="title">Title <span class="req">*</span></label>
 
-        <option value="">Select…</option>
+          <input id="title" name="title" type="text" placeholder="Pickup small sofa, 5 miles" required />
 
-        <option>Pickup with Truck</option>
-
-        <option>Moving help</option>
-
-        <option>Lawn Care</option>
-
-        <option>Leaf / Branch removal</option>
-
-        <option>Cleaning</option>
-
-        <option>Small fix / Handy</option>
-
-        <option>Pool Cleaning</option>
-
-        <option>Power Washing (stone/exterior)</option>
-
-        <option>Driveway / Concrete Cleaning</option>
-
-        <option>Other</option>
-
-      </select>
-
-    </label>
+        </div>
 
 
 
-    <label><span>ZIP / Area *</span><input id="zip" maxlength="10" required placeholder="e.g., 40218"></label>
+        <div class="form-row two">
 
-    <label><span>Date</span><input id="date" type="date"></label>
+          <div>
 
+            <label for="category">Category <span class="req">*</span></label>
 
+            <select id="category" name="category" required>
 
-    <label class="col2"><span>Description</span><textarea id="description" rows="3" placeholder="Short details, size/weight, timing…"></textarea></label>
+              <option value="">Select…</option>
 
-    <label class="col2"><span>Photos / Files (up to 5)</span><input id="files" type="file" multiple accept="image/*,application/pdf"></label>
+              <option>Lawn care</option>
 
+              <option>Moving / Truck pickup</option>
 
+              <option>Cleaning</option>
 
-    <details class="col2"><summary>Optional contact (kept private)</summary><input id="contact" placeholder="Phone / Email (optional)"></details>
+              <option>Repairs / Assembly</option>
 
+              <option>Custom task</option>
 
+            </select>
 
-    <button id="submitBtn" class="btn p col2" type="submit">Submit</button>
+          </div>
 
-    <p id="formMsg" class="msg col2"></p>
+          <div>
 
-  </form>
+            <label for="zip">ZIP / Area <span class="req">*</span></label>
 
-</section>
+            <input id="zip" name="zip" type="text" inputmode="numeric" placeholder="e.g., 40218" required />
 
+          </div>
 
-
-<footer class="f">
-
-  <div class="wrap">
-
-    <small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small>
-
-  </div>
-
-</footer>
+        </div>
 
 
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+        <div class="form-row two">
 
-<script src="app.js?v=1"></script>
+          <div>
+
+            <label for="date">Date</label>
+
+            <input id="date" name="date" type="date" />
+
+          </div>
+
+          <div>
+
+            <label for="time">Time</label>
+
+            <input id="time" name="time" type="time" />
+
+          </div>
+
+        </div>
+
+
+
+        <div class="form-row">
+
+          <label for="desc">Description</label>
+
+          <textarea id="desc" name="desc" rows="3" placeholder="Short details, size/weight, timing…"></textarea>
+
+        </div>
+
+
+
+        <div class="form-row">
+
+          <label for="files">Photos / Files (up to 5)</label>
+
+          <input id="files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.png,.jpg,.jpeg" />
+
+          <small class="hint">Uploads are optional. No sign-in required.</small>
+
+        </div>
+
+
+
+        <details class="form-row">
+
+          <summary>Optional contact (kept private)</summary>
+
+          <div class="stack">
+
+            <label for="contactName">Name</label>
+
+            <input id="contactName" name="contactName" type="text" placeholder="First name" />
+
+            <label for="contactPhone">Phone</label>
+
+            <input id="contactPhone" name="contactPhone" type="tel" placeholder="(555) 555-5555" />
+
+            <label for="contactEmail">Email</label>
+
+            <input id="contactEmail" name="contactEmail" type="email" placeholder="you@example.com" />
+
+          </div>
+
+        </details>
+
+
+
+        <div class="form-actions">
+
+          <button class="btn btn-primary" type="submit">Submit</button>
+
+          <a href="index.html" class="btn btn-ghost">Back</a>
+
+        </div>
+
+
+
+        <p id="formMsg" class="form-msg" role="status" aria-live="polite"></p>
+
+      </form>
+
+
+
+      <p class="muted center small">
+
+        HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.
+
+      </p>
+
+    </div>
+
+  </main>
+
+
+
+  <script>
+
+    // Demo handler (frontend only). Replace later with your backend / Airtable / Tally.
+
+    const f = document.getElementById('requestForm');
+
+    const msg = document.getElementById('formMsg');
+
+    f.addEventListener('submit', (e) => {
+
+      e.preventDefault();
+
+      if (!f.checkValidity()) {
+
+        msg.textContent = 'Please complete required fields.';
+
+        msg.className = 'form-msg error';
+
+        return;
+
+      }
+
+      msg.textContent = 'Thanks! Your request has been recorded (demo).';
+
+      msg.className = 'form-msg success';
+
+      f.reset();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    });
+
+  </script>
 
 </body>
 
