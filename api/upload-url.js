@@ -1,3 +1,4 @@
+export const config = { runtime: 'nodejs20.x' }; // أول سطر في الملف
 import { createClient } from '@supabase/supabase-js';
 
 
