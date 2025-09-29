@@ -42,8 +42,6 @@
 
 
 
-      <!-- Filters (static demo) -->
-
       <div id="filters" class="card form-card" style="margin-bottom:16px">
 
         <div class="form-row two">
@@ -92,13 +90,7 @@
 
 
 
-      <!-- Cards -->
-
-      <div id="cards" class="cards-grid">
-
-        <!-- Filled by JS for demo -->
-
-      </div>
+      <div id="cards" class="cards-grid"></div>
 
     </div>
 
@@ -120,45 +112,21 @@
 
   <script>
 
-    // Demo data
-
-    const data = [
-
-      { title:'Mow small front yard', cat:'Lawn care', zip:'40218', date:'Sat • 9–11am', desc:'Grass ~4–5 inches, front yard only.', icon:'🏡' },
-
-      { title:'Pickup loveseat with truck', cat:'Moving / Truck pickup', zip:'40214', date:'Sun • flexible', desc:'5 miles, 2nd-floor pickup.', icon:'🚚' },
-
-      { title:'Assemble IKEA dresser', cat:'Repairs / Assembly', zip:'40220', date:'Today • evening', desc:'New in box, bring tools.', icon:'🛠️' },
-
-      { title:'Deep clean kitchen', cat:'Cleaning', zip:'40219', date:'This week', desc:'Oven + fridge wipe, floors.', icon:'🧹' },
-
-      { title:'Hang 3 frames + 1 TV', cat:'Repairs / Assembly', zip:'40229', date:'Fri • afternoon', desc:'TV is 55”. Need wall anchors.', icon:'🖼️' },
-
-      { title:'Custom: remove small branches', cat:'Lawn care', zip:'40213', date:'Sat • noon', desc:'Backyard pile, about 8–10 bundles.', icon:'🌳' },
-
-    ];
-
-
-
-    const el = (tag, cls, txt) => {
-
-      const n = document.createElement(tag);
-
-      if (cls) n.className = cls;
-
-      if (txt) n.textContent = txt;
-
-      return n;
-
-    };
-
-
+    const API = ''; // نفس الدومين
 
     const cards = document.getElementById('cards');
+
+
+
+    const el = (tag, cls, txt) => { const n=document.createElement(tag); if(cls)n.className=cls; if(txt!==undefined)n.textContent=txt; return n; };
+
+
 
     function render(list){
 
       cards.innerHTML = '';
+
+      if (!list.length){ cards.innerHTML = '<p class="muted">No requests found.</p>'; return; }
 
       list.forEach(item => {
 
@@ -166,9 +134,7 @@
 
         const head = el('div','req-head');
 
-        head.append(el('span','req-icon',item.icon));
-
-        head.append(el('h3','req-title',item.title));
+        head.append(el('span','req-icon','🧰'), el('h3','req-title', item.title));
 
         card.append(head);
 
@@ -176,39 +142,55 @@
 
         const meta = el('div','req-meta');
 
-        meta.append(el('span','badge',item.cat));
+        meta.append(el('span','badge', item.category || '—'),
 
-        meta.append(el('span','dot','•'));
+                    el('span','dot','•'),
 
-        meta.append(el('span','muted',item.zip));
+                    el('span','muted', item.zip || ''),
 
-        meta.append(el('span','dot','•'));
+                    el('span','dot','•'));
 
-        meta.append(el('span','muted',item.date));
+        const when = [item.need_date, item.need_time].filter(Boolean).join(' • ');
+
+        meta.append(el('span','muted', when || 'Flexible'));
 
         card.append(meta);
 
 
 
-        card.append(el('p','req-desc',item.desc));
+        if (item.description) card.append(el('p','req-desc', item.description));
 
 
 
         const actions = el('div','req-actions');
 
-        const offer = el('a','btn btn-primary','Offer help');
+        const offer = el('a','btn btn-primary','Offer help'); offer.href='post.html';
 
-        offer.href = 'post.html'; // لاحقاً تربط بنموذج/مراسلة
+        actions.append(offer);
 
-        const details = el('a','btn btn-ghost','Details');
 
-        details.href = '#';
 
-        actions.append(offer, details);
+        if (Array.isArray(item.files) && item.files.length){
+
+          const link = document.createElement('a');
+
+          link.className = 'btn btn-ghost';
+
+          link.textContent = 'View file';
+
+          link.href = item.files[0].url; link.target='_blank'; link.rel='noopener';
+
+          actions.append(link);
+
+        } else {
+
+          const details = el('a','btn btn-ghost','Details'); details.href='#';
+
+          actions.append(details);
+
+        }
 
         card.append(actions);
-
-
 
         cards.append(card);
 
@@ -216,11 +198,29 @@
 
     }
 
-    render(data);
+
+
+    async function load({cat='',zip=''}={}){
+
+      const url = new URL(`${API}/api/requests`, window.location.origin);
+
+      if (cat) url.searchParams.set('cat',cat);
+
+      if (zip) url.searchParams.set('zip',zip);
+
+      const r = await fetch(url);
+
+      const { data } = await r.json();
+
+      render(data || []);
+
+    }
 
 
 
-    // Simple filter demo
+    // initial + filters
+
+    load();
 
     document.getElementById('apply').onclick = () => {
 
@@ -228,15 +228,7 @@
 
       const zip = document.getElementById('fZip').value.trim();
 
-      const out = data.filter(d =>
-
-        (!cat || d.cat === cat) &&
-
-        (!zip || d.zip.startsWith(zip))
-
-      );
-
-      render(out);
+      load({cat,zip});
 
       window.scrollTo({ top: cards.offsetTop - 80, behavior: 'smooth' });
 
@@ -248,7 +240,7 @@
 
       document.getElementById('fZip').value = '';
 
-      render(data);
+      load();
 
     };
 
