@@ -4,113 +4,255 @@
 
 <head>
 
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <title>Neighbor Requests — HelpAroundYou</title>
+  <title>Requests — HelpAroundYou</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 
 </head>
 
-<body data-page="requests">
+<body>
 
+  <header class="site-header compact">
 
+    <a class="brand" href="index.html">Help<span class="brand-accent">Around</span>You</a>
 
-<header class="header">
+    <nav class="site-nav">
 
-  <div class="wrap header__in">
+      <a class="nav-link" href="post.html">Post</a>
 
-    <a class="brand" href="index.html">Help<span class="a">Around</span><span class="y">You</span></a>
-
-    <nav class="nav">
-
-      <a class="btn p" href="post.html">Post a Request</a>
+      <a class="nav-link" href="#filters">Filters</a>
 
     </nav>
 
-  </div>
-
-</header>
+  </header>
 
 
 
-<section class="wrap card">
+  <main class="section">
 
-  <div class="card__head">
+    <div class="container">
 
-    <div class="tab"><span class="dot"></span><strong>Neighbor Requests</strong></div>
-
-    <div class="act"><a class="btn g s" href="requests.html">All Requests</a></div>
-
-  </div>
+      <h1 class="section-title">Requests near you</h1>
 
 
 
-  <div class="filters">
+      <!-- Filters (static demo) -->
 
-    <input id="q" type="search" placeholder="Search title or description">
+      <div id="filters" class="card form-card" style="margin-bottom:16px">
 
-    <select id="cat">
+        <div class="form-row two">
 
-      <option value="">All categories</option>
+          <div>
 
-      <option>Pickup with Truck</option>
+            <label for="fCat">Category</label>
 
-      <option>Moving help</option>
+            <select id="fCat">
 
-      <option>Lawn Care</option>
+              <option value="">All</option>
 
-      <option>Leaf / Branch removal</option>
+              <option>Lawn care</option>
 
-      <option>Cleaning</option>
+              <option>Moving / Truck pickup</option>
 
-      <option>Small fix / Handy</option>
+              <option>Cleaning</option>
 
-      <option>Pool Cleaning</option>
+              <option>Repairs / Assembly</option>
 
-      <option>Power Washing (stone/exterior)</option>
+              <option>Custom task</option>
 
-      <option>Driveway / Concrete Cleaning</option>
+            </select>
 
-      <option>Other</option>
+          </div>
 
-    </select>
+          <div>
 
-    <input id="zipf" type="text" placeholder="ZIP / Area">
+            <label for="fZip">ZIP / Area</label>
 
-    <button id="apply" class="btn p s">Apply</button>
+            <input id="fZip" type="text" placeholder="e.g., 40218" />
 
-    <button id="clear" class="btn g s">Clear</button>
+          </div>
 
-  </div>
+        </div>
 
+        <div class="form-actions">
 
+          <button class="btn btn-primary" id="apply">Apply</button>
 
-  <div id="list" class="list"></div>
+          <button class="btn btn-ghost" id="clear">Clear</button>
 
-  <button id="loadMore" class="btn g s hidden">Load more</button>
+        </div>
 
-</section>
-
-
-
-<footer class="f">
-
-  <div class="wrap">
-
-    <small>HelpAroundYou is a free platform that connects neighbors and local doers. You agree directly with each other.</small>
-
-  </div>
-
-</footer>
+      </div>
 
 
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+      <!-- Cards -->
 
-<script src="app.js?v=1"></script>
+      <div id="cards" class="cards-grid">
+
+        <!-- Filled by JS for demo -->
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <p class="muted">HelpAroundYou connects neighbors and local doers. Coordinate time and payment directly with each other.</p>
+
+    </div>
+
+  </footer>
+
+
+
+  <script>
+
+    // Demo data
+
+    const data = [
+
+      { title:'Mow small front yard', cat:'Lawn care', zip:'40218', date:'Sat • 9–11am', desc:'Grass ~4–5 inches, front yard only.', icon:'🏡' },
+
+      { title:'Pickup loveseat with truck', cat:'Moving / Truck pickup', zip:'40214', date:'Sun • flexible', desc:'5 miles, 2nd-floor pickup.', icon:'🚚' },
+
+      { title:'Assemble IKEA dresser', cat:'Repairs / Assembly', zip:'40220', date:'Today • evening', desc:'New in box, bring tools.', icon:'🛠️' },
+
+      { title:'Deep clean kitchen', cat:'Cleaning', zip:'40219', date:'This week', desc:'Oven + fridge wipe, floors.', icon:'🧹' },
+
+      { title:'Hang 3 frames + 1 TV', cat:'Repairs / Assembly', zip:'40229', date:'Fri • afternoon', desc:'TV is 55”. Need wall anchors.', icon:'🖼️' },
+
+      { title:'Custom: remove small branches', cat:'Lawn care', zip:'40213', date:'Sat • noon', desc:'Backyard pile, about 8–10 bundles.', icon:'🌳' },
+
+    ];
+
+
+
+    const el = (tag, cls, txt) => {
+
+      const n = document.createElement(tag);
+
+      if (cls) n.className = cls;
+
+      if (txt) n.textContent = txt;
+
+      return n;
+
+    };
+
+
+
+    const cards = document.getElementById('cards');
+
+    function render(list){
+
+      cards.innerHTML = '';
+
+      list.forEach(item => {
+
+        const card = el('article','card request-card');
+
+        const head = el('div','req-head');
+
+        head.append(el('span','req-icon',item.icon));
+
+        head.append(el('h3','req-title',item.title));
+
+        card.append(head);
+
+
+
+        const meta = el('div','req-meta');
+
+        meta.append(el('span','badge',item.cat));
+
+        meta.append(el('span','dot','•'));
+
+        meta.append(el('span','muted',item.zip));
+
+        meta.append(el('span','dot','•'));
+
+        meta.append(el('span','muted',item.date));
+
+        card.append(meta);
+
+
+
+        card.append(el('p','req-desc',item.desc));
+
+
+
+        const actions = el('div','req-actions');
+
+        const offer = el('a','btn btn-primary','Offer help');
+
+        offer.href = 'post.html'; // لاحقاً تربط بنموذج/مراسلة
+
+        const details = el('a','btn btn-ghost','Details');
+
+        details.href = '#';
+
+        actions.append(offer, details);
+
+        card.append(actions);
+
+
+
+        cards.append(card);
+
+      });
+
+    }
+
+    render(data);
+
+
+
+    // Simple filter demo
+
+    document.getElementById('apply').onclick = () => {
+
+      const cat = document.getElementById('fCat').value;
+
+      const zip = document.getElementById('fZip').value.trim();
+
+      const out = data.filter(d =>
+
+        (!cat || d.cat === cat) &&
+
+        (!zip || d.zip.startsWith(zip))
+
+      );
+
+      render(out);
+
+      window.scrollTo({ top: cards.offsetTop - 80, behavior: 'smooth' });
+
+    };
+
+    document.getElementById('clear').onclick = () => {
+
+      document.getElementById('fCat').value = '';
+
+      document.getElementById('fZip').value = '';
+
+      render(data);
+
+    };
+
+  </script>
 
 </body>
 
