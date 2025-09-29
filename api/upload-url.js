@@ -1,101 +1,57 @@
-import { createClient } from '@supabase/supabase-js';
+import { v4 as uuidv4 } from "uuid";
+
+import { createClient } from "@supabase/supabase-js";
+
+
+
+const supabase = createClient(
+
+  process.env.SUPABASE_URL,
+
+  process.env.SUPABASE_KEY
+
+);
 
 
 
 export default async function handler(req, res) {
 
-  // ---- CORS ----
+  if (req.method === "POST") {
 
-  const origin = process.env.CORS_ORIGIN || '*';
+    try {
 
-  res.setHeader('Access-Control-Allow-Origin', origin);
-
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') return res.status(200).end();
+      const fileName = `${uuidv4()}.jpg`;
 
 
 
-  if (req.method !== 'POST') {
+      const { data, error } = await supabase.storage
 
-    return res.status(405).json({ error: 'Method not allowed' });
+        .from("uploads")
 
-  }
-
-
-
-  try {
-
-    const { filename, contentType } = req.body || {};
-
-    if (!filename) return res.status(400).json({ error: 'filename required' });
+        .createSignedUploadUrl(fileName);
 
 
 
-    const supabase = createClient(
+      if (error) {
 
-      process.env.SUPABASE_URL,
+        return res.status(500).json({ error: error.message });
 
-      process.env.SUPABASE_SERVICE_ROLE
-
-    );
+      }
 
 
 
-    const bucket = process.env.SUPABASE_BUCKET || 'hay-uploads';
+      return res.status(200).json({ url: data.signedUrl });
 
+    } catch (err) {
 
+      return res.status(500).json({ error: err.message });
 
-    // مسار آمن للملف
-
-    const safeName = String(filename).replace(/[^\w.\-]/g, '_');
-
-    const path = `${Date.now()}_${Math.random().toString(36).slice(2,8)}_${safeName}`;
-
-
-
-    // رابط رفع موقّع (صالح لفترة قصيرة)
-
-    const { data, error } = await supabase
-
-      .storage
-
-      .from(bucket)
-
-      .createSignedUploadUrl(path);
-
-
-
-    if (error) throw error;
-
-
-
-    // رابط عام للعرض بعد الرفع (لأن البكت Public)
-
-    const { data: pub } = supabase.storage.from(bucket).getPublicUrl(path);
-
-
-
-    return res.status(200).json({
-
-      uploadUrl: data?.signedUrl,
-
-      path,
-
-      publicUrl: pub?.publicUrl,
-
-      contentType: contentType || 'application/octet-stream'
-
-    });
-
-  } catch (err) {
-
-    console.error('upload-url error:', err);
-
-    return res.status(500).json({ error: 'Failed to create upload URL' });
+    }
 
   }
+
+
+
+  return res.status(405).json({ error: "Method not allowed" });
 
 }
