@@ -186,17 +186,63 @@
 
   <script>
 
-    // Demo handler (frontend only). Replace later with your backend / Airtable / Tally.
+    // ===== Frontend -> Serverless Proxy (no keys in client) =====
 
-    const f = document.getElementById('requestForm');
+    const API = ''; // نفس الدومين
+
+
+
+    const form = document.getElementById('requestForm');
 
     const msg = document.getElementById('formMsg');
 
-    f.addEventListener('submit', (e) => {
+    const filesInput = document.getElementById('files');
+
+
+
+    async function getSignedUrl(filename, type){
+
+      const r = await fetch(`${API}/api/upload-url`, {
+
+        method:'POST',
+
+        headers:{ 'Content-Type':'application/json' },
+
+        body: JSON.stringify({ filename, contentType:type })
+
+      });
+
+      if (!r.ok) throw new Error('upload-url failed');
+
+      return r.json(); // {uploadUrl, path, publicUrl}
+
+    }
+
+
+
+    async function uploadViaSignedUrl(file){
+
+      const { uploadUrl, publicUrl, path } = await getSignedUrl(file.name, file.type);
+
+      const put = await fetch(uploadUrl, { method:'PUT', headers:{ 'Content-Type': file.type || 'application/octet-stream' }, body:file });
+
+      if (!put.ok) throw new Error('upload PUT failed');
+
+      return { name:file.name, size:file.size, path, url: publicUrl };
+
+    }
+
+
+
+    form.addEventListener('submit', async (e) => {
 
       e.preventDefault();
 
-      if (!f.checkValidity()) {
+      msg.textContent = ''; msg.className = 'form-msg';
+
+
+
+      if (!form.checkValidity()){
 
         msg.textContent = 'Please complete required fields.';
 
@@ -206,13 +252,85 @@
 
       }
 
-      msg.textContent = 'Thanks! Your request has been recorded (demo).';
 
-      msg.className = 'form-msg success';
 
-      f.reset();
+      const payload = {
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+        title: document.getElementById('title').value.trim(),
+
+        category: document.getElementById('category').value,
+
+        zip: document.getElementById('zip').value.trim(),
+
+        need_date: document.getElementById('date').value || null,
+
+        need_time: document.getElementById('time').value || null,
+
+        description: document.getElementById('desc').value.trim() || null,
+
+        contact_name: document.getElementById('contactName')?.value || null,
+
+        contact_phone: document.getElementById('contactPhone')?.value || null,
+
+        contact_email: document.getElementById('contactEmail')?.value || null,
+
+        files: null
+
+      };
+
+
+
+      try {
+
+        // 1) رفع الملفات عبر signed URL (اختياري)
+
+        if (filesInput.files.length){
+
+          const list = Array.from(filesInput.files).slice(0,5);
+
+          const uploaded = [];
+
+          for (const f of list){ uploaded.push(await uploadViaSignedUrl(f)); }
+
+          payload.files = uploaded;
+
+        }
+
+
+
+        // 2) إدخال الطلب في قاعدة البيانات عبر الـProxy
+
+        const r = await fetch(`${API}/api/requests`, {
+
+          method:'POST',
+
+          headers:{ 'Content-Type':'application/json' },
+
+          body: JSON.stringify(payload)
+
+        });
+
+        if (!r.ok) throw new Error('insert failed');
+
+
+
+        msg.textContent = 'Thanks! Your request has been posted.';
+
+        msg.className = 'form-msg success';
+
+        form.reset();
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (err){
+
+        console.error(err);
+
+        msg.textContent = 'Sorry—something went wrong. Please try again.';
+
+        msg.className = 'form-msg error';
+
+      }
 
     });
 
